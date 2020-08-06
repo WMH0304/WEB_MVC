@@ -1,0 +1,645 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/css/skins/grid_bootstrap.min.css" rel="stylesheet" />
+    <title>财务结算</title>
+    <style type="text/css">
+        #button button {
+            font-family: 华文行楷;
+            font-size: 16px;
+            line-height: 14px;
+        }
+
+        .row label {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .class1 th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .class2 th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .class3 th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="panel-heading" style="height:55px;margin-left:-1839px;margin-top:30px;">
+                <div class="col-lg-10 col-sm-10 col-md-10 text-right" id="button">  @*除了新增按钮，其他按钮都是针对右边按钮的*@
+                    <button class="btn btn-brown" id="btnInsert" style="width:84px;"><i class="glyphicon glyphicon-plus" style="font-size:14px;"></i>新增</button>
+                    <button class="btn btn-brown" id="btnUpdate" style="width:84px;"><i class="glyphicon glyphicon-pencil" style="font-size:14px;"></i>编辑</button>
+                    <button class="btn btn-brown" id="btnShuaX" style="width:84px;"><i class="glyphicon glyphicon-adjust" style="font-size:14px;"></i>刷新</button>
+                    <button class="btn btn-brown" id="btnDelete" style="width:84px;"><i class="glyphicon glyphicon-remove" style="font-size:14px;"></i>删除</button>
+                    <button class="btn btn-brown" style="width:122px;" id="btnShangwuShenHe"><i class="glyphicon glyphicon-floppy-saved" style="font-size:14px;"></i>财务审核</button>
+                    <button class="btn btn-brown" style="width:122px;" id="btnShangwuQiShen"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>财务弃审</button>
+                    <button class="btn btn-brown" style="width:84px;" onclick="printAchievement()"><i class="glyphicon glyphicon-check" style="font-size:14px;"></i>打印</button>
+                    <button class="btn btn-brown" style="width:84px;" id="btnDaoChu"><i class=" glyphicon glyphicon-share-alt" style="font-size:14px;"></i>导出</button>
+                    <button class="btn btn-brown" style="width:84px;" id="btnSelect"><i class=" glyphicon glyphicon-search" style="font-size:14px;"></i>查询</button>
+                </div>
+            </div>
+
+            <div class="row" id="modInsertExamine">
+                <form id="J_Form" class="form-horizontal span24" action="/KeFangYuDing/KeFang/Insertnews" method="post">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:0px;margin-top:-7px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">客户代码</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <input type="text" class="form-control" style="width:150px;height:30px;" id="ClientCode" name="ClientCode" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-233px;margin-top:-7px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">客户简称</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <input type="text" class="form-control" style="width:150px;height:30px;" id="ClientAbbreviation" name="ClientAbbreviation" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            @*左边*@
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left:5px;margin-left:65px;">
+                <div class="panel panel-warning" id="plNoticeType" style="width:573px;">
+                    <div class="panel-body" style="padding:0 0 20px 0;">
+                        <table id="tabFinance">
+                            <tr class="class1">
+                                <th w_index="SignCloseAccountID" w_check="true" width="40px;"></th>
+                                <th w_num="total_line" width="60px;">序号</th>
+                                <th w_index="ClientAbbreviation" width="100px;">结算单位</th>
+                                <th w_index="ClientCode" width="100px;" w_hidden="true">客户代码</th>
+                                <th w_index="TissueCode" width="100px;" w_hidden="true">组织代码</th>
+                                <th w_index="YingShouZ" width="100px;">应收总额</th>
+                                <th w_index="YingFuZ" width="100px;">应付总额</th>
+                                <th w_index="SettleWay" width="100px;">结算方式</th>
+                                <th w_index="SettleTime" width="100px;">结算日</th>
+                                <th w_index="Currency" width="80px;">币种</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @*右边*@
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left:5px;margin-left:660px;margin-top:-232px;">
+                <div class="panel panel-warning" id="plNoticeDetailed" style="width:700px;">
+                    <div class="panel-body" style="padding:0 0 20px 0;">
+                        <table id="tabSign">
+                            <tr class="class2">
+                                <th w_index="SignCloseAccountID" w_hidden="true"></th>
+                                <th w_index="SignID"  w_check="true"></th>
+                                <th w_num="total_line" >序号</th>
+                                <th w_index="SignType" >对账状态</th>
+                                <th w_index="SignExplain" >对账说明</th>
+                                <th w_index="SettleNumber">结算单号</th>
+                                <th w_index="SettleMoney">结算金额</th>
+                                <th w_index="PayWay">付款方式</th>
+                                <th w_index="PayWayID" w_hidden="true">付款方式ID</th>
+                                <th w_index="SettleWay" >结算方式</th>
+                                <th w_index="SettleWayID" w_hidden="true">结算方式ID</th>
+                                <th w_index="SignDate1">对账日期</th>
+                                <th w_index="FinishType" >状态</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            @*按钮*@
+            <div style="width:1230px;height:30px;margin-top:62px;margin-left:70px;">
+                <div class="row">
+                    <form id="" class="form-horizontal span24" action="" method="post">
+                        <div class="col-lg-10 col-sm-10 col-md-10 text-right" id="button">  @*如果按钮没有错，但每次点击都是刷新，那么就应该加一个type="button"*@
+                            <button type="button" class="btn btn-brown" style="width:84px;margin-left:1px;float:left" id="Insert"><i class="glyphicon glyphicon-plus" style="font-size:14px;"></i>新增</button>
+                            @*<button class="btn btn-brown" type="button" style="width:84px;margin-left:11px;float:left" id=""><i class="glyphicon glyphicon-pencil" style="font-size:14px;"></i>编辑</button>*@
+                            <button class="btn btn-brown" type="button" style="width:84px;margin-left:11px;float:left" id="Delete"><i class="glyphicon glyphicon-remove" style="font-size:14px;"></i>删除</button>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="margin-left:-496px;margin-top:3px;width:100px;">
+                            <label class="control-label" style="font-size:18px;">合计:</label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-95px;margin-top:-26px;float:left">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">应收</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:-3px;">
+                                <input type="text" class="form-control" id="YingShouZ" name="" style="width:100px;height:30px;margin-top:7px;" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:731px;margin-top:-32px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">应付</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <input type="text" class="form-control" id="YingFuZ" name="" style="width:100px;height:30px;margin-top:-1px;" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            @*下方*@
+            <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left:5px;margin-left:65px;margin-top:10px;width:1314px;">
+                <div class="panel panel-warning" id="plNoticeDetailed">
+                    <div class="panel-body" style="padding:0 0 20px 0;">
+                        <table id="tabCloseA">
+                            <tr class="class3">
+                                <th w_index="SignID" width="40px;" w_hidden="true"></th>
+                                <th w_index="CloseAccountID" w_check="true"></th>
+                                <th w_num="total_line" width="50px;">序号</th>
+                                <th w_index="ExpenseName" width="110px;">费用名称</th>
+                                <th w_index="SettleAccounts" width="120px;">收付款类型</th>
+                                <th w_index="UnitPrice" width="120px;">结算金额</th>
+                                <th w_index="YiHeXiao" width="120px;">已核销金额</th>
+                                <th w_index="YiChHeX" width="140px;">异常核销金额</th>
+                                <th w_index="UnitPrice" width="120px;">未核销金额</th>
+                                <th w_index="Parities" width="120px;">当前汇率</th>
+                                <th w_index="Currency" width="50px;">币种</th>
+                                <th w_index="EtrustNmber" width="120px;">委托单号</th>
+                                <th w_index="CarriageNumber" width="120px;">运输单号</th>
+                                <th w_index="CalculateNumber" width="120px;">收付款单号</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            @*编辑模态框*@
+            <div class="row">
+                <div class="modal bs-example-modal-sm" id="modBaseInfor">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:560px;">
+                            <div class="modal-header" style="height:47px;">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" style="font-family:华文行楷;"><span class="glyphicon glyphicon-ok"></span>修改对账</h4>
+                                <h4 style="font-family:华文行楷;margin-left:-2px;color:cadetblue;margin-top:11px;">对账单信息</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" role="form" id="J_Form" action="" method="post">
+                                    <div class="form-group" style="margin-left:-4px;margin-top:6px;">
+                                        <label class="control-label">对账状态</label>
+                                        <input id="SignType" name="SignType" style="width:185px;margin-left:72px;margin-top:-26px;" type="text" class="form-control" readonly />
+                                    </div>
+                                    <div class="form-group" style="margin-left:274px;margin-top:-53px;">
+                                        <label class="control-label">核销状态</label>
+                                        <input id="FinishType" name="FinishType" style="width:185px;margin-left:72px;margin-top:-26px;" type="text" class="form-control" readonly />
+                                    </div>
+                                    <div class="form-group" style="margin-top:-3px;">
+                                        <label class="control-label" style="margin-left:5px;">对账说明</label>
+                                        <input id="SignExplain" name="SignExplain" type="text" style="width:465px;margin-left:82px;margin-top:-26px;" class="form-control" />
+                                    </div>
+                                    <div class="form-group" style="margin-left:276px;margin-top:-3px;">
+                                        <label class="control-label">结算单号</label>
+                                        <input id="SettleNumber" name="SettleNumber" style="margin-left:71px;margin-top:-26px;width:185px;" type="text" class="form-control" readonly />
+                                    </div>
+                                    <div class="form-group" style="margin-left:-4px;margin-top:-52px;">
+                                        <label class="control-label">对账日期</label>
+                                        <input id="SignDate1" name="SignDate" style="margin-left:71px;margin-top:-26px;width:185px;" type="text" class="form-control" readonly />
+                                    </div>
+                                    <div class="form-group" style="margin-left:-4px;margin-top:-2px;">
+                                        <label class="control-label">结算方式</label>
+                                        <select type="text" style="margin-left:71px;margin-top:-26px;width:185px;" class="form-control" id="SettleWayID" name="SettleWayID"></select>
+                                    </div>
+                                    <div class="form-group" style="margin-left:276px;margin-top:-53px;">
+                                        <label class="control-label">付款方式</label>
+                                        <select type="text" style="margin-left:71px;margin-top:-26px;width:185px;" class="form-control" id="PayWayID" name="PayWayID"></select>
+                                    </div>
+                                    <div style="margin-left:287px;font-family: 华文行楷;font-size:18px;">
+                                        <button id="BtnEdit" type="button" class="btn btn-warning">确定</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+
+    <script>
+        var tabFinance;//左边
+        var tabSign;//右边
+        var tabCloseA;//下面
+
+        $(function () {
+
+            $("#YingShouZ").val(0);//应付  就是一开始让文本框显示值为0
+            $("#YingFuZ").val(0);//应收
+
+            //绑定结算方式下拉框
+            createSelect("SettleWayID", "SelectSettleWay");
+            //绑定付款方式下拉框
+            createSelect("PayWayID", "SelectPayWay");
+
+            //初始化表格数据
+            tabFinance = $.fn.bsgrid.init("tabFinance", {
+                url: "SelectFinance",
+                autoLoad: true,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabFinance tr", rowIndex + 1, record);
+                            tabSign.search("SignCloseAccountID=" + record.SignCloseAccountID);  //要把这个ID传到控制器进行查询
+                            tabCloseA.search("SignID="+0);  //传个空值过去，把触发表格的数据随着母表变化而清空
+                        }
+                    }
+                }
+            });
+
+            //右方表格数据
+            tabSign = $.fn.bsgrid.init('tabSign', {
+                url: 'SelectSign',
+                autoLoad: false,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabSign tr", rowIndex + 1, record);
+                            tabCloseA.search("SignID=" + record.SignID);  //要把这个ID传到控制器进行查询
+                            SignInfor(record);
+
+                            $.post("SelectCloseA?A=" + 1 + "&SignID=" + record.SignID, function (Data) {//把控制器获取到那三个文本框的值回填到页面是文本框上
+                                $("#YingShouZ").val(Data.YingShouZ);
+                                $("#YingFuZ").val(Data.YingFuZ);
+                            })
+                        }
+                    }
+                }
+            });
+
+            //下方表格数据
+            tabCloseA = $.fn.bsgrid.init('tabCloseA', {
+                url: 'SelectCloseA',
+                autoLoad: false,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 10,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabCloseA tr", rowIndex + 1, record);
+                        }
+                    }
+                }
+            });
+
+        })
+
+
+        //多条件查询
+        function tabFinanceSearch() {
+            var ClientCode = $("#ClientCode").val();
+            var ClientAbbreviation = $("#ClientAbbreviation").val();
+
+            if (ClientCode == undefined) {
+                ClientCode = "";
+            }
+            if (ClientAbbreviation == undefined) {
+                ClientAbbreviation = "";
+            }
+            
+            tabFinance.search({ ClientCode: ClientCode, ClientAbbreviation: ClientAbbreviation});
+        }
+        //点击查询按钮进行多条件查询
+        $("#btnSelect").click(function () {
+            tabFinanceSearch();
+        });
+
+        //点击财务审核，对数据进行审核(可以批量)
+        $("#btnShangwuShenHe").click(function () {
+            var check = $("#tabSign input:checked");
+            if (check.length == 0) {
+                layer.alert("请选择需要进行财务审核的客户数据!");
+            }
+            else if (check.length > 0) {
+                var SignID = $("#tabSign input:checked");
+                layer.confirm("确定进行财务审核吗？",
+               { icon: 3, btn: ['确定', '取消'] }, function (layerIndex) {
+                   layer.close(layerIndex);
+                   for (var i = 0; i < check.length; i++) {//for循环实现批量删除
+                       $.ajax({
+                           url: "CaiWuShenHe?SignID=" + check[i].value,//选择的checkbox的value值
+                           type: "get",//数据传输通道的类型
+                           async: false,
+                           dataType: "json",//传输的数据的类型
+                           success: function (data) {//直接理解为回调函数
+                               if (data == "success") {
+                                   tabSign.refreshPage();
+                               } else {
+                                   layer.msg(data, { icon: 1, skin: "layui-layer-molv" });
+                               }
+                           }
+                       });
+                   }
+               })
+            }
+        })
+
+        //点击财务弃审，对数据进行财务弃审(可以批量)
+        $("#btnShangwuQiShen").click(function () {
+            var check = $("#tabSign input:checked");
+            if (check.length == 0) {
+                layer.alert("请选择需要进行财务弃审的客户数据!");
+            }
+            else if (check.length > 0) {
+                var SignID = $("#tabSign input:checked");
+                layer.confirm("确定进行财务弃审吗？",
+               { icon: 3, btn: ['确定', '取消'] }, function (layerIndex) {
+                   layer.close(layerIndex);
+                   for (var i = 0; i < check.length; i++) {//for循环实现批量删除
+                       $.ajax({
+                           url: "CaiWuQiShen?SignID=" + check[i].value,//选择的checkbox的value值
+                           type: "get",//数据传输通道的类型
+                           async: false,
+                           dataType: "json",//传输的数据的类型
+                           success: function (data) {//直接理解为回调函数
+                               if (data == "success") {
+                                   tabSign.refreshPage();
+                               } else {
+                                   layer.msg(data, { icon: 1, skin: "layui-layer-molv" });
+                               }
+                           }
+                       });
+                   }
+               })
+            }
+        })
+
+        //点击编辑按钮右边表格进行数据回填
+        function SignInfor(record) {
+            //console.log(record);
+            $("#SignType").val(record.SignType);//对账状态
+            $("#FinishType").val(record.FinishType);//核销状态
+            $("#SignExplain").val(record.SignExplain);//对账说明
+            $("#SettleNumber").val(record.SettleNumber);//结算单号
+            $("#SignDate1").val(record.SignDate1);//对账日期
+            $("#SettleWayID").val(record.SettleWayID);//结算方式
+            $("#PayWayID").val(record.PayWayID);//付款方式
+        }
+
+        //点击编辑按钮弹出编辑模态框，并实现数据回填
+        $("#btnUpdate").click(function () {
+            var Check = $("#tabSign input[type='checkbox']:checked");
+            if (Check.length == 0) {
+                layer.alert("请选择一条数据!");
+            }
+            else if (Check.length == 1) {
+                for (var i = 0; i < Check.length; i++) {
+                    var index = $("#tabSign input[type='checkbox']").index(Check[i])-1;  //用这种方法的时候，如果表头也是选择框，则需要-1
+                    var SignType = tabSign.getRecord(index).SignType;
+                    if (SignType == "审核") {
+                        layer.alert('审核状态下的对账单不能进行编辑,请先弃审!', { icon: 0, title: '提示' });
+                    }
+                    else {
+                        $("#modBaseInfor").modal();
+                    }
+                }
+            }
+            else {
+                layer.alert("只能选择一条数据!");
+            }
+        })
+
+        //点击编辑模态框里面的确定按钮，进行保存
+        $("#BtnEdit").click(function () {
+            var SignID = $("#tabSign input:checked").val();
+            var SignExplain = $("#SignExplain").val().trim();
+            var SettleWayID = $("#SettleWayID").val();
+            var PayWayID = $("#PayWayID").val();
+
+            $.post("SaveUpdate", { SignID:SignID,SignExplain: SignExplain, SettleWayID: SettleWayID, PayWayID: PayWayID }, function (msg) {
+                if (msg=="success") {
+                    layer.alert("修改成功!");
+                    $("#modBaseInfor").modal('hide');
+                    tabSign.refreshPage();
+                }
+                else {
+                    layer.alert("修改失败，请重新检查一遍!");
+                }
+            })
+        })
+
+        //点击打印按钮，打印对账单
+        function printAchievement() {
+            var myArray = new Array(); //声明一个数组
+            var SignCloseAccountID = $("#tabSign input:checked").val();
+            var check = $("#tabSign tbody input:checked");//获取表格中checkbox被选中的个数
+            for (var i = 0; i < check.length; i++) {
+                myArray[i] = check[i].value;
+            }
+            layer.confirm("确定要打印当前选择的数据吗？", {
+                icon: 3,
+                btn: ["确定", "取消"]
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("PrintAchievementC?myArray=" + myArray + "&SignCloseAccountID=" + SignCloseAccountID);
+            });
+        }
+
+        //点击导出按钮，导出对账单
+        $("#btnDaoChu").click(function () {
+            var myArray = new Array(); //声明一个数组
+            var SignCloseAccountID = $("#tabSign input:checked").val();
+            var check = $("#tabSign tbody input:checked");//获取表格中checkbox被选中的个数
+            for (var i = 0; i < check.length; i++) {
+                myArray[i] = check[i].value;
+            }
+            layer.confirm("确定要导出当前选择的数据吗？", {
+                icon: 3,
+                btn: ["确定", "取消"]
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("ExportSign?myArray=" + myArray + "&SignCloseAccountID=" + SignCloseAccountID);
+            });
+        })
+
+        //点击上方删除按钮，进行删除
+        $("#btnDelete").click(function () {
+            var delCount = 0;//记录需要删除的数据的总数
+            var ReturnCount = 0;//记录删除成功的数据的总数
+            //获取选中的数据
+            var Check = $("#tabSign input[type='checkbox']:checked");
+
+            if (Check.length > 0) {
+                var SignID = $("#tabSign input:checked");
+                layer.confirm("确定要进行删除吗?", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                    offset: "100px"
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    //计算选中的客户所有审核中的数据的总数
+                    for (var i = 0; i < Check.length; i++) {
+                        //获取索引(获取Check[i]相对于jQuery选择器$("#tabSign input[type='checkbox']")的索引)
+                        var Index = $("#tabSign input[type='checkbox']").index(Check[i]) - 1;   //如果表格表头上方也有一个选择框，就要减1，如果没有，就不需要
+                        //根据索引获取行记录值中客户的状态
+                        var SignType = tabSign.getRecord(Index).SignType;
+                        //判断获取到的客户的状态是否为审核
+                        if (SignType != "审核") {
+                            delCount++;
+                        }
+                    }
+                    //判断选中的客户是否全部是“审核”的状态
+                    if (delCount == Check.length) {
+                        //进行审核
+                        for (var i = 0; i < Check.length; i++) {
+                            $.ajax({
+                                url: "DeleteSign?SignID=" + Check[i].value,
+                                async: false,
+                                type: "get",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data == "success") {
+                                        ReturnCount++;
+                                    }
+                                }
+                            });
+                        }
+                        if (ReturnCount == Check.length) {
+                            layer.msg("删除成功", { icon: 1, skin: "layui-layer-molv" });
+                            location.reload();
+                        }
+                        else {
+                            layer.alert("有" + (delCount - ReturnCount) + "条数据存在异常！", { icon: 0, title: "提示", offset: "100px" });
+                        }
+                    }
+                    else {
+                        layer.alert("选中的客户中存在审核的客户，不能进行删除！", { icon: 0, title: "提示", offset: "100px" });
+                    }
+                })
+            }
+            else {
+                layer.alert("请选择需要进行删除的客户！", { icon: 0, title: "提示", offset: "100px" });
+            }
+        })
+
+        //点击下方删除按钮,把选中数据的对账ID修改为空
+        $("#Delete").click(function () {
+            var check = $("#tabCloseA input[type=checkbox]:checked");
+            if (check.length==0) {
+                layer.msg("请选择数据再点击此按钮!", {icon:6});
+            }
+            else if (check.length > 0) {
+                var SignType = $("#tabSign :checked").parents("tr").children().eq(3).html();  //获取表格的ID选中行里面的第三列数据
+                if (SignType == "审核") {
+                    layer.msg('审核状态下的对账单不能删除已审核过的收费明细!如要删除,请先弃审!', { icon: 0, title: '提示' });
+                }
+                else {
+                    var CloseAccountID = $("#tabCloseA input:checked").val();
+                    var SignID = $("#tabSign input:checked").val();
+                    layer.confirm("确定要删除已审核过的收费明细吗？",
+                   { icon: 3, btn: ['确定', '取消'] }, function (layerIndex) {
+                       layer.close(layerIndex);
+                       for (var i = 0; i < check.length; i++) {//for循环实现批量删除
+                           $.ajax({
+                               url: "SaveDeleteDetail?CloseAccountID=" + CloseAccountID + "&SignID=" + SignID,//选择的checkbox的value值
+                               type: "get",//数据传输通道的类型
+                               async: false,
+                               dataType: "json",//传输的数据的类型
+                               success: function (data) {//直接理解为回调函数
+                                   if (data == "success") {
+                                       layer.msg("删除成功!");
+                                       tabCloseA.refreshPage();
+                                   } else {
+                                       layer.msg("删除失败,请重新检查!");
+                                   }
+                               }
+                           });
+                       }
+                   })
+                }
+            }
+        })
+
+
+        //点击上方新增按钮，跳转到新增结算单页面
+        $("#btnInsert").click(function () {
+            var check = $("#tabFinance input:checked")
+            if (check.length==0) {
+                layer.msg("请选择一条数据,才可以跳转页面",{icon:0})
+            } else if (check.length > 1) {
+                layer.msg("只能选择一条数据，才可以跳转页面",{icon:0})
+            } else if (check.length == 1) {
+                window.location.href = ("/Commerce/Examine/InsetIndex?SignCloseAccountID=" + check[0].value); //跳转页面时把选中的对账结算ID传过去
+            } 
+        })
+
+        //点击下方新增按钮，跳转到新增结算明细页面
+        $("#Insert").click(function () {
+            var check = $("#tabSign input:checked")
+            if (check.length == 0) {
+                layer.msg("请选择一条数据,才可以跳转页面", { icon: 0 })
+            } else if (check.length > 1) {
+                layer.msg("只能选择一条数据，才可以跳转页面", { icon: 0 })
+            } else if (check.length == 1) {
+                for (var i = 0; i < check.length; i++) {
+                    var index = $("#tabSign input[type='checkbox']").index(check[i])-1;  //表头有选择框，要-1；
+                    var SignType = tabSign.getRecord(index).SignType;
+                    if (SignType == "审核") {
+                        layer.alert('审核状态下的对账单不能新增收费明细,请先弃审', { icon: 0, title: '提示' });
+                    }
+                    else {
+                        window.location.href = ("/Commerce/Examine/InsertDetail?SignID=" + check[0].value); //跳转页面时把选中的对账结算ID传过去
+                    }                  
+                }
+            }
+        })
+
+        //点击刷新按钮，刷新页面
+        $("#btnShuaX").click(function () {
+            location.reload();
+        })
+
+    </script>
+
+</body>
+</html>

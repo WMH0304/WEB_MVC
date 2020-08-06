@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ChargeDB" targetNamespace="http://tempuri.org/ChargeDB.xsd" xmlns:mstns="http://tempuri.org/ChargeDB.xsd" xmlns="http://tempuri.org/ChargeDB.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ChargeDB" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ChargeDB" msprop:Generator_UserDSName="ChargeDB">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tabCharge" msprop:Generator_TableClassName="tabChargeDataTable" msprop:Generator_TableVarName="tabletabCharge" msprop:Generator_TablePropName="tabCharge" msprop:Generator_RowDeletingName="tabChargeRowDeleting" msprop:Generator_RowChangingName="tabChargeRowChanging" msprop:Generator_RowEvHandlerName="tabChargeRowChangeEventHandler" msprop:Generator_RowDeletedName="tabChargeRowDeleted" msprop:Generator_UserTableName="tabCharge" msprop:Generator_RowChangedName="tabChargeRowChanged" msprop:Generator_RowEvArgName="tabChargeRowChangeEvent" msprop:Generator_RowClassName="tabChargeRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ReckoningUnit" msprop:Generator_ColumnVarNameInTable="columnReckoningUnit" msprop:Generator_ColumnPropNameInRow="ReckoningUnit" msprop:Generator_ColumnPropNameInTable="ReckoningUnitColumn" msprop:Generator_UserColumnName="ReckoningUnit" type="xs:string" minOccurs="0" />
+              <xs:element name="ExpenseName" msprop:Generator_ColumnVarNameInTable="columnExpenseName" msprop:Generator_ColumnPropNameInRow="ExpenseName" msprop:Generator_ColumnPropNameInTable="ExpenseNameColumn" msprop:Generator_UserColumnName="ExpenseName" type="xs:string" minOccurs="0" />
+              <xs:element name="ChargeType" msprop:Generator_ColumnVarNameInTable="columnChargeType" msprop:Generator_ColumnPropNameInRow="ChargeType" msprop:Generator_ColumnPropNameInTable="ChargeTypeColumn" msprop:Generator_UserColumnName="ChargeType" type="xs:string" minOccurs="0" />
+              <xs:element name="SettleAccounts" msprop:Generator_ColumnVarNameInTable="columnSettleAccounts" msprop:Generator_ColumnPropNameInRow="SettleAccounts" msprop:Generator_ColumnPropNameInTable="SettleAccountsColumn" msprop:Generator_UserColumnName="SettleAccounts" type="xs:string" minOccurs="0" />
+              <xs:element name="UnitPrice" msprop:Generator_ColumnVarNameInTable="columnUnitPrice" msprop:Generator_ColumnPropNameInRow="UnitPrice" msprop:Generator_ColumnPropNameInTable="UnitPriceColumn" msprop:Generator_UserColumnName="UnitPrice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="BoxQuantity" msprop:Generator_ColumnVarNameInTable="columnBoxQuantity" msprop:Generator_ColumnPropNameInRow="BoxQuantity" msprop:Generator_ColumnPropNameInTable="BoxQuantityColumn" msprop:Generator_UserColumnName="BoxQuantity" type="xs:string" minOccurs="0" />
+              <xs:element name="Money" msprop:Generator_ColumnVarNameInTable="columnMoney" msprop:Generator_ColumnPropNameInRow="Money" msprop:Generator_ColumnPropNameInTable="MoneyColumn" msprop:Generator_UserColumnName="Money" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Currency" msprop:Generator_ColumnVarNameInTable="columnCurrency" msprop:Generator_ColumnPropNameInRow="Currency" msprop:Generator_ColumnPropNameInTable="CurrencyColumn" msprop:Generator_UserColumnName="Currency" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

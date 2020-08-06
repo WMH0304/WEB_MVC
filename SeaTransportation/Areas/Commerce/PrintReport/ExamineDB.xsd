@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ExamineDB" targetNamespace="http://tempuri.org/ExamineDB.xsd" xmlns:mstns="http://tempuri.org/ExamineDB.xsd" xmlns="http://tempuri.org/ExamineDB.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ExamineDB" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ExamineDB" msprop:Generator_UserDSName="ExamineDB">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tabExamine" msprop:Generator_TableClassName="tabExamineDataTable" msprop:Generator_TableVarName="tabletabExamine" msprop:Generator_RowChangedName="tabExamineRowChanged" msprop:Generator_TablePropName="tabExamine" msprop:Generator_RowDeletingName="tabExamineRowDeleting" msprop:Generator_RowChangingName="tabExamineRowChanging" msprop:Generator_RowEvHandlerName="tabExamineRowChangeEventHandler" msprop:Generator_RowDeletedName="tabExamineRowDeleted" msprop:Generator_RowClassName="tabExamineRow" msprop:Generator_UserTableName="tabExamine" msprop:Generator_RowEvArgName="tabExamineRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="EtrustNmber" msprop:Generator_ColumnVarNameInTable="columnEtrustNmber" msprop:Generator_ColumnPropNameInRow="EtrustNmber" msprop:Generator_ColumnPropNameInTable="EtrustNmberColumn" msprop:Generator_UserColumnName="EtrustNmber" type="xs:string" minOccurs="0" />
+              <xs:element name="CarriageNumber" msprop:Generator_ColumnVarNameInTable="columnCarriageNumber" msprop:Generator_ColumnPropNameInRow="CarriageNumber" msprop:Generator_ColumnPropNameInTable="CarriageNumberColumn" msprop:Generator_UserColumnName="CarriageNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="EtrustType" msprop:Generator_ColumnVarNameInTable="columnEtrustType" msprop:Generator_ColumnPropNameInRow="EtrustType" msprop:Generator_ColumnPropNameInTable="EtrustTypeColumn" msprop:Generator_UserColumnName="EtrustType" type="xs:string" minOccurs="0" />
+              <xs:element name="ClientAbbreviation" msprop:Generator_ColumnVarNameInTable="columnClientAbbreviation" msprop:Generator_ColumnPropNameInRow="ClientAbbreviation" msprop:Generator_ColumnPropNameInTable="ClientAbbreviationColumn" msprop:Generator_UserColumnName="ClientAbbreviation" type="xs:string" minOccurs="0" />
+              <xs:element name="CheXing" msprop:Generator_ColumnVarNameInTable="columnCheXing" msprop:Generator_ColumnPropNameInRow="CheXing" msprop:Generator_ColumnPropNameInTable="CheXingColumn" msprop:Generator_UserColumnName="CheXing" type="xs:string" minOccurs="0" />
+              <xs:element name="Cupboard" msprop:Generator_ColumnVarNameInTable="columnCupboard" msprop:Generator_ColumnPropNameInRow="Cupboard" msprop:Generator_ColumnPropNameInTable="CupboardColumn" msprop:Generator_UserColumnName="Cupboard" type="xs:string" minOccurs="0" />
+              <xs:element name="Seal" msprop:Generator_ColumnVarNameInTable="columnSeal" msprop:Generator_ColumnPropNameInRow="Seal" msprop:Generator_ColumnPropNameInTable="SealColumn" msprop:Generator_UserColumnName="Seal" type="xs:string" minOccurs="0" />
+              <xs:element name="IndentNumber" msprop:Generator_ColumnVarNameInTable="columnIndentNumber" msprop:Generator_ColumnPropNameInRow="IndentNumber" msprop:Generator_ColumnPropNameInTable="IndentNumberColumn" msprop:Generator_UserColumnName="IndentNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="ArriveFactoryTime1" msprop:Generator_ColumnVarNameInTable="columnArriveFactoryTime1" msprop:Generator_ColumnPropNameInRow="ArriveFactoryTime1" msprop:Generator_ColumnPropNameInTable="ArriveFactoryTime1Column" msprop:Generator_UserColumnName="ArriveFactoryTime1" type="xs:string" minOccurs="0" />
+              <xs:element name="LeftFactoryTime1" msprop:Generator_ColumnVarNameInTable="columnLeftFactoryTime1" msprop:Generator_ColumnPropNameInRow="LeftFactoryTime1" msprop:Generator_ColumnPropNameInTable="LeftFactoryTime1Column" msprop:Generator_UserColumnName="LeftFactoryTime1" type="xs:string" minOccurs="0" />
+              <xs:element name="User1" msprop:Generator_ColumnVarNameInTable="columnUser1" msprop:Generator_ColumnPropNameInRow="User1" msprop:Generator_ColumnPropNameInTable="User1Column" msprop:Generator_UserColumnName="User1" type="xs:string" minOccurs="0" />
+              <xs:element name="User" msprop:Generator_ColumnVarNameInTable="columnUser" msprop:Generator_ColumnPropNameInRow="User" msprop:Generator_ColumnPropNameInTable="UserColumn" msprop:Generator_UserColumnName="User" type="xs:string" minOccurs="0" />
+              <xs:element name="FinancingExaninePID" msprop:Generator_ColumnVarNameInTable="columnFinancingExaninePID" msprop:Generator_ColumnPropNameInRow="FinancingExaninePID" msprop:Generator_ColumnPropNameInTable="FinancingExaninePIDColumn" msprop:Generator_UserColumnName="FinancingExaninePID" type="xs:int" minOccurs="0" />
+              <xs:element name="FinancingQiExaninePID" msprop:Generator_ColumnVarNameInTable="columnFinancingQiExaninePID" msprop:Generator_ColumnPropNameInRow="FinancingQiExaninePID" msprop:Generator_ColumnPropNameInTable="FinancingQiExaninePIDColumn" msprop:Generator_UserColumnName="FinancingQiExaninePID" type="xs:int" minOccurs="0" />
+              <xs:element name="ShangWuShenHeTime" msprop:Generator_ColumnVarNameInTable="columnShangWuShenHeTime" msprop:Generator_ColumnPropNameInRow="ShangWuShenHeTime" msprop:Generator_ColumnPropNameInTable="ShangWuShenHeTimeColumn" msprop:Generator_UserColumnName="ShangWuShenHeTime" type="xs:string" minOccurs="0" />
+              <xs:element name="ShangWuQiShenTime" msprop:Generator_ColumnVarNameInTable="columnShangWuQiShenTime" msprop:Generator_ColumnPropNameInRow="ShangWuQiShenTime" msprop:Generator_ColumnPropNameInTable="ShangWuQiShenTimeColumn" msprop:Generator_UserColumnName="ShangWuQiShenTime" type="xs:string" minOccurs="0" />
+              <xs:element name="FinancingExanineTime" msprop:Generator_ColumnVarNameInTable="columnFinancingExanineTime" msprop:Generator_ColumnPropNameInRow="FinancingExanineTime" msprop:Generator_ColumnPropNameInTable="FinancingExanineTimeColumn" msprop:Generator_UserColumnName="FinancingExanineTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="FinancingQiExanineTime" msprop:Generator_ColumnVarNameInTable="columnFinancingQiExanineTime" msprop:Generator_ColumnPropNameInRow="FinancingQiExanineTime" msprop:Generator_ColumnPropNameInTable="FinancingQiExanineTimeColumn" msprop:Generator_UserColumnName="FinancingQiExanineTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AuditType" msprop:Generator_ColumnVarNameInTable="columnAuditType" msprop:Generator_ColumnPropNameInRow="AuditType" msprop:Generator_ColumnPropNameInTable="AuditTypeColumn" msprop:Generator_UserColumnName="AuditType" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

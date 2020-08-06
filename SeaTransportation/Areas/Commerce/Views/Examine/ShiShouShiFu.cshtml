@@ -1,0 +1,1230 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/css/skins/grid_bootstrap.min.css" rel="stylesheet" />
+    <title>实收实付</title>
+    <style type="text/css">
+        #button button {
+            font-family: 华文行楷;
+            font-size: 16px;
+            line-height: 14px;
+        }
+
+        .row label {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .row input {
+            height: 34px;
+            width:185px;
+        }
+
+        .class1 th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .class2 th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .class3 th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+        #div1 th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="panel-heading" style="height:55px;margin-left:-3425px;margin-top:30px;">
+                <div class="col-lg-10 col-sm-10 col-md-10 text-right" id="button">
+                    <button class="btn btn-brown" id="btnShuaXin" style="width:84px;"><i class="glyphicon glyphicon-refresh" style="font-size:14px;"></i>刷新</button>
+                    <button class="btn btn-brown" id="btnInsert" style="width:84px;"><i class="glyphicon glyphicon-plus" style="font-size:14px;"></i>新增</button>
+                    <button class="btn btn-brown" id="btnUpdate" style="width:84px;"><i class="glyphicon glyphicon-pencil" style="font-size:14px;"></i>编辑</button>
+                    <button class="btn btn-brown" id="btnDelete" style="width:84px;"><i class="glyphicon glyphicon-remove" style="font-size:14px;"></i>删除</button>
+                    <button class="btn btn-brown" style="width:84px;" id="btnDaYin"><i class="glyphicon glyphicon-check" style="font-size:14px;"></i>打印</button>
+                    <button class="btn btn-brown" style="width:84px;" id="btnDaoChu"><i class=" glyphicon glyphicon-share-alt" style="font-size:14px;"></i>导出</button>
+                    <button class="btn btn-brown" style="width:84px;" id="btnSelect"><i class=" glyphicon glyphicon-search" style="font-size:14px;"></i>查询</button>
+                </div>
+            </div>
+            <h4 style="font-family:华文行楷;margin-left:74px;color:cadetblue;margin-top:-4px;">检索条件</h4>
+            <div class="row" id="modInsertExaminee">
+                <form id="" class="form-horizontal span24" action="" method="post">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:18px;margin-top:-15px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">收付款单号</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <input type="text" class="form-control" style="width:150px;height:30px;" id="CalculateNumber" name="CalculateNumber" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-291px;margin-top:-15px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">结算单位</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <select type="text" style="height:33px;width:150px;" class="form-control" id="ClientID"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-274px;margin-top:-15px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">结算单位</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <select type="text" style="height:33px;width:150px;" class="form-control" id="MessageID"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-272px;margin-top:-15px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">银行名称</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <input type="text" class="form-control" style="width:150px;height:30px;" id="BankName" name="BankName" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:1010px;margin-top:-33px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">收付日期</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:3px;">
+                                <input type="date" class="form-control" style="width:150px;height:30px;" id="SFDate" name="SFDate" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:83px;margin-top:2px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:100px;">
+                                <label class="control-label">付款方式</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <select type="text" style="height:33px;width:150px;" class="form-control" id="PayWayID"></select>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-357px;margin-top:2px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">币种</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <input type="text" class="form-control" style="width:150px;height:30px;" id="Currency" name="Currency" />
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-272px;margin-top:2px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="margin-left:-4px;">
+                                <label class="control-label">收付金额</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <input type="text" class="form-control" style="width:150px;height:30px;margin-left:3px;" id="SFMoney" name="SFMoney" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-273px;margin-top:2px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">已核销金额</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <input type="text" class="form-control" style="width:150px;height:30px;" id="AlreadyCancelMoney" name="AlreadyCancelMoney" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-272px;margin-top:2px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">待核销金额</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                                <input type="text" class="form-control" style="width:150px;height:30px;" id="StayCancelMoney" name="StayCancelMoney" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>           
+        </div>
+
+        @*新增计费单模态框*@
+        <div class="row">
+            <form id="J_Form" class="form-horizontal span24" action="SaveCalculate" method="post">
+                <div class="modal bs-example-modal-sm" id="modBaseInfor">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:592px;">
+                            <div class="modal-header" style="height:47px;">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" style="font-family:华文行楷;">新增计费单</h4>
+                            </div>
+                            <div class="modal-body" style="height:450px;">
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:0px;margin-top:0px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                        <label class="control-label">收付款单号</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;" id="CalculateNumber1" name="CalculateNumber" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:200px;margin-left:-20px;margin-top:0px;">
+                                        <label class="control-label"><span style="color:red">*</span>收付款类型</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:159px;margin-top:-31px;">
+                                        <select type="text" style="height:34px;width:185px;" class="form-control" id="SettleAccounts1" name="SettleAccounts">
+                                            <option value="">----请选择----</option>  @*相当于文本框用里面的value去查询*@
+                                            <option value="应收">应收</option>
+                                            <option value="应付">应付</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-325px;margin-top:0px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:200px;margin-left:-179px;margin-top:41px;">
+                                        <label class="control-label"><span style="color:red">*</span>付款方式</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-top:8px;margin-left:-16px;">
+                                        <select type="text" style="margin-top:34px;width:185px;" class="form-control" id="PayWayID1" name="PayWayID"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:251px;margin-top:-26px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:80px;margin-left:-9px;margin-top:-9px;">
+                                        <label class="control-label"><span style="color:red">*</span>币种</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" style="margin-left:94px;margin-top:-29px;width:185px;" id="Currency1" name="Currency" value="RMB" readonly/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:251px;margin-top:-26px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:150px;margin-left:-331px;margin-top:36px;">
+                                        <label class="control-label"><span style="color:red">*</span>结算单位</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <select type="text" style="margin-left:-197px;margin-top:35px;width:185px;" class="form-control" id="ClientID1" name="ClientID"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:542px;margin-top:-63px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:150px;margin-left:-338px;margin-top:30px;">
+                                        <label class="control-label"><span style="color:red">*</span>结算单位</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <select type="text" style="margin-left:-197px;margin-top:29px;width:185px;" class="form-control" id="MessageID1" name="MessageID"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-40px;margin-top:17px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-18px;margin-top:-6px;">
+                                        <label class="control-label"><span style="color:red">*</span>收付金额</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="SFMoney1" name="SFMoney" style="margin-left:94px;margin-top:-30px;width:185px;" type="text" class="form-control" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:110px;margin-top:12px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-35px;margin-top:0px;">
+                                        <label class="control-label">收付日期</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="SFDate1" name="SFDate" style="margin-left:89px;margin-top:-30px;width:185px;" type="date" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-481px;margin-top:60px;float:left">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-21px;margin-top:-6px;">
+                                        <label class="control-label">银行名称</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="BankName1" name="BankName" style="margin-left:91px;margin-top:-30px;width:477px;" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-481px;margin-top:106px;float:left">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-21px;margin-top:-6px;">
+                                        <label class="control-label">银行账号</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="BankAccount1" name="BankAccount" style="margin-left:91px;margin-top:-32px;width:477px;" type="text" class="form-control" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-481px;margin-top:142px;float:left">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-27px;margin-top:0px;">
+                                        <label class="control-label">支票号</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="ChequeNumber1" name="ChequeNumber" style="margin-left:91px;margin-top:-31px;width:477px;" type="text" class="form-control" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-481px;margin-top:186px;float:left">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-27px;margin-top:0px;">
+                                        <label class="control-label">备注</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="Remark" name="Remark" style="margin-left:91px;margin-top:-31px;width:477px;height:80px;" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div style="margin-left:445px;font-family: 华文行楷;font-size:18px;margin-top:391px;">
+                                    <button id="BtnAdd" type="button" class="btn btn-primary">保存</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        @*编辑计费单模态框*@
+        <div class="row">  @*如果字符串回填数据出错，检查在查询数据时是否有去空格*@
+            <form id="" class="form-horizontal span24" action="SaveCalculate" method="post">
+                <div class="modal bs-example-modal-sm" id="modBaseInfor2">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:592px;">
+                            <div class="modal-header" style="height:47px;">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" style="font-family:华文行楷;">编辑计费单</h4>
+                            </div>
+                            <div class="modal-body" style="height:450px;">
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:0px;margin-top:0px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                        <label class="control-label">收付款单号</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;" id="CalculateNumber2" name="CalculateNumber" readonly/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:200px;margin-left:-20px;margin-top:0px;">
+                                        <label class="control-label"><span style="color:red">*</span>收付款类型</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:159px;margin-top:-31px;">
+                                        <select type="text" style="height:34px;width:185px;" class="form-control" id="SettleAccounts2" name="SettleAccounts">
+                                            <option value="">----请选择----</option>  @*相当于文本框用里面的value去查询*@
+                                            <option value="应收">应收</option>
+                                            <option value="应付">应付</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-325px;margin-top:0px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:200px;margin-left:-179px;margin-top:41px;">
+                                        <label class="control-label"><span style="color:red">*</span>付款方式</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-top:8px;margin-left:-16px;">
+                                        <select type="text" style="margin-top:34px;width:185px;" class="form-control" id="PayWayID2" name="PayWayID"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:251px;margin-top:-26px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:80px;margin-left:-9px;margin-top:-9px;">
+                                        <label class="control-label"><span style="color:red">*</span>币种</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" style="margin-left:94px;margin-top:-29px;width:185px;" id="Currency2" name="Currency" readonly/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:251px;margin-top:-26px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:150px;margin-left:-331px;margin-top:36px;">
+                                        <label class="control-label"><span style="color:red">*</span>结算单位</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <select type="text" style="margin-left:-197px;margin-top:35px;width:185px;" class="form-control" id="ClientID2" name="ClientID"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:542px;margin-top:-63px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:150px;margin-left:-338px;margin-top:30px;">
+                                        <label class="control-label"><span style="color:red">*</span>结算单位</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <select type="text" style="margin-left:-197px;margin-top:29px;width:185px;" class="form-control" id="MessageID2" name="MessageID"></select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-40px;margin-top:17px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-18px;margin-top:-6px;">
+                                        <label class="control-label"><span style="color:red">*</span>收付金额</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="SFMoney2" name="SFMoney" style="margin-left:94px;margin-top:-30px;width:185px;" type="text" class="form-control" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:110px;margin-top:12px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-35px;margin-top:0px;">
+                                        <label class="control-label">收付日期</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="SFDate2" name="SFDate" style="margin-left:89px;margin-top:-30px;width:185px;" type="date" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-481px;margin-top:60px;float:left">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-21px;margin-top:-6px;">
+                                        <label class="control-label">银行名称</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="BankName2" name="BankName" style="margin-left:91px;margin-top:-30px;width:477px;" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-481px;margin-top:106px;float:left">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-21px;margin-top:-6px;">
+                                        <label class="control-label">银行账号</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="BankAccount2" name="BankAccount" style="margin-left:91px;margin-top:-32px;width:477px;" type="text" class="form-control" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-481px;margin-top:142px;float:left">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-27px;margin-top:0px;">
+                                        <label class="control-label">支票号</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="ChequeNumber2" name="ChequeNumber" style="margin-left:91px;margin-top:-31px;width:477px;" type="text" class="form-control" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-481px;margin-top:186px;float:left">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-27px;margin-top:0px;">
+                                        <label class="control-label">备注</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input id="Remark2" name="Remark" style="margin-left:91px;margin-top:-31px;width:477px;height:80px;" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                                <div style="margin-left:445px;font-family: 华文行楷;font-size:18px;margin-top:391px;">
+                                    <button id="BtnAdd2" type="button" class="btn btn-primary">保存</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        @*上方*@
+        <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left:5px;margin-left:43px;margin-top:10px;width:1394px;">
+            <div id="plNoticeDetailed">
+                <div class="panel-body" style="padding:0 0 20px 0;">
+                    <table id="tabCalculate">
+                        <tr class="class3">
+                            <th w_index="CalculateID" w_check="true">选择</th>
+                            <th w_index="SignID" w_hidden="true"></th>
+                            <th w_num="total_line">序号</th>
+                            <th w_index="CalculateState">状态</th>
+                            <th w_index="CalculateNumber">收付款单号</th>
+                            <th w_index="SettleAccounts">收付款类型</th>
+                            <th w_index="ReckoningUnit">结算单位</th>
+                            <th w_index="SFMoney">收付金额</th>
+                            <th w_index="AlreadyCancelMoney">已核销金额</th>
+                            <th w_index="StayCancelMoney">待核销金额</th>
+                            <th w_index="PayWay">付款方式</th>
+                            <th w_index="Currency">币种</th>
+                            <th w_index="SFDate1">收付日期</th>
+                            <th w_index="BankName">银行名称</th>
+                            <th w_index="BankAccount">账号</th>
+                            <th w_index="ChequeNumber">支票号</th>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        @*按钮*@
+        <div style="width:1230px;height:30px;margin-top:62px;margin-left:45px;">
+            <div class="col-lg-10 col-sm-10 col-md-10 text-right" id="button">
+                <button class="btn btn-brown" type="button" style="width:107px;margin-left:-13px;float:left" id="Insert"><i class="glyphicon glyphicon-ok" style="font-size:14px;"></i>自动填充</button>
+                <button class="btn btn-brown" type="button" style="width:84px;margin-left:11px;float:left" id="Delete"><i class="glyphicon glyphicon-ok-sign" style="font-size:14px;"></i>核销</button>
+            </div>
+        </div>
+
+        @*中间文本框*@
+        <div class="row" id="">
+            <form id="" class="form-horizontal span24" action="" method="post">
+                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-859px;margin-top:2px;">
+                    <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                        <label class="control-label">收付款单号</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                        <input type="text" class="form-control" style="width:150px;height:30px;" id="CalculateNumber3" name="CalculateNumber" readonly/>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-603px;margin-top:2px;">
+                    <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                        <label class="control-label">待核销金额</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                        <input type="text" class="form-control" style="width:150px;height:30px;" id="StayCancelMoney3" name="StayCancelMoney" readonly/>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-348px;margin-top:3px;">
+                    <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                        <label class="control-label">可核销金额</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                        <input type="text" class="form-control" style="width:150px;height:30px;" id="SettleMoney1" name="SettleMoney" readonly/>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-250px;margin-top:2px;">
+                    <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                        <label class="control-label">核销总金额</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                        <input type="text" class="form-control" style="width:150px;height:30px;" id="AlreadyCancelMoney3" name="AlreadyCancelMoney" readonly/>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        @*下方左边表格*@
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <div class="panel" style="width:960px;margin-left:30px;margin-top:20px;height:112px;">
+                <div class="table">
+                    <ul class="nav nav-tabs tab-color-blue background-blue" id="myTab4">
+                        <li class="active" style="font-family: 华文行楷;
+            font-size: 16px;">
+                            <a id="tbnavB" href="#tpB" data-toggle="tab">待核销</a>
+                        </li>
+                        <li class="" style="font-family: 华文行楷;
+            font-size: 16px;">
+                            <a id="tbnavZ" href="#tpZ" data-toggle="tab">核销历史</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content  padding-0" id="div">
+                        @*待核销*@
+                        <div class="tab-pane in active" id="tpB">
+                            <table id="tabSign" style="margin-top:15px;">
+                                <tr>
+                                    <th w_index="SignID" w_check="true">选择</th>
+                                    <th w_num="total_line">序号</th>
+                                    <th w_index="FinishType">状态</th>
+                                    @*<th w_index="SignType">状态</th>*@
+                                    <th w_index="SettleNumber">结算单号</th>
+                                    <th w_index="BCYShou">应收结算金额</th>
+                                    <th w_index="BCYFu">应付结算金额</th>
+                                    <th w_index="SettleMoney">实际结算金额</th>
+                                    <th w_index="Currency">结算币种</th>
+                                    <th w_index="SignExplain">备注</th>
+                                </tr>
+                            </table>
+                        </div>
+                        @*核销历史*@
+                        <div class="tab-pane" id="tpZ">
+                            <table id="tabSignn" style="margin-top:15px;">
+                                <tr>
+                                    <th w_index="SignID" w_check="true">选择</th>
+                                    <th w_num="total_line">序号</th>
+                                    <th w_index="FinishType">状态</th>
+                                    <th w_index="SettleNumber">结算单号</th>
+                                    <th w_index="BCYShou">应收结算金额</th>
+                                    <th w_index="BCYFu">应付结算金额</th>
+                                    <th w_index="SettleMoney1">实际结算金额</th>
+                                    <th w_index="Currency">结算币种</th>
+                                    <th w_index="SignExplain">备注</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*下方右边表格*@
+        <div class="col-md-6 col-sm-6 col-xs-6" style="padding-left:5px;margin-left:987px;margin-top:-73px;float:left">
+            <div class="panel panel-warning" style="width:250px;">
+                <table id="tabCloseA" style="width:250px;">
+                    <tr>
+                        <th w_index="CloseAccountID" w_check="true" width="50px;"></th>
+                        <th w_num="total_line" width="50px;">序号</th>
+                        <th w_index="ExpenseName" width="80px;">费用名称</th>
+                        <th w_index="UnitPrice" width="80px;">结算金额</th>                      
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+
+    <script>
+        var tabCalculate;
+        var tabSign;
+        var tabSignn;
+        var tabCloseA;
+
+        $(function () {
+
+            $("#CalculateNumber3").val(0); //付款单号
+            $("#StayCancelMoney3").val(0);// 收付金额(待核销金额) 就是一开始让文本框显示值为0
+            $("#SettleMoney1").val(0);//可核销金额
+            $("#AlreadyCancelMoney3").val(0);//已核销金额(核销总金额)
+
+            //绑定结算单位下拉框(客户)
+            createSelect("ClientID", "SelectClientr");
+            createSelect("ClientID1", "SelectClientr");
+            createSelect("ClientID2", "SelectClientr");
+            //绑定本公司下拉框
+            createSelect("MessageID", "SelectMessage");
+            createSelect("MessageID1", "SelectMessage");
+            createSelect("MessageID2", "SelectMessage");
+            //绑定付款方式下拉框
+            createSelect("PayWayID", "SelectPayWay");
+            createSelect("PayWayID1", "SelectPayWay");
+            createSelect("PayWayID2", "SelectPayWay");          
+
+            //绑定当前时间
+            var nowdata = getNowFormatDate();//今天日期
+            $("#SFDate1").val(getNowFormatDate());
+
+            //初始化表格数据(上方表格)
+            tabCalculate = $.fn.bsgrid.init("tabCalculate", {
+                url: "SelectCalculate",
+                autoLoad: true,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabCalculate tr", rowIndex + 1, record);
+                            CalculateInfor(record);
+                            CalculateInforr(record);
+                        }
+                    }
+                }
+            });
+
+            //下方左方表格数据(未核销)
+            tabSign = $.fn.bsgrid.init('tabSign', {
+                url: 'SelectSignY',
+                autoLoad: true,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabSign tr", rowIndex + 1, record);
+                            tabCloseA.search("SignID=" + record.SignID);  //要把这个ID传到控制器进行查询
+                            SignIDInfor(record);
+                        }
+                    }
+                }
+            });
+
+            //已核销
+            tabSignn = $.fn.bsgrid.init('tabSignn', {
+                url: 'SelectSignn',
+                autoLoad: true,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabSignn tr", rowIndex + 1, record);
+                            tabCloseA.search("SignID=" + record.SignID);  //要把这个ID传到控制器进行查询
+                        }
+                    }
+                }
+            });
+
+            //下方右方表格数据
+            tabCloseA = $.fn.bsgrid.init('tabCloseA', {
+                url: 'SelectCloseA',
+                autoLoad: false,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabCloseA tr", rowIndex + 1, record);
+                        }
+                    }
+                }
+            });
+        })
+
+        //多条件查询的条件
+        function tabCalculateSearch() {
+            var CalculateNumber = $("#CalculateNumber").val();//收付款单号
+            var ClientID = $("#ClientID").val();//结算单位
+            var MessageID = $("#MessageID").val();//结算单位
+            var BankName = $("#BankName").val();//银行名称 
+            var SFDate = $("#SFDate").val();//收付日期
+            var PayWayID = $("#PayWayID").val();//付款方式
+            var Currency = $("#Currency").val();//币种
+            var SFMoney = $("#SFMoney").val();//收付金额
+            var AlreadyCancelMoney = $("#AlreadyCancelMoney").val();//已核销金额
+            var StayCancelMoney = $("#StayCancelMoney").val();//待核销金额          
+
+            if (CalculateNumber == undefined) { //收付款单号
+                CalculateNumber = "";
+            }
+            if (ClientID == undefined) { //结算单位
+                ClientID = 0;
+            }
+            if (MessageID == undefined) { //结算单位
+                MessageID = 0;
+            }
+            if (BankName == undefined) { //银行名称 
+                BankName = "";
+            }
+            if (SFDate == undefined) { //收付日期
+                SFDate = "";
+            }
+            if (PayWayID == undefined) { //付款方式
+                PayWayID = 0;
+            }
+            if (Currency == undefined) { //币种
+                Currency = "";
+            }
+            if (SFMoney == undefined) { //收付金额
+                SFMoney = "";
+            }
+            if (AlreadyCancelMoney == undefined) { //已核销金额
+                AlreadyCancelMoney = "";
+            }
+            if (StayCancelMoney == undefined) { //待核销金额
+                StayCancelMoney = "";
+            }
+
+            tabCalculate.search({ CalculateNumber: CalculateNumber, ClientID: ClientID, MessageID: MessageID, BankName: BankName, SFDate: SFDate, PayWayID: PayWayID, Currency: Currency, SFMoney: SFMoney, AlreadyCancelMoney: AlreadyCancelMoney, StayCancelMoney: StayCancelMoney })
+        }
+
+        //点击查询按钮进行多条件查询
+        $("#btnSelect").click(function () {
+            $("#CalculateNumber3").val(0); //付款单号
+            $("#StayCancelMoney3").val(0);// 收付金额(待核销金额) 就是一开始让文本框显示值为0
+            $("#SettleMoney1").val(0);//可核销金额
+            $("#AlreadyCancelMoney3").val(0);//已核销金额(核销总金额)
+
+            tabCalculateSearch();
+        });
+
+        //点击新增按钮，弹出新增计费单模态框
+        $("#btnInsert").click(function () {
+            //收付款单号（自动生成）
+            $.getJSON("getCodee", function (data) {
+                $("#CalculateNumber1").val(data);
+            });
+            $("#modBaseInfor").modal("show");//弹出模态框
+        })
+
+        //点击新增计费单模态框的保存按钮，进行保存
+        $("#BtnAdd").click(function () {
+            if ($("#J_Form [name='SettleAccounts']").val()!=null && $("#J_Form [name='SettleAccounts']").val()!="" && $("#J_Form [name='SettleAccounts']").val()!= undefined) {
+                if ($("#J_Form [name='PayWayID']").val() >0) {
+                    if ($("#J_Form [name='ClientID']").val() > 0 || $("#J_Form [name='MessageID']").val() > 0) {
+                        if ($("#J_Form [name='SFMoney']").val() != null && $("#J_Form [name='SFMoney']").val() != "" && $("#J_Form [name='SFMoney']").val() != undefined) {
+                            if ($("#J_Form [name='BankName']").val() != null && $("#J_Form [name='BankName']").val() != "" && $("#J_Form [name='BankName']").val() != undefined) {
+                                if ($("#J_Form [name='BankAccount']").val() != null && $("#J_Form [name='BankAccount']").val() != "" && $("#J_Form [name='BankAccount']").val() != undefined) {
+                                    //用表单ID提交(用表单提交，上面的name要跟数据库对应)
+                                    $("#J_Form").ajaxSubmit(function (msg) {
+                                        if (msg == "success") {
+                                            layer.alert("保存成功", { icon: 1, title: '提示' });
+                                            $("#modBaseInfor").modal("hide");
+                                            location.reload();
+                                        }
+                                        else {
+                                            alert("保存出错");
+                                        }
+                                    })
+                                }
+                                else {
+                                    layer.msg("请填写常用的银行账号!", { icon: 6 });
+                                }
+                            }
+                            else {
+                                layer.msg("请填写常用的银行名称!", { icon: 6 });
+                            }
+                        }
+                        else {
+                            layer.msg("请填写正确的收付金额!", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("请选择相对应的结算单位!", { icon: 6 });
+                    }
+                }
+                else {
+                    layer.msg("请选择付款方式!", { icon: 6 });
+                }
+            }
+            else {
+                layer.msg("请选择收付款类型!", { icon: 6 });
+            }            
+        })
+
+        
+        //点击编辑按钮，弹出编辑计费单模态框
+        $("#btnUpdate").click(function () {
+            var Check = $("#tabCalculate input[type='checkbox']:checked");
+            if (Check.length == 0) {
+                layer.alert("请先选择一条数据，在点击执行此按钮!");
+            }
+            else if (Check.length == 1) {
+                $("#modBaseInfor2").modal();
+            }
+            else {
+                layer.alert("只能选择一条数据！");
+            }
+        })
+
+        //点击弹出编辑计费单的同时，回填数据
+        function CalculateInfor(record) {
+            $("#CalculateNumber2").val(record.CalculateNumber);//收付款单号
+            $("#SettleAccounts2").val(record.SettleAccounts);//收付款类型
+            $("#PayWayID2").val(record.PayWayID);//付款方式
+            $("#Currency2").val(record.Currency);//币种
+            $("#ClientID2").val(record.ClientID);//客户的结算单位
+            $("#MessageID2").val(record.MessageID);//本公司的结算单位
+            $("#SFMoney2").val(record.SFMoney);//收付金额
+            $("#SFDate2").val(record.SFDate);//收付日期
+            $("#BankName2").val(record.BankName);//银行名称
+            $("#BankAccount2").val(record.BankAccount);//银行账号
+            $("#ChequeNumber2").val(record.ChequeNumber);//支票号
+            $("#Remark2").val(record.Remark);//备注
+        }
+
+        //编辑过后，点击保存按钮，保存数据
+        $("#BtnAdd2").click(function () {
+            var CalculateID = $("#tabCalculate input:checked").val();//计费ID
+            var CalculateNumber = $("#CalculateNumber2").val().trim();//收付款单号
+            var SettleAccounts = $("#SettleAccounts2").val();//收付款类型
+            var PayWayID = $("#PayWayID2").val();//付款方式
+            var Currency = $("#Currency2").val().trim();//币种
+            var ClientID = $("#ClientID2").val();//客户的结算单位
+            var MessageID = $("#MessageID2").val();//本公司的结算单位
+            var SFMoney = $("#SFMoney2").val().trim();//收付金额
+            var SFDate = $("#SFDate2").val().trim();//收付日期
+            var BankName = $("#BankName2").val().trim();//银行名称
+            var BankAccount = $("#BankAccount2").val().trim();//银行账号
+            var ChequeNumber = $("#ChequeNumber2").val().trim();//支票号
+            var Remark = $("#Remark2").val().trim();//备注
+            if (SettleAccounts != null && SettleAccounts != undefined && SettleAccounts != "") {
+                if (PayWayID > 0) {
+                    if (ClientID > 0 || MessageID > 0) {
+                        if (SFMoney != null && SFMoney != "" && SFMoney != undefined) {
+                            if (BankName != null && BankName != undefined && BankName != "") {
+                                if (BankAccount != undefined && BankAccount != "" && BankAccount != null) {
+                                    $.post("UpdateCalculate", { CalculateID: CalculateID, CalculateNumber: CalculateNumber, SettleAccounts: SettleAccounts, PayWayID: PayWayID, Currency: Currency, ClientID: ClientID, MessageID: MessageID, SFMoney: SFMoney, SFDate: SFDate, BankName: BankName, BankAccount: BankAccount, ChequeNumber: ChequeNumber, Remark: Remark }, function (msg) {
+                                        if (msg == "success") {
+                                            layer.alert("修改成功!");
+                                            location.reload();
+                                        }
+                                        else {
+                                            layer.alert("修改失败，请重新检查一遍!");
+                                        }
+                                    })
+                                }
+                                else {
+                                    layer.msg("请填写常用的银行账号!", { icon: 6 });
+                                }
+                            }
+                            else {
+                                layer.msg("请填写常用的银行名称!", { icon: 6 });
+                            }
+                        }
+                        else {
+                            layer.msg("请填写正确的收付金额!", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("请选择相对应的结算单位!", { icon: 6 });
+                    }
+                }
+                else {
+                    layer.msg("请选择付款方式!", { icon: 6 });
+                }
+            }
+            else {
+                layer.msg("请选择收付款类型!", { icon: 6 });
+            }
+        })
+
+        //点击删除按钮，删除选中的数据
+        $("#btnDelete").click(function () {
+            var Check = $("#tabCalculate input[type='checkbox']:checked");
+
+            if (Check.length == 0) {
+                layer.alert("请选择需要删除的计费单!");
+            }
+            else if (Check.length > 0) {
+                var CalculateID = $("#tabCalculate input:checked");
+                layer.confirm("确定删除选中的计费单吗？",
+               { icon: 3, btn: ['确定', '取消'] }, function (layerIndex) {
+                   layer.close(layerIndex);
+                   for (var i = 0; i < Check.length; i++) {//for循环实现批量删除
+                       $.ajax({
+                           url: "DeleteShiShouShiFu?CalculateID=" + Check[i].value,//选择的checkbox的value值
+                           type: "get",//数据传输通道的类型
+                           async: false,
+                           dataType: "json",//传输的数据的类型
+                           success: function (data) {//直接理解为回调函数
+                               if (data == "success") {
+                                   layer.alert("删除成功!");
+                                   tabCalculate.refreshPage();
+                               } else {
+                                   layer.alert("删除失败！");
+                               }
+                           }
+                       });
+                   }
+               })
+            }
+        })
+
+        //点击打印按钮，打印上方表格数据
+        $("#btnDaYin").click(function () {
+            var CalculateNumber = $("#CalculateNumber").val();//收付款单号
+            var ClientID = $("#ClientID").val();//结算单位
+            var MessageID = $("#MessageID").val();//结算单位
+            var BankName = $("#BankName").val();//银行名称 
+            var SFDate = $("#SFDate").val();//收付日期
+            var PayWayID = $("#PayWayID").val();//付款方式
+            var Currency = $("#Currency").val();//币种
+            var SFMoney = $("#SFMoney").val();//收付金额
+            var AlreadyCancelMoney = $("#AlreadyCancelMoney").val();//已核销金额
+            var StayCancelMoney = $("#StayCancelMoney").val();//待核销金额          
+
+            if (CalculateNumber == undefined) { //收付款单号
+                CalculateNumber = "";
+            }
+            if (ClientID == undefined) { //结算单位
+                ClientID = 0;
+            }
+            if (MessageID == undefined) { //结算单位
+                MessageID = 0;
+            }
+            if (BankName == undefined) { //银行名称 
+                BankName = "";
+            }
+            if (SFDate == undefined) { //收付日期
+                SFDate = "";
+            }
+            if (PayWayID == undefined) { //付款方式
+                PayWayID = 0;
+            }
+            if (Currency == undefined) { //币种
+                Currency = "";
+            }
+            if (SFMoney == undefined) { //收付金额
+                SFMoney = "";
+            }
+            if (AlreadyCancelMoney == undefined) { //已核销金额
+                AlreadyCancelMoney = "";
+            }
+            if (StayCancelMoney == undefined) { //待核销金额
+                StayCancelMoney = "";
+            }
+
+            //拼接查询条件
+            var str = "CalculateNumber=" + CalculateNumber + "&ClientID=" + ClientID + "&MessageID=" + MessageID + "&BankName=" + BankName + "&SFDate=" + SFDate + "&PayWayID=" + PayWayID + "&Currency=" + Currency + "&SFMoney=" + SFMoney + "&AlreadyCancelMoney=" + AlreadyCancelMoney + "&StayCancelMoney=" + StayCancelMoney;
+            //getPageCondition获取当前页请求条件
+            var curCondition = tabCalculate.getPageCondition(tabCalculate.getCurPage());
+
+            if (curCondition.indexOf(str) > -1) {
+                layer.confirm("确定要打印当前数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"]
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("PrintShiShouShiFu?" + str);
+                });
+            }
+            else {
+                layer.alert("请先查询出成绩信息，预览是否是需要打印的数据", { icon: 0, title: '提示' });
+            }
+        })
+
+        //点击导出按钮，导出上方表格数据
+        $("#btnDaoChu").click(function () {
+            var CalculateNumber = $("#CalculateNumber").val();//收付款单号
+            var ClientID = $("#ClientID").val();//结算单位
+            var MessageID = $("#MessageID").val();//结算单位
+            var BankName = $("#BankName").val();//银行名称 
+            var SFDate = $("#SFDate").val();//收付日期
+            var PayWayID = $("#PayWayID").val();//付款方式
+            var Currency = $("#Currency").val();//币种
+            var SFMoney = $("#SFMoney").val();//收付金额
+            var AlreadyCancelMoney = $("#AlreadyCancelMoney").val();//已核销金额
+            var StayCancelMoney = $("#StayCancelMoney").val();//待核销金额          
+
+            if (CalculateNumber == undefined) { //收付款单号
+                CalculateNumber = "";
+            }
+            if (ClientID == undefined) { //结算单位
+                ClientID = 0;
+            }
+            if (MessageID == undefined) { //结算单位
+                MessageID = 0;
+            }
+            if (BankName == undefined) { //银行名称 
+                BankName = "";
+            }
+            if (SFDate == undefined) { //收付日期
+                SFDate = "";
+            }
+            if (PayWayID == undefined) { //付款方式
+                PayWayID = 0;
+            }
+            if (Currency == undefined) { //币种
+                Currency = "";
+            }
+            if (SFMoney == undefined) { //收付金额
+                SFMoney = "";
+            }
+            if (AlreadyCancelMoney == undefined) { //已核销金额
+                AlreadyCancelMoney = "";
+            }
+            if (StayCancelMoney == undefined) { //待核销金额
+                StayCancelMoney = "";
+            }
+
+            //拼接查询条件
+            var str = "CalculateNumber=" + CalculateNumber + "&ClientID=" + ClientID + "&MessageID=" + MessageID + "&BankName=" + BankName + "&SFDate=" + SFDate + "&PayWayID=" + PayWayID + "&Currency=" + Currency + "&SFMoney=" + SFMoney + "&AlreadyCancelMoney=" + AlreadyCancelMoney + "&StayCancelMoney=" + StayCancelMoney;
+            //getPageCondition获取当前页请求条件
+            var curCondition = tabCalculate.getPageCondition(tabCalculate.getCurPage());
+
+            if (curCondition.indexOf(str) > -1) {
+                layer.confirm("确定要导出当前数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"]
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("ExportShiShouShiFu?" + str);
+                });
+            }
+            else {
+                layer.alert("请先查询出成绩信息，预览是否是需要导出的数据", { icon: 0, title: '提示' });
+            }
+        })
+
+        //下面前两个文本框回填数据
+        function CalculateInforr(record) {
+            $("#CalculateNumber3").val(record.CalculateNumber);//收付款单号
+            $("#StayCancelMoney3").val(record.StayCancelMoney);//可核销金额
+        }
+
+        //下面第三个文本框回填数据
+        function SignIDInfor(record) {
+            $("#SettleMoney1").val(record.SettleMoney);//可核销金额
+        }
+
+        //调用禁用(true)
+        function OPenDisabled() {
+            var Bill = document.getElementById("Insert");
+            Insert.disabled = true;
+        }
+
+        //点击自动填充按钮，计算金额  (要先自动填充，再进行核销)
+        $("#Insert").click(function () {
+            var StayCancelMoney = $("#StayCancelMoney3").val();//待核销金额
+            var SettleMoney = $("#SettleMoney1").val();//可核销金额
+
+            $("#AlreadyCancelMoney3").val(SettleMoney); //让最后一个文本框(核销总金额)在点击按钮时显示可核销金额的值
+
+            var A = StayCancelMoney - SettleMoney;
+            $("#StayCancelMoney3").val(A);
+            OPenDisabled(); //点击一次自动填充按钮之后，就禁用此按钮
+        })
+
+        //点击核销按钮，保存核销金额，改变状态
+        $("#Delete").click(function () {
+            var CalculateID = $("#tabCalculate input[type='checkbox']:checked").val();//上方表格ID
+            var SignID = $("#tabSign input[type='checkbox']:checked").val();//下方未核销表格的值 
+            var StayCancelMoney = $("#StayCancelMoney3").val();//待核销金额
+            var SettleMoney = $("#SettleMoney1").val();//可核销金额
+            var AlreadyCancelMoney = $("#AlreadyCancelMoney3").val();//核销总金额(已核销金额)
+            if (AlreadyCancelMoney>0) {
+                if (StayCancelMoney>=0) {
+                    $.ajax({
+                        url: "SaveVerification?CalculateID=" + CalculateID + "&SignID=" + SignID + "&StayCancelMoney=" + StayCancelMoney + "&AlreadyCancelMoney=" + AlreadyCancelMoney,//选择的checkbox的value值
+                        type: "get",//数据传输通道的类型
+                        async: false,
+                        dataType: "json",//传输的数据的类型
+                        success: function (data) {//直接理解为回调函数
+                            if (data == "success") {
+                                layer.msg("核销成功!");
+                                location.reload();
+                            } else {
+                                layer.msg("核销失败,请重新检查!");
+                            }
+                        }
+                    });
+                }    
+                else {
+                    layer.msg("请重新选择核销数据,现选择的数据不符合核销条件!",{icon:6});
+                }
+            }
+            else {
+                layer.msg("请先点击自动填充按钮，在进行核销!",{icon:6});
+            }   
+        })
+
+
+        //点击刷新按钮，刷新页面
+        $("#btnShuaXin").click(function () {
+            location.reload();
+        });
+
+
+
+    </script>
+
+
+
+    @*封装自定义的方法*@
+    <script>
+        //获取当前时间
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+            return currentdate;
+        }
+        ////一周后的日期
+        //function getNowFormatDates() {
+        //    var date = new Date();
+        //    var seperator1 = "-";
+        //    var seperator2 = ":";
+        //    var month = date.getMonth() + 1;
+        //    var strDate = date.getDate()+4;
+        //    if (month >= 1 && month <= 9) {
+        //        month = "0" + month;
+        //    }
+        //    if (strDate >= 0 && strDate <= 9) {
+        //        strDate = "0" + strDate;
+        //    }
+        //    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+        //    return currentdate;
+        //}
+        //一周后的日期
+        function fun_submit() {
+            var date1 = new Date();
+            var date2 = new Date(date1);
+            date2.setDate(date1.getDate() + 6);
+            var month=date2.getMonth() + 1
+            var strDate = date2.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var times = date2.getFullYear() + "-" + month + "-" + strDate;
+            return times;
+        }
+        //计算两个时间相隔的天数
+        function isLeapYear(year) {
+            if (year % 4 == 0 && ((year % 100 != 0) || (year % 400 == 0))) {
+                return true;
+            }
+            return false;
+        }
+        //判断前后两个日期
+        function validatePeriod(fyear, fmonth, fday, byear, bmonth, bday) {
+            if (fyear < byear) {
+                return true;
+            } else if (fyear == byear) {
+                if (fmonth < bmonth) {
+                    return true;
+                } else if (fmonth == bmonth) {
+                    if (fday <= bday) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+
+        //日期加一
+        function addByTransDate(dateParameter, num) {
+            var translateDate = "", dateString = "", monthString = "", dayString = "";
+            translateDate = dateParameter.replace("-", "/").replace("-", "/");
+            var newDate = new Date(translateDate);
+            newDate = newDate.valueOf();
+            newDate = newDate + num * 24 * 60 * 60 * 1000;
+            newDate = new Date(newDate);
+            //如果月份长度少于2，则前加 0 补位
+            if ((newDate.getMonth() + 1).toString().length == 1) {
+                monthString = 0 + "" + (newDate.getMonth() + 1).toString();
+            } else {
+                monthString = (newDate.getMonth() + 1).toString();
+            }
+            //如果天数长度少于2，则前加 0 补位
+            if (newDate.getDate().toString().length == 1) {
+                dayString = 0 + "" + newDate.getDate().toString();
+            } else {
+                dayString = newDate.getDate().toString();
+            }
+            dateString = newDate.getFullYear() + "-" + monthString + "-" + dayString;
+            return dateString;
+        }
+        //日期加一
+        function showTime(date, pdVal) {
+            trans_day = "";
+            trans_day = addByTransDate(date, pdVal);
+            //处理
+            return trans_day;
+        }
+
+        //获取星期几
+        function getWeekday(sDate) {
+            var dt = new Date(sDate.replace(/-/g, '/'));
+            var a = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            return a[dt.getDay()];
+        }
+
+        //两个时间相隔天数
+        function xiangge(sDate1, sDate2) { //sDate1和sDate2是2002-12-18格式
+            var aDate, oDate1, oDate2, iDays
+            aDate = sDate1.split("-")
+            oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]) //转换为12-18-2002格式
+            aDate = sDate2.split("-")
+            oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
+            iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24) //把相差的毫秒数转换为天数
+            return iDays
+        }
+    </script>
+</body>
+</html>

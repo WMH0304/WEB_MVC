@@ -1,0 +1,594 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Tree/jsTree/style.min.css" rel="stylesheet" />
+    <title>Port</title>
+    <style type="text/css">
+        .modal-header {
+            padding: 6px 5px;
+            border-bottom: none;
+            background: #d8d8d2;
+            text-align: center;
+            color: #000;
+        }
+
+        .modal-content {
+            padding: 6px;
+        }
+
+        .modal-body {
+            padding: 0 25px;
+        }
+
+        .btn {
+            background: #d8d8d2;
+            margin-top: 5px;
+        }
+
+            .btn:hover {
+                background: #5190f8;
+            }
+
+        .container {
+            width: 100%;
+        }
+        .panel-heading {
+            font-size: 16px;
+            text-align: center;
+            background-color:#d8d8d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="panel-heading">
+            <span>港口资料</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button class="btn  glyphicon glyphicon-off" type="button" id="Close"> 关闭</button>
+            <button class="btn  glyphicon glyphicon-refresh" type="button" id="Refresh"> 刷新</button>
+            <button class="btn  glyphicon glyphicon-plus" type="button" id="Insert"> 新增</button>
+            <button class="btn  glyphicon glyphicon-pencil" type="button" id="Update"> 编辑</button>
+            <button class="btn  glyphicon glyphicon-remove" type="button" id="Delete"> 删除</button>
+            <button class="btn  glyphicon glyphicon-search" type="button" id="Check"> 查询</button>
+            <button class="btn  glyphicon glyphicon-print" type="button" id="Print"> 打印</button>
+            <button class="btn  glyphicon glyphicon-paste" type="button" id="ExportToExcel"> 导出</button>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12" style="float:right">
+            <div class="panel-body">
+                <div class="row examineeInfor">
+                    <table id="Port" class="table table-condensed" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th w_index="PortID" w_check="true">选择</th>
+                                <th w_num="total_line">序号</th>
+                                <th w_index="PortCode" width="">港口代码</th>
+                                <th w_index="ChineseName" width="">中文名称</th>
+                                <th w_index="EnglishName" width="">英文名称</th>
+                                <th w_index="CountryCode" width="">国家代码</th>
+                                <th w_index="Area" width="">区域</th>
+                                <th w_index="Berthage" width="">泊位数</th>
+                                <th w_index="Phone" width="">联系电话</th>
+                                <th w_index="Remark" width="">备注</th>
+                                <th w_render="SetState">是否启用</th>
+                                <th w_index="WhetherStart" w_hidden="true">启用</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*新增模态框*@
+    <div class="modal  bs-example-modal-sm" id="modInsertExaminee">
+        <div class="modal-content" style="width:780px;height:290px;margin-left:400px;">
+            <div class="modal-header">
+                <h5 class="modal-title glyphicon glyphicon-plus"> 港口资料</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="formInsert" action="/Basics/Basics/InsertPort" method="post">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">港口代码:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" name="PortCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">国家代码:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="CountryCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">中文名称:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="ChineseName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">英文名称:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="EnglishName" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z]+$/, '')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">区域:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Area" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"/>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">泊位数:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Berthage" maxlength="2" onkeyup="value=value.replace(/[^0-9]/g,'')"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">联系电话:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Phone" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-2">
+                                <label>
+                                    <input type="checkbox" name="WhetherStart" id="" value="true" />
+                                    是否启用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">备注:</label>
+                            </div>
+                            <div class="col-lg-10 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Remark" maxlength="40" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                            <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                            <button class="btn glyphicon glyphicon-ok" type="button" id="Saveport"> 保存</button>
+                            <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @*修改模态框*@
+    <div class="modal  bs-example-modal-sm" id="modUpdateExaminee">
+        <div class="modal-content" style="width:700px;height:290px;margin-left:450px;">
+            <div class="modal-header">
+                <h5 class="modal-title glyphicon glyphicon-pencil"> 港口资料</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="formUpdate" action="/Basics/Basics/UpdatePort" method="post">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">港口代码:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="PortCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">国家代码:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="CountryCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">中文名称:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="ChineseName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">英文名称:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="EnglishName" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z]+$/, '')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">区域:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Area" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')"/>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">泊位数:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Berthage" maxlength="2" onkeyup="value=value.replace(/[^0-9]/g,'')"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">联系电话:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Phone" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-2">
+                                <label>
+                                    <input type="checkbox" name="WhetherStart" id="" value="true" />
+                                    是否启用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">备注:</label>
+                            </div>
+                            <div class="col-lg-10 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Remark" maxlength="40" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                            <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                            <button class="btn glyphicon glyphicon-ok" type="button" id="UpdateSave"> 保存</button>
+                            <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @*查询模态框*@
+    <div class="modal  bs-example-modal-sm" id="modCheckExaminee">
+        <div class="modal-content" style="width:400px;height:215px;margin-left:610px;">
+            <div class="modal-header">
+                <h5 class="modal-title glyphicon glyphicon-search"> 查询港口资料</h5>
+            </div>
+            <form id="formCheckport">
+                <div class="modal-body">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">港口代码:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="Code" name="PortCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">中文名称:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="Name" name="ChineseName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">英文名称:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="hName" name="EnglishName" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z]+$/,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                            <button class="btn glyphicon glyphicon-search" type="button" id="modelcheck"> 查询</button>
+                            <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="~/Content/Tree/jquery.min.js"></script>
+    <link href="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/Tree/Tree.js"></script>
+    <script src="~/Content/Tree/jstree.min.js"></script>
+    <script>
+        var tabport;
+        $(function () {
+            //查询港口表
+            tabport = $.fn.bsgrid.init('Port', {
+                url: 'selectPort',
+                autoLoad: true,//自动加载数据
+                stripeRows: true,//隔行变色
+                rowHoverColor: true,//划过行变色
+                displayBlankRows: true,//是否显示空白行，默认值false
+                rowSelectedColor: true,//是否显示选中行背景色
+                pageSize: 10,//默认页面大小
+                pageSizeSelect: true,//是否选择分页页数下拉框
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                //事件
+                event: {
+                    customRowEvents: {
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#Port tr", rowIndex + 1);
+                        }
+                    }
+                }
+            });
+        })
+        //查询
+        $("#Check").click(function () {
+            $('#formCheckport').resetForm();
+            $("#modCheckExaminee").modal("show");
+            $("#modelcheck").click(function () {
+                Checkport();
+                $("#modCheckExaminee").modal("hide");
+            })
+        })
+        //查询条件
+        function Checkport() {
+            var PortCode = $("#Code").val();
+            if (PortCode == null || PortCode == undefined) {
+                PortCode = 0;
+            }
+            var ChineseName = $("#Name").val();
+            if (ChineseName == null || ChineseName == undefined) {
+                ChineseName = 0;
+            }
+            var EnglishName = $("#hName").val();
+            if (EnglishName == null || EnglishName == undefined) {
+                EnglishName = 0;
+            }
+            tabport.search({ PortCode: PortCode, ChineseName: ChineseName, EnglishName: EnglishName });
+        }
+        //true or false
+        function SetState(record) {
+            var WhetherStart = record.WhetherStart;
+            if (WhetherStart) {
+                return '<span style="color:blue">√</span>';
+            } else {
+                return '<span style="color:red">×</span>';
+            }
+        }
+        //关闭
+        $("#Close").click(function () {
+            window.location.href = "/Main/index";
+        })
+        //刷新
+        $("#Refresh").click(function () {
+            location.reload();
+        })
+        //新增
+        $("#Insert").click(function () {
+            $('#formInsert').resetForm();
+            $("#modInsertExaminee").modal("show");
+        });
+        $("#Saveport").click(function () {
+            var PortCode = $('#formInsert [name="PortCode"]').val();
+            var ChineseName = $('#formInsert [name="ChineseName"]').val();
+            var EnglishName = $('#formInsert [name="EnglishName"]').val();
+            if (PortCode != '') {
+                if (ChineseName != '') {
+                    if (EnglishName != '') {
+                        var layerIndex = layer.load(0);
+                        $("#formInsert").ajaxSubmit(function (msg) {
+                            layer.close(layerIndex);
+                            if (msg == "数据新增成功！") {
+                                tabport.search();
+                                $("#modInsertExaminee").modal("hide");
+                                layer.msg(msg, { icon: 1 });
+                            }
+                            else {
+                                layer.msg(msg, { icon: 0});
+                            }
+                        });
+                    }
+                    else {
+                        layer.msg("英文名称不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("中文名称不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("港口代码不能为空！", { icon: 0 });
+            }
+        })
+        //编辑
+        $("#Update").click(function () {
+            var check = $("#Port input:checked");
+            if (check.length == 0) {
+                //0警告；1成功；2失败；3问号；4锁；5难过表情；6微笑表情
+                layer.msg("请选择一条信息!", { icon: 0});
+            }
+            if (check.length > 1) {
+                layer.msg("只能选择一条信息!", { icon: 0 });
+            }
+            if (check.length == 1) {
+                $.post("/Basics/Basics/SelectPortById", { PortID: check[0].value }, function (data) {
+                    loadDatatoForm("formUpdate", data);
+                })
+                $("#modUpdateExaminee").modal("show");
+            }
+        })
+        $("#UpdateSave").click(function () {
+            var PortCode = $('#formUpdate [name="PortCode"]').val();
+            var ChineseName = $('#formUpdate [name="ChineseName"]').val();
+            var EnglishName = $('#formUpdate [name="EnglishName"]').val();
+            if (PortCode != '') {
+                if (ChineseName != '') {
+                    if (EnglishName != '') {
+                        var layerIndex = layer.load(0);
+                        $("#formUpdate").attr("action", "/Basics/Basics/UpdatePort?PortID=" + $("#Port input:checked")[0].value);
+                        $("#formUpdate").ajaxSubmit(function (msg) {
+                            layer.close(layerIndex);
+                            if (msg == "修改成功！") {
+                                tabport.search();
+                                $("#modUpdateExaminee").modal("hide");
+                                layer.msg(msg, { icon: 1 });
+                            }
+                            layer.msg(msg, { icon: 0 });
+                        });
+                    }
+                    else {
+                        layer.msg("英文名称不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("中文名称不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("港口代码不能为空！", { icon: 0 });
+            }
+        });
+        //删除
+        $("#Delete").click(function () {
+            var delCount = 0;//记录需要删除的数据的总数
+            var returnCount = 0;//记录删除成功的数据的总数
+            //获取选中的数据
+            var Check = $("#Port input[type='checkbox']:checked");
+            if (Check.length > 0) {
+                layer.confirm("确定要删除选中的数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                    offset: "100px"
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    //计算选中的题目所有作废的数据的总数
+                    for (var i = 0; i < Check.length; i++) {
+                        //获取索引(获取Check[i]相对于jQuery选择器$("#tbTitlesInfor input[type='checkbox']")的索引)
+                        var Index = $("#Port input[type='checkbox']").index(Check[i]);
+                        //根据索引获取行记录值中题目的状态
+                        var WhetherStart = tabport.getRecord(Index).WhetherStart;
+                        //判断获取到的题目的状态是否为作废
+                        if (!WhetherStart) {
+                            delCount++;
+                        }
+                    }
+                    //判断选中的题目是否全部是“已作废”的状态
+                    if (delCount == Check.length) {
+                        //删除
+                        for (var i = 0; i < Check.length; i++) {
+                            $.ajax({
+                                url: "DelectPort?PortID=" + Check[i].value,
+                                async: false,
+                                type: "get",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data) {
+                                        returnCount++;
+                                    }
+                                }
+                            });
+                        }
+                        if (returnCount == Check.length) {
+                            //layer.msg("删除成功", { icon: 1, skin: "layui-layer-molv" });
+                            layer.msg("有" + (returnCount) + "条数据删除成功！", { icon: 1});
+                            tabport.search();
+                        }
+                        else {
+                            layer.msg("有" + (delCount - returnCount) + "条数据存在异常！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("选中的数据中存在已启用，不能删除！", { icon: 0 });
+                    }
+                });
+            }
+            else {
+                layer.msg("请选择需要删除的数据！", { icon: 0 });
+            }
+        });
+        //excel导出
+        $("#ExportToExcel").click(function () {
+            var PortCode = $("#Code").val();
+            if (PortCode == null || PortCode == undefined) {
+                PortCode = "";
+            }
+            var ChineseName = $("#Name").val();
+            if (ChineseName == null || ChineseName == undefined) {
+                ChineseName = "";
+            }
+            var EnglishName = $("#hName").val();
+            if (EnglishName == null || EnglishName == undefined) {
+                EnglishName = 0;
+            }
+            var str = 'PortCode=' + PortCode + "&ChineseName=" + ChineseName + "&EnglishName=" + EnglishName;
+            var oldStr = tabport.getPageCondition(tabport.getCurPage());
+            if (oldStr.indexOf(str) > -1) {
+                layer.confirm("是否要导出当前的数据？", {
+                    icon: 3,
+                    btn: ['确定', '取消']
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("ExportToExcelPort?" + str);
+                })
+            }
+            else {
+                layer.msg("预览是否是需要导出", { icon: 0, title: '提示' });
+            }
+        });
+        //打印
+        $("#Print").click(function () {
+            var PortCode = $("#Code").val();
+            if (PortCode == null || PortCode == undefined) {
+                PortCode = "";
+            }
+            var ChineseName = $("#Name").val();
+            if (ChineseName == null || ChineseName == undefined) {
+                ChineseName = "";
+            }
+            var EnglishName = $("#hName").val();
+            if (EnglishName == null || EnglishName == undefined) {
+                EnglishName = "";
+            }
+            window.open("PrintAchievementPort?PortCode=" + PortCode + "&ChineseName=" + ChineseName + "&EnglishName=" + EnglishName);
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,734 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Tree/jsTree/style.min.css" rel="stylesheet" />
+    <title>Customs</title>
+    <style type="text/css">
+        .modal-header {
+            padding: 6px 5px;
+            border-bottom: none;
+            background: #d8d8d2;
+            text-align: center;
+            color: #000;
+        }
+
+        .modal-content {
+            padding: 6px;
+        }
+
+        .modal-body {
+            padding: 0 25px;
+        }
+
+        .btn {
+            /*background:#d8d8d2;*/
+            background: #d8d8d2;
+            margin-top: 5px;
+            /*color:#fff;*/
+        }
+
+            .btn:hover {
+                background: #5190f8;
+            }
+
+        .container {
+            width: 100%;
+        }
+        /*.panel-body{
+            padding:0;
+        }*/
+        .panel-heading {
+            font-size: 16px;
+            text-align: center;
+            background-color:#d8d8d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="panel-heading">
+            <span>关区管理</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button class="btn  glyphicon glyphicon-off" type="button" id="Close"> 关闭</button>
+            <button class="btn  glyphicon glyphicon-refresh" type="button" id="Refresh"> 刷新</button>
+            <button class="btn  glyphicon glyphicon-plus" type="button" id="Insert"> 新增</button>
+            <button class="btn  glyphicon glyphicon-pencil" type="button" id="Update"> 编辑</button>
+            <button class="btn  glyphicon glyphicon-remove" type="button" id="Delete"> 删除</button>
+            <button class="btn  glyphicon glyphicon-search" type="button" id="Check"> 查询</button>
+            <button class="btn  glyphicon glyphicon-print" type="button" id="Print"> 打印</button>
+            <button class="btn  glyphicon glyphicon-paste" type="button" id="ExportToExcel"> 导出</button>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12" style="float:right">
+            <div class="panel-body">
+                <div class="row examineeInfor">
+                    <table id="customs" class="table table-condensed" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th w_index="CustomsID" w_check="true">选择</th>
+                                <th w_num="total_line">序号</th>
+                                <th w_index="CustomsCode" width="">关区编码</th>
+                                <th w_index="CustomsName" width="">关区名称</th>
+                                <th w_index="EnglishName" width="">英文名称</th>
+                                <th w_index="GatedotName" width="">所属区域</th>
+                                <th w_index="Describe" width="">描述</th>
+                                <th w_render="SetState">是否启用</th>
+                                <th w_index="WhetherStart" width="" w_hidden="true">是否启用</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*新增模态框*@
+    <div class="modal  bs-example-modal-sm" id="modInsertExaminee">
+        <div class="modal-content" style="width:778px;height:405px;margin-left:400px;">
+            <div class="modal-header">
+                <h5 class="modal-title glyphicon glyphicon-plus"> 关区信息</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="formInsert" action="/Basics/Basics/InsertCustoms" method="post">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">关区编码:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="CustomsCode" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z$]/,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">关区名称:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="CustomsName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">所属区域:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <select class="form-control" id="Gatedot" name="GatedotID">
+                                    <option value="0">----请选择----</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">英文名称:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="EnglishName" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z$]/,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">手机:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="MobilePhone" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">电话:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Mobile" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">联系人:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Linkman" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">EMAIL:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Email" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">传真:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Faxes" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">邮编:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="PostCode" maxlength="6" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">上班时间:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="time" class="form-control" id="" name="OfficeHours" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">下班时间:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="time" class="form-control" id="" name="ClosingTime" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">地址:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Site" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">网站:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Website" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">描述:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Describe" />
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-2">
+                                <label>
+                                    <input type="checkbox" name="WhetherStart" id="" value="true" />
+                                    是否启用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-10 col-md-8 col-sm-10 col-lg-offset-4">
+                            <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                            <button class="btn glyphicon glyphicon-ok" type="button" id="Savecustoms"> 保存</button>
+                            <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @*修改模态框*@
+    <div class="modal  bs-example-modal-sm" id="modUpdateExaminee">
+        <div class="modal-content" style="width:700px;height:410px;margin-left:450px;">
+            <div class="modal-header">
+                <h5 class="modal-title glyphicon glyphicon-pencil"> 关区信息</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="formUpdate" action="/Basics/Basics/UpdateCustoms" method="post">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">关区编码:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="CustomsCode" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z$]/,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">关区名称:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="CustomsName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">所属区域:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <select class="form-control" id="Gatedote" name="GatedotID">
+                                    <option value="0">----请选择----</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">英文名称:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="EnglishName" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z$]/,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">手机:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="MobilePhone" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">电话:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Mobile" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">联系人:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Linkman" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">EMAIL:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Email" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">传真:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Faxes" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">邮编:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="PostCode" maxlength="6" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">上班时间:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="time" class="form-control" id="" name="OfficeHours" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">下班时间:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="time" class="form-control" id="" name="ClosingTime" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">地址:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Site" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">网站:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Website" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">描述:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Describe" />
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-2">
+                                <label>
+                                    <input type="checkbox" name="WhetherStart" id="" value="true" />
+                                    是否启用
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                            <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                            <button class="btn glyphicon glyphicon-ok" type="button" id="UpdateSave"> 保存</button>
+                            <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @*查询模态框*@
+    <div class="modal  bs-example-modal-sm" id="modCheckExaminee">
+        <div class="modal-content" style="width:400px;height:215px;margin-left:600px;">
+            <div class="modal-header">
+                <h5 class="modal-title glyphicon glyphicon-search"> 查询关区信息</h5>
+            </div>
+            <form id="formCheckcustoms">
+                <div class="modal-body">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">关区名称:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="Name" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">关区编码:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="Code" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z$]/,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">所属区域:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-5 col-sm-5">
+                                <select class="form-control" id="Gatedoter">
+                                    <option value="0">----请选择----</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                            <button class="btn glyphicon glyphicon-search" type="button" id="modelcheck"> 查询</button>
+                            <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="~/Content/Tree/jquery.min.js"></script>
+    <link href="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/Tree/Tree.js"></script>
+    <script src="~/Content/Tree/jstree.min.js"></script>
+    <script>
+        var tabcustoms;
+        $(function () {
+            appendOption("Gatedot", "selectGatedotxia");
+            appendOption("Gatedote", "selectGatedotxia");
+            appendOption("Gatedoter", "selectGatedotxia");
+            //查询customs表
+            tabcustoms = $.fn.bsgrid.init('customs', {
+                url: 'selectCustoms',
+                autoLoad: true,//自动加载数据
+                stripeRows: true,//隔行变色
+                rowHoverColor: true,//划过行变色
+                displayBlankRows: true,//是否显示空白行，默认值false
+                rowSelectedColor: true,//是否显示选中行背景色
+                pageSize: 10,//默认页面大小
+                pageSizeSelect: true,//是否选择分页页数下拉框
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                //事件
+                event: {
+                    customRowEvents: {//自定义行事件
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#customs tr", rowIndex + 1);
+                        }
+                    }
+                }
+            });
+        })
+        //关闭
+        $("#Close").click(function () {
+            window.location.href = "/Main/index";
+        })
+        //刷新
+        $("#Refresh").click(function () {
+            location.reload();
+        })
+        //true or false
+        function SetState(record) {
+            var WhetherStart = record.WhetherStart;
+            if (WhetherStart) {
+                return '<span style="color:blue">√</span>';
+            } else {
+                return '<span style="color:red">×</span>';
+            }
+        }
+        //查询
+        $("#Check").click(function () {
+            $('#formCheckcustoms').resetForm();
+            $("#modCheckExaminee").modal("show");
+            $("#modelcheck").click(function () {
+                Checkcustoms();
+                $("#modCheckExaminee").modal("hide");
+            })
+        })
+        //查询条件
+        function Checkcustoms() {
+            var CustomsName = $("#Name").val();
+            if (CustomsName == null || CustomsName == undefined) {
+                CustomsName = 0;
+            }
+            var CustomsCode = $("#Code").val();
+            if (CustomsCode == null || CustomsCode == undefined) {
+                CustomsCode = 0;
+            }
+            var GatedotID = $("#Gatedoter").val();
+            if (GatedotID == null || GatedotID == undefined) {
+                GatedotID = 0;
+            }
+            tabcustoms.search({ CustomsName: CustomsName, CustomsCode: CustomsCode, GatedotID: GatedotID });
+        }
+        //新增
+        $("#Insert").click(function () {
+            $('#formInsert').resetForm();
+            $("#modInsertExaminee").modal("show");
+        });
+        $("#Savecustoms").click(function () {
+            var CustomsCode = $('#formInsert [name="CustomsCode"]').val();
+            var CustomsName = $('#formInsert [name="CustomsName"]').val();
+            var GatedotID = $('#formInsert [name="GatedotID"]').val();
+            var EnglishName = $('#formInsert [name="EnglishName"]').val();
+            //判断一些必填项的数据是否为空
+            if (CustomsCode != '') {
+                if (CustomsName != '') {
+                    if (GatedotID > 0) {
+                        if (EnglishName != '') {
+                            //显示 加载层（是第三方对话框的属性）
+                            var layerIndex = layer.load(0);
+                            //ajaxSubmit()提交表单:我们直接通过form提交的话， 提交后当前页面跳转到form的action所指向的页面。
+                            //然而，很多时候我们并不希望提交表单后页面跳转，那么，我们就可以使用ajaxSubmit(obj)来提交数据
+                            //ajaxSubmit(obj)方法是jQuery的一个插件jquery.form.js里面的方法，所以使用此方法需要先引入这个插件
+                            $("#formInsert").ajaxSubmit(function (msg) {
+                                layer.close(layerIndex);//关闭加载层
+                                if (msg == "数据新增成功！") {
+                                    tabcustoms.search();//调用多条件查询方法：起到刷新表格的作用
+                                    $("#modInsertExaminee").modal("hide");//关闭 modal
+                                    layer.msg(msg, { icon: 1 });
+                                }
+                                else {
+                                    layer.msg(msg, { icon: 0 });
+                                }
+                            });
+                        }
+                        else {
+                            layer.msg("英文名称不能为空！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("所属区域不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("关区名称不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("关区编码不能为空！", { icon: 0 });
+            }
+        })
+        //编辑
+        $("#Update").click(function () {
+            var check = $("#customs input:checked");
+            if (check.length == 0) {
+                //0警告；1成功；2失败；3问号；4锁；5难过表情；6微笑表情
+                layer.msg("请选择一条信息!", { icon: 0 });
+            }
+            if (check.length > 1) {
+                layer.msg("只能选择一条信息!", { icon: 0 });
+            }
+            if (check.length == 1) {
+                $.post("/Basics/Basics/SelectCustomsById", { CustomsID: check[0].value }, function (data) {
+                    loadDatatoForm("formUpdate", data);
+                })
+                $("#modUpdateExaminee").modal("show");
+            }
+        })
+        $("#UpdateSave").click(function () {
+            var CustomsCode = $('#formUpdate [name="CustomsCode"]').val();
+            var CustomsName = $('#formUpdate [name="CustomsName"]').val();
+            var GatedotID = $('#formUpdate [name="GatedotID"]').val();
+            var EnglishName = $('#formUpdate [name="EnglishName"]').val();
+            //判断一些必填项的数据是否为空
+            if (CustomsCode != '') {
+                if (CustomsName != '') {
+                    if (GatedotID > 0) {
+                        if (EnglishName != '') {
+                            var layerIndex = layer.load(0);
+                            $("#formUpdate").attr("action", "/Basics/Basics/UpdateCustoms?CustomsID=" + $("#customs input:checked")[0].value);
+                            $("#formUpdate").ajaxSubmit(function (msg) {
+                                layer.close(layerIndex);
+                                if (msg == "修改成功！") {
+                                    tabcustoms.search();
+                                    $("#modUpdateExaminee").modal("hide");
+                                    layer.msg(msg, { icon: 1 });
+                                }
+                                else {
+                                    layer.msg(msg, { icon: 0 });
+                                }
+                            });
+                        }
+                        else {
+                            layer.msg("英文名称不能为空！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("所属区域不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("关区名称不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("关区编码不能为空！", { icon: 0 });
+            }
+        })
+        //删除
+        $("#Delete").click(function () {
+            var delCount = 0;//记录需要删除的数据的总数
+            var returnCount = 0;//记录删除成功的数据的总数
+            //获取选中的数据
+            var Check = $("#customs input[type='checkbox']:checked");
+            if (Check.length > 0) {
+                layer.confirm("确定要删除选中的数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                    offset: "100px"
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    //计算选中的题目所有作废的数据的总数
+                    for (var i = 0; i < Check.length; i++) {
+                        //获取索引(获取Check[i]相对于jQuery选择器$("#tbTitlesInfor input[type='checkbox']")的索引)
+                        var Index = $("#customs input[type='checkbox']").index(Check[i]);
+                        //根据索引获取行记录值中题目的状态
+                        var WhetherStart = tabcustoms.getRecord(Index).WhetherStart;
+                        //判断获取到的题目的状态是否为作废
+                        if (!WhetherStart) {
+                            delCount++;
+                        }
+                    }
+                    //判断选中的题目是否全部是“已作废”的状态
+                    if (delCount == Check.length) {
+                        //删除
+                        for (var i = 0; i < Check.length; i++) {
+                            $.ajax({
+                                url: "DelectCustoms?CustomsID=" + Check[i].value,
+                                async: false,
+                                type: "get",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data) {
+                                        returnCount++;
+                                    }
+                                }
+                            });
+                        }
+                        if (returnCount == Check.length) {
+                            //layer.msg("删除成功", { icon: 1, skin: "layui-layer-molv" });
+                            layer.msg("有" + (returnCount) + "条数据删除成功！", { icon: 1 });
+                            tabcustoms.search();
+                        }
+                        else {
+                            layer.msg("有" + (delCount - returnCount) + "条数据存在异常！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("选中的数据中存在已启用，不能删除！", { icon: 0 });
+                    }
+                });
+            }
+            else {
+                layer.msg("请选择需要删除的数据！", { icon: 0 });
+            }
+        });
+        //excel导出
+        $("#ExportToExcel").click(function () {
+            var CustomsName = $("#Name").val();
+            if (CustomsName == null || CustomsName == undefined) {
+                CustomsName = 0;
+            }
+            var CustomsCode = $("#Code").val();
+            if (CustomsCode == null || CustomsCode == undefined) {
+                CustomsCode = 0;
+            }
+            var GatedotID = $("#Gatedoter").val();
+            if (GatedotID == null || GatedotID == undefined) {
+                GatedotID = 0;
+            }
+            var str = 'CustomsName=' + CustomsName + "&CustomsCode=" + CustomsCode + "&GatedotID=" + GatedotID;
+            var oldStr = tabcustoms.getPageCondition(tabcustoms.getCurPage());
+            if (oldStr.indexOf(str) > -1) {
+                layer.confirm("是否要导出当前的数据？", {
+                    icon: 3,
+                    btn: ['确定', '取消']
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("ExportToExcelCustoms?" + str);
+                })
+            }
+            else {
+                layer.msg("预览是否是需要导出", { icon: 0, title: '提示' });
+            }
+        });
+        //打印
+        $("#Print").click(function () {
+            var CustomsName = $("#Name").val();
+            if (CustomsName == null || CustomsName == undefined) {
+                CustomsName = 0;
+            }
+            var CustomsCode = $("#Code").val();
+            if (CustomsCode == null || CustomsCode == undefined) {
+                CustomsCode = 0;
+            }
+            var GatedotID = $("#Gatedoter").val();
+            if (GatedotID == null || GatedotID == undefined) {
+                GatedotID = 0;
+            }
+            window.open("PrintAchievementCustoms?CustomsName=" + CustomsName + "&CustomsCode=" + CustomsCode + "&GatedotID=" + GatedotID);
+        })
+    </script>
+</body>
+</html>

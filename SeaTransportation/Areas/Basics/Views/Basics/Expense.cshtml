@@ -1,0 +1,612 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Tree/jsTree/style.min.css" rel="stylesheet" />
+    <title>Expense</title>
+    <style type="text/css">
+        .modal-header {
+            padding: 6px 5px;
+            border-bottom: none;
+            background: #d8d8d2;
+            text-align: center;
+            color: #000;
+        }
+        .modal-content {
+            padding: 6px;
+        }
+        .modal-body {
+            padding: 0 25px;
+        }
+        .btn {
+            background: #d8d8d2;
+            margin-top: 5px;
+        }
+            .btn:hover {
+                background: #5190f8;
+            }
+
+        .container {
+            width: 100%;
+        }
+        .panel-heading {
+            font-size: 16px;
+            text-align: center;
+            background-color:#d8d8d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="panel-heading">
+                <span>费用项目</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <button class="btn  glyphicon glyphicon-off" type="button" id="Close"> 关闭</button>
+                <button class="btn  glyphicon glyphicon-refresh" type="button" id="Refresh"> 刷新</button>
+                <button class="btn  glyphicon glyphicon-plus" type="button" id="Insert"> 新增</button>
+                <button class="btn  glyphicon glyphicon-pencil" type="button" id="Update"> 编辑</button>
+                <button class="btn  glyphicon glyphicon-remove" type="button" id="Delete"> 删除</button>
+                <button class="btn  glyphicon glyphicon-search" type="button" id="Check"> 查询</button>
+                <button class="btn  glyphicon glyphicon-print" type="button" id="Print"> 打印</button>
+                <button class="btn  glyphicon glyphicon-paste" type="button" id="ExportToExcel"> 导出</button>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12" style="float:right">
+                <div class="panel-body">
+                    <div class="row examineeInfor">
+                        <table id="Expense" class="table table-condensed" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th w_index="ExpenseID" w_check="true" width="5%">选择</th>
+                                    <th w_num="total_line" width="5%">序号</th>
+                                    <th w_index="ExpenseCode" width="10%">费用编码</th>
+                                    <th w_index="ExpenseName" width="10%">费用名称</th>
+                                    <th w_index="SettleAccounts" width="10%">费用子类型</th>
+                                    <th w_index="CostAttributes" width="10%">费用属性</th>
+                                    <th w_index="CostSortingCode" width="10%">费用排序码</th>
+                                    <th w_render="SetState" width="10%">是否启用</th>
+                                    <th w_index="WhetherStart" w_hidden="true">启用</th>
+                                    <th w_index="Remark" width="20%">备注</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*新增模态框*@
+        <div class="modal  bs-example-modal-sm" id="modInsertExaminee">
+            <div class="modal-content" style="width:780px;height:255px;margin-left:400px;">
+                <div class="modal-header">
+                    <h5 class="modal-title glyphicon glyphicon-plus"> 费用项目</h5>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="formInsert" action="/Basics/Basics/InsertExpense" method="post">
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用编码:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="ExpenseCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')"  />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用名称:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="ExpenseName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用子类型:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <select id="" name="SettleAccounts" class="form-control">
+                                        <option value="">----请选择----</option>
+                                        <option value="应收">应收</option>
+                                        <option value="应付">应付</option>
+                                        <option value="成本">成本</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用属性:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <select id="" name="CostAttributes" class="form-control">
+                                        <option value="">----请选择----</option>
+                                        <option value="全部">全部</option>
+                                        <option value="运输">运输</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用排序码:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="CostSortingCode" maxlength="1" onkeyup="value=value.replace(/[^0-9]/g,'')"/>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-2">
+                                    <label>
+                                        <input type="checkbox" name="WhetherStart" id="" value="true" />
+                                        是否启用
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">备注:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="Remark" maxlength="40"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                                <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                                <button class="btn glyphicon glyphicon-ok" type="button" id="SaveExpense"> 保存</button>
+                                <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @*修改模态框*@
+        <div class="modal  bs-example-modal-sm" id="modUpdateExaminee">
+            <div class="modal-content" style="width:700px;height:255px;margin-left:450px;">
+                <div class="modal-header">
+                    <h5 class="modal-title glyphicon glyphicon-pencil"> 费用项目</h5>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="formUpdate" action="/Basics/Basics/UpdateExpense" method="post">
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用编码:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="ExpenseCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用名称:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="ExpenseName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用子类型:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <select id="" name="SettleAccounts" class="form-control">
+                                        <option value="">----请选择----</option>
+                                        <option value="应收">应收</option>
+                                        <option value="应付">应付</option>
+                                        <option value="成本">成本</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用属性:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <select id="" name="CostAttributes" class="form-control">
+                                        <option value="">----请选择----</option>
+                                        <option value="全部">全部</option>
+                                        <option value="运输">运输</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用排序码:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="CostSortingCode" maxlength="1" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-2">
+                                    <label>
+                                        <input type="checkbox" name="WhetherStart" id="" value="true" />
+                                        是否启用
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">备注:</label>
+                                </div>
+                                <div class="col-lg-10 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="Remark" maxlength="40" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                                <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                                <button class="btn glyphicon glyphicon-ok" type="button" id="UpdateSave"> 保存</button>
+                                <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @*查询模态框*@
+        <div class="modal  bs-example-modal-sm" id="modCheckExaminee">
+            <div class="modal-content" style="width:400px;height:215px;margin-left:610px;">
+                <div class="modal-header">
+                    <h5 class="modal-title glyphicon glyphicon-search"> 查询费用项目</h5>
+                </div>
+                <form id="formCheckexpense">
+                    <div class="modal-body">
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用编码:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="Code" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用名称:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="Name" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-4 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">费用子类型:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-5 col-sm-5">
+                                    <select id="Settle" class="form-control">
+                                        <option value="">----请选择----</option>
+                                        <option value="应收">应收</option>
+                                        <option value="应付">应付</option>
+                                        <option value="成本">成本</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                                <button class="btn glyphicon glyphicon-search" type="button" id="modelcheck"> 查询</button>
+                                <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Tree/jquery.min.js"></script>
+    <link href="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/Tree/Tree.js"></script>
+    <script src="~/Content/Tree/jstree.min.js"></script>
+    <script>
+        var tabExpense;
+        $(function () {
+            //查询费用项目
+            tabExpense = $.fn.bsgrid.init('Expense', {
+                url: 'selectExpense',
+                autoLoad: true,//自动加载数据
+                stripeRows: true,//隔行变色
+                rowHoverColor: true,//划过行变色
+                displayBlankRows: true,//是否显示空白行，默认值false
+                rowSelectedColor: true,//是否显示选中行背景色
+                pageSize: 10,//默认页面大小
+                pageSizeSelect: true,//是否选择分页页数下拉框
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                //事件
+                event: {
+                    customRowEvents: {//自定义行事件
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#Expense tr", rowIndex + 1);
+                        }
+                    }
+                }
+            });
+        })
+        //查询
+        $("#Check").click(function () {
+            $('#formCheckexpense').resetForm();
+            $("#modCheckExaminee").modal("show");
+            $("#modelcheck").click(function () {
+                Checkexpense(); 
+                $("#modCheckExaminee").modal("hide");
+            })
+        })
+        //查询条件
+        function Checkexpense() {
+            var ExpenseCode = $("#Code").val();
+            if (ExpenseCode == null || ExpenseCode == undefined) {
+                ExpenseCode = 0;
+            }
+            var ExpenseName = $("#Name").val();
+            if (ExpenseName == null || ExpenseName == undefined) {
+                ExpenseName = 0;
+            }
+            var SettleAccounts = $("#Settle").val();
+            if (SettleAccounts == null || SettleAccounts == undefined) {
+                SettleAccounts = 0;
+            }
+            tabExpense.search({ ExpenseCode: ExpenseCode, ExpenseName: ExpenseName, SettleAccounts: SettleAccounts });
+        }
+        //true or false
+        function SetState(record) {
+            var WhetherStart = record.WhetherStart;
+            if (WhetherStart) {
+                return '<span style="color:blue">√</span>';
+            } else {
+                return '<span style="color:red">×</span>';
+            }
+        }
+        //关闭
+        $("#Close").click(function () {
+            window.location.href = "/Main/index";
+        })
+        //刷新
+        $("#Refresh").click(function () {
+            location.reload();
+        })
+        //新增
+        $("#Insert").click(function () {
+            $('#formInsert').resetForm();
+            $("#modInsertExaminee").modal("show");
+        });
+        $("#SaveExpense").click(function () {
+            var ExpenseCode = $('#formInsert [name="ExpenseCode"]').val();
+            var ExpenseName = $('#formInsert [name="ExpenseName"]').val();
+            var SettleAccounts = $('#formInsert [name="SettleAccounts"]').val();
+            var CostAttributes = $('#formInsert [name="CostAttributes"]').val();
+            var CostSortingCode = $('#formInsert [name="CostSortingCode"]').val();
+            //判断一些必填项的数据是否为空
+            if (ExpenseCode != '') {
+                if (ExpenseName != '') {
+                    if (SettleAccounts != '') {
+                        if (CostAttributes != '') {
+                            if (CostSortingCode != '') {
+                                //显示 加载层（是第三方对话框的属性）
+                                var layerIndex = layer.load(0);
+                                //ajaxSubmit()提交表单:我们直接通过form提交的话， 提交后当前页面跳转到form的action所指向的页面。
+                                //然而，很多时候我们并不希望提交表单后页面跳转，那么，我们就可以使用ajaxSubmit(obj)来提交数据
+                                //ajaxSubmit(obj)方法是jQuery的一个插件jquery.form.js里面的方法，所以使用此方法需要先引入这个插件
+                                $("#formInsert").ajaxSubmit(function (msg) {
+                                    layer.close(layerIndex);//关闭加载层
+                                    if (msg == "数据新增成功！") {
+                                        tabExpense.search();//调用多条件查询方法：起到刷新表格的作用
+                                        $("#modInsertExaminee").modal("hide");//关闭 modal
+                                        layer.msg(msg, { icon: 1 });
+                                    }
+                                    else {
+                                        layer.msg(msg, { icon: 0 });
+                                    }
+                                });
+                            }
+                            else {
+                                layer.msg("费用排序码不能为空！", { icon: 0 });
+                            }
+                        }
+                        else {
+                            layer.msg("费用属性不能为空！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("费用子类型不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("费用名称不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("费用编码不能为空！", { icon: 0 });
+            }
+        })
+        //编辑
+        $("#Update").click(function () {
+            var check = $("#Expense input:checked");
+            if (check.length == 0) {
+                //0警告；1成功；2失败；3问号；4锁；5难过表情；6微笑表情
+                layer.msg("请选择一条信息!", { icon: 0});
+            }
+            if (check.length > 1) {
+                layer.msg("只能选择一条信息!", { icon: 0 });
+            }
+            if (check.length == 1) {
+                $.post("/Basics/Basics/SelectExpenseById", { ExpenseID: check[0].value }, function (data) {
+                    loadDatatoForm("formUpdate", data);
+                })
+                $("#modUpdateExaminee").modal("show");
+            }
+        })
+        $("#UpdateSave").click(function () {
+            var ExpenseCode = $('#formUpdate [name="ExpenseCode"]').val();
+            var ExpenseName = $('#formUpdate [name="ExpenseName"]').val();
+            var SettleAccounts = $('#formUpdate [name="SettleAccounts"]').val();
+            var CostAttributes = $('#formUpdate [name="CostAttributes"]').val();
+            var CostSortingCode = $('#formUpdate [name="CostSortingCode"]').val();
+            //判断一些必填项的数据是否为空
+            if (ExpenseCode != '') {
+                if (ExpenseName != '') {
+                    if (SettleAccounts != '') {
+                        if (CostAttributes != '') {
+                            if (CostSortingCode != '') {
+                                var layerIndex = layer.load(0);
+                                $("#formUpdate").attr("action", "/Basics/Basics/UpdateExpense?ExpenseID=" + $("#Expense input:checked")[0].value);
+                                $("#formUpdate").ajaxSubmit(function (msg) {
+                                    layer.close(layerIndex);
+                                    if (msg == "修改成功！") {
+                                        tabExpense.search();
+                                        $("#modUpdateExaminee").modal("hide");
+                                        layer.msg(msg, { icon: 1 });
+                                    }
+                                    else {
+                                        layer.msg(msg, { icon: 0 });
+                                    }
+                                });
+                            }
+                            else {
+                                layer.msg("费用排序码不能为空！", { icon: 0 });
+                            }
+                        }
+                        else {
+                            layer.msg("费用属性不能为空！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("费用子类型不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("费用名称不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("费用编码不能为空！", { icon: 0 });
+            }
+        })
+        //删除
+        $("#Delete").click(function () {
+            var delCount = 0;//记录需要删除的数据的总数
+            var returnCount = 0;//记录删除成功的数据的总数
+            //获取选中的数据
+            var Check = $("#Expense input[type='checkbox']:checked");
+            if (Check.length > 0) {
+                layer.confirm("确定要删除选中的数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    //计算选中的题目所有作废的数据的总数
+                    for (var i = 0; i < Check.length; i++) {
+                        //获取索引(获取Check[i]相对于jQuery选择器$("#tbTitlesInfor input[type='checkbox']")的索引)
+                        var Index = $("#Expense input[type='checkbox']").index(Check[i]);
+                        //根据索引获取行记录值中题目的状态
+                        var WhetherStart = tabExpense.getRecord(Index).WhetherStart;
+                        //判断获取到的题目的状态是否为作废
+                        if (!WhetherStart) {
+                            delCount++;
+                        }
+                    }
+                    //判断选中的题目是否全部是“已作废”的状态
+                    if (delCount == Check.length) {
+                        //删除
+                        for (var i = 0; i < Check.length; i++) {
+                            $.ajax({
+                                url: "DelectExpense?ExpenseID=" + Check[i].value,
+                                async: false,
+                                type: "get",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data) {
+                                        returnCount++;
+                                    }
+                                }
+                            });
+                        }
+                        if (returnCount == Check.length) {
+                            layer.msg("有" + (returnCount) + "条数据删除成功！", { icon: 1 });
+                            tabExpense.search();
+                        }
+                        else {
+                            layer.msg("有" + (delCount - returnCount) + "条数据存在异常！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("选中的数据已启用，不能删除！", { icon: 0 });
+                    }
+                });
+            }
+            else {
+                layer.msg("请选择需要删除的数据！", { icon: 0 });
+            }
+        });
+        //excel导出
+        $("#ExportToExcel").click(function () {
+            var ExpenseCode = $("#Code").val();
+            if (ExpenseCode == null || ExpenseCode == undefined) {
+                ExpenseCode = "";
+            }
+            var ExpenseName = $("#Name").val();
+            if (ExpenseName == null || ExpenseName == undefined) {
+                ExpenseName = "";
+            }
+            var SettleAccounts = $("#Settle").val();
+            if (SettleAccounts == null || SettleAccounts == undefined) {
+                SettleAccounts = "";
+            }
+            var str = 'ExpenseCode=' + ExpenseCode + "&ExpenseName=" + ExpenseName + "&SettleAccounts=" + SettleAccounts;
+            var oldStr = tabExpense.getPageCondition(tabExpense.getCurPage());
+            if (oldStr.indexOf(str) > -1) {
+                layer.confirm("是否要导出当前的数据？", {
+                    icon: 3,
+                    btn: ['确定', '取消']
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("ExportToExcelExpense?" + str);
+                })
+            }
+            else {
+                layer.msg("预览是否是需要导出", { icon: 0, title: '提示' });
+            }
+        });
+        //打印
+        $("#Print").click(function () {
+            var ExpenseCode = $("#Code").val();
+            if (ExpenseCode == null || ExpenseCode == undefined) {
+                ExpenseCode = "";
+            }
+            var ExpenseName = $("#Name").val();
+            if (ExpenseName == null || ExpenseName == undefined) {
+                ExpenseName = "";
+            }
+            var SettleAccounts = $("#Settle").val();
+            if (SettleAccounts == null || SettleAccounts == undefined) {
+                SettleAccounts = "";
+            }
+            window.open("PrintAchievementExpense?ExpenseCode=" + ExpenseCode + "&ExpenseName=" + ExpenseName + "&SettleAccounts=" + SettleAccounts);
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="SignDB" targetNamespace="http://tempuri.org/SignDB.xsd" xmlns:mstns="http://tempuri.org/SignDB.xsd" xmlns="http://tempuri.org/SignDB.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="SignDB" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="SignDB" msprop:Generator_UserDSName="SignDB">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tabSign" msprop:Generator_TableClassName="tabSignDataTable" msprop:Generator_TableVarName="tabletabSign" msprop:Generator_TablePropName="tabSign" msprop:Generator_RowDeletingName="tabSignRowDeleting" msprop:Generator_RowChangingName="tabSignRowChanging" msprop:Generator_RowEvHandlerName="tabSignRowChangeEventHandler" msprop:Generator_RowDeletedName="tabSignRowDeleted" msprop:Generator_UserTableName="tabSign" msprop:Generator_RowChangedName="tabSignRowChanged" msprop:Generator_RowEvArgName="tabSignRowChangeEvent" msprop:Generator_RowClassName="tabSignRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="SignType" msprop:Generator_ColumnVarNameInTable="columnSignType" msprop:Generator_ColumnPropNameInRow="SignType" msprop:Generator_ColumnPropNameInTable="SignTypeColumn" msprop:Generator_UserColumnName="SignType" type="xs:string" minOccurs="0" />
+              <xs:element name="SignExplain" msprop:Generator_ColumnVarNameInTable="columnSignExplain" msprop:Generator_ColumnPropNameInRow="SignExplain" msprop:Generator_ColumnPropNameInTable="SignExplainColumn" msprop:Generator_UserColumnName="SignExplain" type="xs:string" minOccurs="0" />
+              <xs:element name="SettleNumber" msprop:Generator_ColumnVarNameInTable="columnSettleNumber" msprop:Generator_ColumnPropNameInRow="SettleNumber" msprop:Generator_ColumnPropNameInTable="SettleNumberColumn" msprop:Generator_UserColumnName="SettleNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="SettleMoney" msprop:Generator_ColumnVarNameInTable="columnSettleMoney" msprop:Generator_ColumnPropNameInRow="SettleMoney" msprop:Generator_ColumnPropNameInTable="SettleMoneyColumn" msprop:Generator_UserColumnName="SettleMoney" type="xs:decimal" minOccurs="0" />
+              <xs:element name="PayWay" msprop:Generator_ColumnVarNameInTable="columnPayWay" msprop:Generator_ColumnPropNameInRow="PayWay" msprop:Generator_ColumnPropNameInTable="PayWayColumn" msprop:Generator_UserColumnName="PayWay" type="xs:string" minOccurs="0" />
+              <xs:element name="SettleWay" msprop:Generator_ColumnVarNameInTable="columnSettleWay" msprop:Generator_ColumnPropNameInRow="SettleWay" msprop:Generator_ColumnPropNameInTable="SettleWayColumn" msprop:Generator_UserColumnName="SettleWay" type="xs:string" minOccurs="0" />
+              <xs:element name="SignDate1" msprop:Generator_ColumnVarNameInTable="columnSignDate1" msprop:Generator_ColumnPropNameInRow="SignDate1" msprop:Generator_ColumnPropNameInTable="SignDate1Column" msprop:Generator_UserColumnName="SignDate1" type="xs:string" minOccurs="0" />
+              <xs:element name="FinishType" msprop:Generator_ColumnVarNameInTable="columnFinishType" msprop:Generator_ColumnPropNameInRow="FinishType" msprop:Generator_ColumnPropNameInTable="FinishTypeColumn" msprop:Generator_UserColumnName="FinishType" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

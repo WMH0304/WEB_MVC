@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="IndexDB" targetNamespace="http://tempuri.org/IndexDB.xsd" xmlns:mstns="http://tempuri.org/IndexDB.xsd" xmlns="http://tempuri.org/IndexDB.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="IndexDB" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="IndexDB" msprop:Generator_UserDSName="IndexDB">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tabIndex" msprop:Generator_TableClassName="tabIndexDataTable" msprop:Generator_TableVarName="tabletabIndex" msprop:Generator_TablePropName="tabIndex" msprop:Generator_RowDeletingName="tabIndexRowDeleting" msprop:Generator_RowChangingName="tabIndexRowChanging" msprop:Generator_RowEvHandlerName="tabIndexRowChangeEventHandler" msprop:Generator_RowDeletedName="tabIndexRowDeleted" msprop:Generator_UserTableName="tabIndex" msprop:Generator_RowChangedName="tabIndexRowChanged" msprop:Generator_RowEvArgName="tabIndexRowChangeEvent" msprop:Generator_RowClassName="tabIndexRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ReckoningUnit" msprop:Generator_ColumnVarNameInTable="columnReckoningUnit" msprop:Generator_ColumnPropNameInRow="ReckoningUnit" msprop:Generator_ColumnPropNameInTable="ReckoningUnitColumn" msprop:Generator_UserColumnName="ReckoningUnit" type="xs:string" minOccurs="0" />
+              <xs:element name="IndentNumber" msprop:Generator_ColumnVarNameInTable="columnIndentNumber" msprop:Generator_ColumnPropNameInRow="IndentNumber" msprop:Generator_ColumnPropNameInTable="IndentNumberColumn" msprop:Generator_UserColumnName="IndentNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="EtrustNmber" msprop:Generator_ColumnVarNameInTable="columnEtrustNmber" msprop:Generator_ColumnPropNameInRow="EtrustNmber" msprop:Generator_ColumnPropNameInTable="EtrustNmberColumn" msprop:Generator_UserColumnName="EtrustNmber" type="xs:string" minOccurs="0" />
+              <xs:element name="CabinetType" msprop:Generator_ColumnVarNameInTable="columnCabinetType" msprop:Generator_ColumnPropNameInRow="CabinetType" msprop:Generator_ColumnPropNameInTable="CabinetTypeColumn" msprop:Generator_UserColumnName="CabinetType" type="xs:string" minOccurs="0" />
+              <xs:element name="ExpenseName" msprop:Generator_ColumnVarNameInTable="columnExpenseName" msprop:Generator_ColumnPropNameInRow="ExpenseName" msprop:Generator_ColumnPropNameInTable="ExpenseNameColumn" msprop:Generator_UserColumnName="ExpenseName" type="xs:string" minOccurs="0" />
+              <xs:element name="SettleAccounts" msprop:Generator_ColumnVarNameInTable="columnSettleAccounts" msprop:Generator_ColumnPropNameInRow="SettleAccounts" msprop:Generator_ColumnPropNameInTable="SettleAccountsColumn" msprop:Generator_UserColumnName="SettleAccounts" type="xs:string" minOccurs="0" />
+              <xs:element name="UnitPrice" msprop:Generator_ColumnVarNameInTable="columnUnitPrice" msprop:Generator_ColumnPropNameInRow="UnitPrice" msprop:Generator_ColumnPropNameInTable="UnitPriceColumn" msprop:Generator_UserColumnName="UnitPrice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Currency" msprop:Generator_ColumnVarNameInTable="columnCurrency" msprop:Generator_ColumnPropNameInRow="Currency" msprop:Generator_ColumnPropNameInTable="CurrencyColumn" msprop:Generator_UserColumnName="Currency" type="xs:string" minOccurs="0" />
+              <xs:element name="EtrustType" msprop:Generator_ColumnVarNameInTable="columnEtrustType" msprop:Generator_ColumnPropNameInRow="EtrustType" msprop:Generator_ColumnPropNameInTable="EtrustTypeColumn" msprop:Generator_UserColumnName="EtrustType" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

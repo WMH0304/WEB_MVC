@@ -1,0 +1,140 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link rel="stylesheet" href="~/Login/css/style.css" media="screen" type="text/css" />
+    <link href="~/Login/css/component.css" rel="stylesheet" />
+    <link href="~/Login/css/base.css" rel="stylesheet" />
+ <style>
+     body {
+         margin: 0;
+         padding: 0;
+         background: url('../../Main/img/e0925bcbc91f8a8d7b358fa80a3880e0.jpg') no-repeat fixed center !important;
+         background-attachment: fixed !important;
+         background-size: 100% 100% !important;
+     }
+ </style>
+</head>
+<body style="background:#808080;overflow:hidden">
+    <div class="grid__item theme-2" style="text-align:center">
+        <button class="action md-trigger btn btn-primary btn-sm" data-modal="Login" id="Models"><svg class="icon icon--rewind"><use xlink:href="#icon-rewind"></use></svg></button>
+        <button class="particles-button" style="font-family:Rage;font-size:30px" onclick="Modals()">Login</button>
+    </div>
+    <div class="md-modal md-effect-4" id="Login" style="margin-top:80px">
+        <div class="md-content">
+            <div id="window">
+                <div class="page page-front" style="background:#fff">
+                    <div class="" style="text-align:center">
+                        <h1 style="font-family:Rage;color:#0094ff;font-size:30px">Login</h1>
+                    </div>
+                    <div class="" style="margin:40px 0">
+                        <div class="input-row">
+                            <i class="icon-user"></i>
+                            <input id="User" type="text" class="input" placeholder="User"/>
+                        </div>
+                        <div class="input-row">
+                            <input id="password" type="password" class="input" placeholder="Password" />
+                        </div>
+                        <div class="input-row">
+                            <select class="input" id="Message">
+                                <option>Message</option>
+                            </select>
+                        </div>
+                        <div class="input-row">
+                            <select class="input" id="Department">
+                                <option>Department</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="" style="text-align:center">
+                        <button id="submit" class="button" style="font-family:华文行楷">登录</button>
+                        <button class="button" style="font-family:华文行楷" id="Restest">重置</button>
+                    </div>
+                </div>
+                <div class="page page-back" style="background:#fff;margin-top:-80px">
+                    <div class="page-content">
+                        <img src="~/Main/img/84.jpg" class="avatar" />
+                        <p class="welcome" style="color:#000;font-family:华文行楷;font-size:40px!important">Welcome</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src='~/Login/js/jquery.js'></script>
+    <script type="text/javascript" src='~/Login/js/fyll.js'></script>
+    <script src="~/Login/js/classie.js"></script>
+    <script src="~/Login/js/modalEffects.js"></script>
+    <script src='~/Login/js/anime.min.js'></script>
+    <script src='~/Login/js/particles.js'></script>
+    <script src='~/Login/js/demo.js'></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script>
+        //页面加载
+        $(function () {
+            appendOptions("Message", "/Main/Message", "Message")
+            
+        })
+
+        //按钮消失
+        function Modals() {
+            setTimeout(function () {
+                $("#Models").click()
+            }, 1000)
+        }
+
+        //登录
+        $('#submit').click(function initAnimation() {
+            if ($("#User").val() != "" && $("#User").val() != undefined && $("#User").val() != null) {
+                if ($("#password").val() != "" && $("#password").val() != undefined && $("#password").val() != null) {
+                    if ($("#Message").val() > 0) {
+                        if ($("#Department").val() > 0) {
+                            $.post("/Main/DengLu?User=" + $("#User").val() + "&Password=" + $("#password").val() + "&MessageID=" + $("#Message").val() + "&DepartmentID=" + $("#Department").val(), function (Data) {
+                                if (Data=="登录成功") {
+                                   fyll.go('fill username then fill password then click submit', function () {
+                                        $('#submit').addClass('done').closest('#window').addClass('flip');
+                                   });
+                                   setTimeout(function () {
+                                       window.location.href = "/Main/Main";
+                                   }, 2000)
+                                }
+                                else {
+                                    layer.msg(Data, { icon: 6 })
+                                }
+                            })
+                          
+                        } else {
+                            layer.msg("请选择所属部门", { icon: 6 })
+                        }
+                    } else {
+                        layer.msg("请选择所属公司", { icon: 6 })
+                    }
+                } else {
+                    layer.msg("请填写密码", { icon: 6 })
+                }
+            } else {
+                layer.msg("请填写用户名", { icon: 6 })
+            }
+        })
+
+        //部门下拉框
+        $("#Message").change(function () {
+            appendOptions("Department", "/Main/Department?MessageID=" + $("#Message").val(), "Department")
+        })
+
+        //重置
+        $("#Restest").click(function () {
+            $("input").val("");
+            $("select").val(0)
+        })
+    </script>
+</body>
+</html>4

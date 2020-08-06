@@ -1,0 +1,905 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>车队标准运费</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/css/skins/grid_bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/Hdmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="~/Hdmin/css/plugins/jsTree/style.min.css" rel="stylesheet">
+    <link href="~/Hdmin/css/animate.css" rel="stylesheet">
+    <link href="~/Hdmin/css/style.css?v=4.1.0" rel="stylesheet">
+
+
+    <style type="text/css">
+        code {
+            padding: 0px 4px;
+            color: #d14;
+            background-color: #f7f7f9;
+            border: 1px solid #e1e1e8;
+        }
+
+        #button button {
+            font-family: 华文行楷;
+            font-size: 16px;
+            line-height: 14px;
+        }
+
+        .row label {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .lol th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .row input {
+            width: 185px;
+            height: 34px;
+        }
+
+        .row select {
+            width: 185px;
+            height: 34px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="col-sm-12">
+        <div class="col-sm-2"></div>
+        <div class="col-lg-10" style="line-height:100px;">
+            <div class="col-lg-10 col-sm-10 col-md-10 text-right" id="button" style="text-align:left">
+                <button class="btn btn-brown" style="width:122px;" id="btnRefresh"><i class="glyphicon glyphicon-floppy-saved" style="font-size:14px;"></i>刷新</button>
+                <button class="btn btn-brown" style="width:122px;" id="btnInsert"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>新增</button>
+                <button class="btn btn-brown" style="width:122px;" id="btnUpdate"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>编辑</button>
+                <button class="btn btn-brown" style="width:122px;" id="btnDelete"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>删除</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnPrint"><i class="glyphicon glyphicon-check" style="font-size:14px;"></i>打印</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnLead"><i class=" glyphicon glyphicon-share-alt" style="font-size:14px;"></i>导出</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnSelect"><i class=" glyphicon glyphicon-search" style="font-size:14px;"></i>查询</button>
+            </div>
+        </div>
+
+        @*左边树形图*@
+        <div class="col-sm-2">
+            <div id="jstree1" style="margin-left:35%;font-family:华文行楷;font-size:18px;">
+
+            </div>
+        </div>
+        <div>
+
+            <div class="col-sm-10" id="modInsertExaminee">
+                <div class="col-sm-12">
+                    <h4 style="font-family:华文行楷;color:cadetblue;" class="">查询条件</h4>
+                </div>
+                <div class="col-sm-12" style="margin-bottom:20px;font-family:华文行楷;font-size:16px;">
+                    <form id="" class="form-horizontal span24" action="" method="post">
+                        <div class="col-sm-2" style="padding:0;">
+                            <div class="col-sm-3" style="padding:0;width:100px;">
+                                <label class="control-label">客户名称</label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 reset" style="margin-left:60px;margin-top:-29px;">
+                                <input type="text" style="width:180px;height:34px;" class="form-control" id="ClientAbbreviation" name="ClientAbbreviation" />
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="padding:0;margin-left:62px;">
+                            <div class="col-sm-3" style="padding:0;width:100px;">
+                                <label class="control-label">报价日期</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:60px;margin-top:-29px;">
+                                <input type="date" style="width:180px;height:34px;" class="form-control" id="OfferDate" name="OfferDate" />
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="padding:0;margin-left:62px;">
+                            <div class="col-sm-3" style="padding:0">
+                                <label class="control-label">至</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-35px;">
+                                <input type="date" style="width:180px;height:34px;" class="form-control" id="OfferDate1" name="OfferDatee" />
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="padding:0;margin-left:62px;">
+                            <div class="col-sm-2">
+                                <input style="width:20px;height:20px;" type="checkbox" name="options" id="WhetherShui">
+                            </div>
+                            <div class="col-sm-6" style="padding:0;font-size:16px;font-family:华文行楷;margin-left:6px;margin-top:4px;">
+                                <b>是否含税</b>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                @*上方*@
+                <div class="col-sm-10">
+                    <table class="table table-hover choosetable" id="tabOffer">
+                        <thead>
+                            <tr class="lol">
+                                <th w_index="OfferID" w_check="true"></th>
+                                <th w_num="total_line">序号</th>
+                                <th w_index="ClientAbbreviation">客户名称</th>
+                                <th w_index="ClientCode">客户代码</th>
+                                <th w_index="OfferDate1">报价日期</th>
+                                <th w_index="TakeEffectDate1">生效日期</th>
+                                <th w_index="LoseEfficacyDate1">失效日期</th>
+                                <th w_index="Remark">备注</th>
+                                <th w_index="WhetherShuii">是否含税</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                @*按钮*@
+                <div class="col-lg-10" style="line-height:100px;">
+                    <div class="col-lg-10 col-sm-10 col-md-10 text-right" id="button" style="text-align:left">
+                        <button class="btn btn-brown" style="width:122px;" id="btnInsert1"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>新增</button>
+                        <button class="btn btn-brown" style="width:122px;" id="btnUpdate1"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>编辑</button>
+                        <button class="btn btn-brown" style="width:122px;" id="btnDelete1"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>删除</button>
+                        <button class="btn btn-brown" style="width:84px;" id="btnPrint1"><i class="glyphicon glyphicon-check" style="font-size:14px;"></i>打印</button>
+                        <button class="btn btn-brown" style="width:84px;" id="btnLead1"><i class=" glyphicon glyphicon-share-alt" style="font-size:14px;"></i>导出</button>
+                    </div>
+                </div>
+
+                @*下方*@
+                <div class="col-sm-10">
+                    <table class="table table-hover choosetable" id="tabOfferDetail">
+                        <thead>
+                            <tr class="lol">
+                                <th w_index="OfferDetailID" w_check="true"></th>
+                                <th w_num="total_line">序号</th>
+                                <th w_index="HaulWayDescription">运输路线</th>
+                                <th w_index="ExpenseName">费用项目</th>
+                                <th w_index="CabinetType">箱型</th>
+                                <th w_index="BoxQuantity">箱量</th>
+                                <th w_index="EtryClasses">报关方式</th>
+                                <th w_index="Money">金额</th>
+                                <th w_index="Currency">币种</th>
+                                <th w_index="StaffName">报价人</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            @*车队标准报价 上方表格 新增/编辑模态框*@
+            <div class="row">
+                @*尽量用栅格布局来调样式*@
+                <div class="modal bs-example-modal-sm" id="ClientReceivable">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:690px;height:328px;">
+                            <div class="modal-header" style="height:47px;">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" style="font-family:华文行楷;"><span class="glyphicon glyphicon-ok"></span></h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" role="form" id="J_Form" action="/ClientManage/ClientManage/SaveMotorcadeOffce" method="post">
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">客户代码</label>
+                                        <select id="ClientID" name="ClientID" style="margin-left:96px;margin-top:-26px;" type="text" class="form-control"></select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">客户简称</label>
+                                        <input type="text" class="form-control" style="margin-left:96px;margin-top:-26px;" id="ClientAbbreviationn" name="ClientAbbreviation" readonly />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">报价日期</label>
+                                        <input id="OfferDate2" name="OfferDate" style="margin-left:96px;margin-top:-26px;" type="date" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">生效日期</label>
+                                        <input id="TakeEffectDate" name="TakeEffectDate" style="margin-left:96px;margin-top:-26px;" type="date" class="form-control" onchange="Time()" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">失效日期</label>
+                                        <input id="LoseEfficacyDate" name="LoseEfficacyDate" style="margin-left:96px;margin-top:-26px;" type="date" class="form-control" onchange="Time()" />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">是否含税</label>
+                                        <input id="WhetherShuie" name="WhetherShui" style="margin-left:96px;margin-top:-26px;width:20px;height:20px;" type="checkbox" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label class="control-label" style="font-family:华文行楷;">备注</label>
+                                        <input id="Remark" name="Remark" style="margin-left:96px;margin-top:-26px;width:498px;" type="text" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-12" style="font-family: 华文行楷;font-size:18px;margin-left:424px;margin-top:18px;">
+                                        <button id="BtnEnsure" type="button" class="btn btn-primary">确定</button>
+                                        <button id="BtnAmend" type="button" class="btn btn-info">修改</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left:77px;margin-top:-61px;">关闭</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @*车队标准报价明细 下方表格 新增/编辑模态框*@
+            <div class="row">
+                @*尽量用栅格布局来调样式*@
+                <div class="modal bs-example-modal-sm" id="ClientReceivableOfferDetail">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:690px;height:328px;">
+                            <div class="modal-header" style="height:47px;">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" style="font-family:华文行楷;"><span class="glyphicon glyphicon-ok"></span></h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" role="form" id="J_Forme" action="/ClientManage/ClientManage/SaveMotorcadeMeasureOfferDetail" method="post">
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">运输路线</label>
+                                        <select id="HaulWayID" name="HaulWayID" style="margin-left:96px;margin-top:-26px;" type="text" class="form-control"></select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">费用项目</label>
+                                        <input type="text" class="form-control" style="margin-left:96px;margin-top:-26px;" value="运费" readonly />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">报关方式</label>
+                                        <select type="text" style="margin-left:96px;margin-top:-26px;" class="form-control" id="EtryClasses" name="EtryClasses">
+                                            <option value="">----请选择----</option>
+                                            <option value="自理报关">自理报关</option>
+                                            <option value="直接代理报关">直接代理报关</option>
+                                            <option value="间接代理报关">间接代理报关</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">金额</label>
+                                        <input id="Money" name="Money" style="margin-left:96px;margin-top:-26px;" type="text" class="form-control" onchange="if (/\D/.test(this.value)) { layer.alert('只能输入数字', { icon: 5, title: '提示' }); this.value = ''; }" maxlength="7"/>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">箱型</label>
+                                        <select type="text" style="margin-left:96px;margin-top:-26px;" class="form-control" id="CabinetType" name="CabinetType">
+                                            <option value="">----请选择----</option>
+                                            <option value="20GP">20GP</option>
+                                            <option value="40GP">40GP</option>
+                                            <option value="60GP">60GP</option>
+                                            <option value="80GP">80GP</option>
+                                            <option value="100GP">100GP</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">箱量</label>
+                                        <input id="BoxQuantity" name="BoxQuantity" style="margin-left:96px;margin-top:-26px;" type="text" class="form-control" readonly />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="control-label" style="font-family:华文行楷;">报价人</label>
+                                        <input type="text" class="form-control" style="margin-left:96px;margin-top:-26px;" id="StaffID" name="StaffID" value="@ViewBag.AccountName" readonly />
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <label class="control-label" style="font-family:华文行楷;">备注</label>
+                                        <input id="RemarkK" name="Remark" style="margin-left:96px;margin-top:-26px;width:498px;" type="text" class="form-control" />
+                                    </div>
+                                    <div class="col-sm-12" style="font-family: 华文行楷;font-size:18px;margin-left:424px;margin-top:18px;">
+                                        <button id="BtnEnsure1" type="button" class="btn btn-primary">确定</button>
+                                        <button id="BtnAmend1" type="button" class="btn btn-info">修改</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left:77px;margin-top:-61px;">关闭</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="~/Hdmin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Hdmin/js/plugins/jsTree/jstree.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/Tree.js"></script>
+
+
+
+    <script>
+        var tabOffer;
+        var tabOfferDetail;
+
+        //事件加载事件
+        $(function () {
+
+            var nowdata = getNowFormatDate();//今天日期
+            $("#TakeEffectDate").attr('min', '' + nowdata + '');//日期输入不能小于今天
+            $("#LoseEfficacyDate").attr('min', '' + nowdata + '');//日期输入不能小于今天
+
+
+            //绑定客户代码下拉框
+            createSelect("ClientID", "SelectClientCode");
+            //绑定运输路线下拉框
+            createSelect("HaulWayID", "SelectHaulWay");
+
+            //初始化表格数据
+            tabOffer = $.fn.bsgrid.init("tabOffer", {
+                url: "SelectMotorcadeOffce",
+                autoLoad: true,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabOffer tr", rowIndex + 1, record);
+                            tabOfferDetail.search("OfferID=" + record.OfferID);  //要把这个ID传到控制器进行查询
+                        }
+                    }
+                }
+            });
+
+            //下方表格数据
+            tabOfferDetail = $.fn.bsgrid.init('tabOfferDetail', {
+                url: 'SelectMotorcadeOfferDetail',
+                stripeRows: true,//隔行变色
+                autoLoad: false,//是否自动加载
+                rowHoverColor: true,//划过行变色
+                pageSize: 5,
+                pageSizeSelect: false,//是否选择分页页数下拉框
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabOfferDetail tr", rowIndex + 1, record);
+                        }
+                    }
+                }
+            });
+
+            //绑定树形图的数据
+            Tree("#jstree1", "SelectTree1");
+
+            setTimeout(function () {
+                $("#j1_1_anchor").attr('onclick', "Search('')")
+            }, 500)
+
+        })
+
+        //点击树形图的数据进行查询的方法(控制器的写法就是直接把ID传过去简单的ID查询即可)
+        function Tree1(A) {
+            tabOffer.search({ ClientID: A });
+        }
+
+        //失效日期不能早于生效日期 
+        function Time() {
+            var TakeEffectDate = $("#TakeEffectDate").val();//生效日期
+            var LoseEfficacyDate = $("#LoseEfficacyDate").val();//失效日期
+            if (TakeEffectDate != "" && LoseEfficacyDate != "") {
+                var A = TakeEffectDate.split('-');//把时间分割
+                var C = LoseEfficacyDate.split('-');
+                if (parseInt(A[0] + A[1] + A[2]) >= parseInt(C[0] + C[1] + C[2])) {
+                    $("#TakeEffectDate").val("");
+                    $("#LoseEfficacyDate").val("");
+                    layer.alert("失效日期不能早于或等于生效日期!");
+                }
+            }
+        }
+
+        //多条件查询的条件  bool 值用prop
+        function tabOfferSearch() {
+            var ClientAbbreviation = $("#ClientAbbreviation").val();
+            var OfferDate = $("#OfferDate").val();
+            var OfferDatee = $("#OfferDate1").val();
+            var WhetherShui = $("#WhetherShui").prop('checked');
+
+            if (ClientAbbreviation == undefined) {
+                ClientAbbreviation = "";
+            }
+            if (OfferDate == undefined) {
+                OfferDate = "";
+            }
+            if (OfferDatee == undefined) {
+                OfferDatee = "";
+            }
+            if (WhetherShui == undefined) {
+                WhetherShui = 0;
+            }
+
+            tabOffer.search({ ClientAbbreviation: ClientAbbreviation, OfferDate: OfferDate, OfferDatee: OfferDatee, WhetherShui: WhetherShui });
+        }
+
+        //点击查询按钮进行多条件查询
+        $("#btnSelect").click(function () {
+            tabOfferSearch();
+        });
+
+        //选择客户代码下拉框，把客户简称根据客户代码显示出来 id是唯一的
+        $("#ClientID").change(function () {
+            var ClientID = $("#ClientID").val();
+            $.post("SelectCClient", { ClientID: ClientID }, function (msg) {
+                $("#ClientAbbreviationn").val(msg);
+            })
+        })
+
+        //点击上方表格新增按钮，弹出新增模态框
+        $("#btnInsert").click(function () {
+            $("#ClientReceivable .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 新增车队标准费用报价表');
+            $("#BtnEnsure").css("display", "block");//显示确定按钮
+            $("#BtnAmend").css("display", "none");//隐藏修改按钮        
+
+            $("#ClientID").val(0);
+            $("#ClientAbbreviationn").val("");
+            $("#OfferDate2").val(getNowFormatDate());
+            $("#TakeEffectDate").val("");
+            $("#LoseEfficacyDate").val("");
+            $("#WhetherShuie").prop('checked', false);//让checkbox 清空，也就是让其为false 
+            $("#Remark").val("");
+
+            $("#ClientReceivable").modal();
+        })
+
+        //点击模态框的确定按钮，保存数据
+        $("#BtnEnsure").click(function () {
+            var ClientID = $("#ClientID").val();
+            var OfferDate = $("#OfferDate2").val();
+            var TakeEffectDate = $("#TakeEffectDate").val();
+            var LoseEfficacyDate = $("#LoseEfficacyDate").val();
+
+            if (ClientID == 0 || OfferDate == "" || TakeEffectDate == "" || LoseEfficacyDate == "") {
+                layer.alert("请把重要的信息填写完整!");
+            }
+            else {
+                $("#J_Form").ajaxSubmit(function (msg) {
+                    if (msg == "success") {
+                        layer.alert("保存成功", { icon: 1, title: '提示' });
+                        $("#ClientReceivable").modal("hide");
+                        location.reload();
+                    }
+                    else {
+                        alert("保存出错");
+                    }
+                })
+            }
+        })
+
+        //点击编辑按钮，弹出编辑模态框
+        $("#btnUpdate").click(function () {
+            var check = $("#tabOffer :checkbox:checked");
+            var OfferID = $("#tabOffer :checkbox:checked").val();
+            if (check.length == 0) {
+                layer.alert("请选择一条数据!");
+            }
+            else if (check.length == 1) {
+                $("#ClientReceivable .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 编辑车队标准费用报价表');
+                $("#BtnEnsure").css("display", "none");//隐藏确定按钮
+                $("#BtnAmend").css("display", "block");//显示修改按钮   
+
+                $.post("SelectMotorcadeOffce", { OfferID: OfferID, AAA: "AAA" }, function (msg) {  //表单回填数据,参数为表格主键ID,一个为随便声明的，然后传过去控制器  控制器查出来的数据跟页面的name值一样,就可以回填  SelectMotorcadeOffce  控制器查询的方法名
+                    loadDatatoForm("J_Form", msg[0]); //J_Form  from表单的ID   
+                    //用表单回填数据时，日期是在此另外写的回填
+                    $("#J_Form [name='OfferDate']").val(msg[0].OfferDate1);//回填报价日期
+                    $("#J_Form [name='TakeEffectDate']").val(msg[0].TakeEffectDate1);//回填生效日期
+                    $("#J_Form [name='LoseEfficacyDate']").val(msg[0].LoseEfficacyDate1);//回填失效日期
+
+                    $("#ClientReceivable").modal();//弹出模态框
+                })
+            }
+            else {
+                layer.alert("只能选择一条数据!");
+            }
+        })
+
+        //点击模态框的修改按钮，保存修改的数据
+        $("#BtnAmend").click(function () {
+            var OfferID = $("#tabOffer :checkbox:checked").val();
+            var ClientID = $("#ClientID").val();
+            var OfferDate = $("#OfferDate2").val();
+            var TakeEffectDate = $("#TakeEffectDate").val();
+            var LoseEfficacyDate = $("#LoseEfficacyDate").val();
+            var WhetherShui = $("#WhetherShuie").prop('checked');
+            var Remark = $("#Remark").val();
+
+            if (ClientID == 0 || OfferDate == "" || TakeEffectDate == "" || LoseEfficacyDate == "") {
+                layer.alert("请把重要的信息填写完整!");
+            }
+            else {
+                $.post("UpdateMotorcadeOffce", { OfferID: OfferID, ClientID: ClientID, OfferDate: OfferDate, TakeEffectDate: TakeEffectDate, LoseEfficacyDate: LoseEfficacyDate, WhetherShui: WhetherShui, Remark: Remark }, function (msg) {
+                    if (msg == "success") {
+                        layer.alert("修改成功!");
+                        $("#ClientReceivable").modal('hide');
+                        location.reload();
+                    }
+                    else {
+                        layer.alert("修改失败，请重新检查一遍!");
+                    }
+                })
+            }
+        })
+
+        //点击上方表格删除按钮，删除所选择的数据
+        $("#btnDelete").click(function () {
+            var Check = $("#tabOffer input[type='checkbox']:checked");
+
+            if (Check.length == 0) {
+                layer.alert("请选择需要删除的客户应收报价!");
+            }
+            else if (Check.length > 0) {
+                var OfferID = $("#tabOffer input:checked");
+                layer.confirm("确定删除选中的客户应收报价吗？",
+               { icon: 3, btn: ['确定', '取消'] }, function (layerIndex) {
+                   layer.close(layerIndex);
+                   for (var i = 0; i < Check.length; i++) {//for循环实现批量删除
+                       $.ajax({
+                           url: "DeleteMotorcadeOffce?OfferID=" + Check[i].value,//选择的checkbox的value值
+                           type: "get",//数据传输通道的类型
+                           async: false,
+                           dataType: "json",//传输的数据的类型
+                           success: function (data) {//直接理解为回调函数
+                               if (data == "success") {
+                                   layer.alert("删除成功!");
+                                   location.reload();
+                               } else {
+                                   layer.alert("删除失败！");
+                               }
+                           }
+                       });
+                   }
+               })
+            }
+        })
+
+        //点击上方表格打印按钮，打印所选择的数据
+        $("#btnPrint").click(function () {
+            var myArray = new Array(); //声明一个数组
+            var OfferID = $("#tabOffer input:checked").val();
+            var check = $("#tabOffer tbody input:checked");//获取表格中checkbox被选中的个数
+            for (var i = 0; i < check.length; i++) {
+                myArray[i] = check[i].value;
+            }
+            layer.confirm("确定要打印当前数据吗？", {
+                icon: 3,
+                btn: ["确定", "取消"]
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("PrintMotorcadeOffce?myArray=" + myArray + "&OfferID=" + OfferID);
+            });
+        })
+
+        //点击上方表格导出按钮，导出所选择的数据，不选择的则全部打印
+        $("#btnLead").click(function () {
+            var myArray = new Array(); //声明一个数组
+            var OfferID = $("#tabOffer input:checked").val();
+            var check = $("#tabOffer tbody input:checked");//获取表格中checkbox被选中的个数
+            for (var i = 0; i < check.length; i++) {
+                myArray[i] = check[i].value;
+            }
+            layer.confirm("确定要导出当前数据吗？", {
+                icon: 3,
+                btn: ["确定", "取消"]
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("ExportMotorcadeOffce?myArray=" + myArray + "&OfferID=" + OfferID);
+            });
+        })
+
+
+        //点击下方表格新增按钮，新增报价明细表
+        $("#btnInsert1").click(function () {
+            var check = $("#tabOffer :checkbox:checked");
+            if (check.length == 0) {
+                layer.alert("请先选择报价类型!");
+            }
+            else if (check.length == 1) {
+                $("#ClientReceivableOfferDetail .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 新增车队标准费用报价明细表');
+                $("#BtnEnsure1").css("display", "block");//显示确定按钮
+                $("#BtnAmend1").css("display", "none");//隐藏修改按钮   
+
+                $("#HaulWayID").val(0);//清空输入框
+                $("#ExpenseID").val(0);
+                $("#EtryClasses").val("");
+                $("#Money").val("");
+                $("#CabinetType").val("");
+                $("#BoxQuantity").val(0);
+                $("#RemarkK").val("");
+
+                $("#ClientReceivableOfferDetail").modal();
+            }
+            else {
+                layer.alert("只能选择一条报价类型!");
+            }
+        })
+
+        //箱型的value值触发改变箱量文本框的值（改变事件）
+        $("#CabinetType").change(function () {
+            if ($("#CabinetType").val() == "") {
+                $("#BoxQuantity").val(0);
+            }
+            if ($("#CabinetType").val() == "20GP") {
+                $("#BoxQuantity").val(1000);
+            }
+            if ($("#CabinetType").val() == "40GP") {
+                $("#BoxQuantity").val(2000);
+            }
+            if ($("#CabinetType").val() == "60GP") {
+                $("#BoxQuantity").val(3000);
+            }
+            if ($("#CabinetType").val() == "80GP") {
+                $("#BoxQuantity").val(4000);
+            }
+            if ($("#CabinetType").val() == "100GP") {
+                $("#BoxQuantity").val(5000);
+            }
+        })
+
+        //点击确定按钮，保存新增的数据
+        $("#BtnEnsure1").click(function () {
+            var HaulWayID = $("#HaulWayID").val();
+            var ExpenseID = $("#ExpenseID").val();
+            var EtryClasses = $("#EtryClasses").val();
+            var Money = $("#Money").val();
+            var CabinetType = $("#CabinetType").val();
+
+            if (HaulWayID == 0 || ExpenseID == 0 || EtryClasses == "" || Money == "" || CabinetType == "") {
+                layer.alert("请把重要信息填写完整!");
+            }
+            else {
+                var OfferID = $("#tabOffer :checkbox:checked").val();
+                $("#J_Forme").attr("action", "SaveReceivableOfferDetail?OfferID=" + OfferID); //表单提交传参
+
+                $("#J_Forme").ajaxSubmit(function (msg) {
+                    if (msg == "success") {
+                        layer.alert("保存成功", { icon: 1, title: '提示' });
+                        $("#ClientReceivableOfferDetail").modal("hide");
+                        tabOfferDetail.refreshPage();
+                    }
+                    else {
+                        alert("保存出错");
+                    }
+                })
+            }
+        })
+
+        //点击下方表格的编辑按钮，编辑报价明细表(实现表单数据回填)
+        $("#btnUpdate1").click(function () {
+            var check = $("#tabOfferDetail :checkbox:checked");
+            var OfferDetailID = $("#tabOfferDetail :checkbox:checked").val();
+            if (check.length == 0) {
+                layer.alert("请选择一条数据!");
+            }
+            else if (check.length == 1) {
+                $("#ClientReceivableOfferDetail .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 修改车队标准费用报价明细表');
+                $("#BtnEnsure1").css("display", "none");//隐藏确定按钮
+                $("#BtnAmend1").css("display", "block");//显示修改按钮   
+
+                $.post("SelectMotorcadeOfferDetail", { OfferDetailID: OfferDetailID, AAA: "AAA" }, function (msg) {  //表单回填数据,参数为表格主键ID,一个为随便声明的，然后传过去控制器  控制器查出来的数据跟页面的name值一样,就可以回填
+                    loadDatatoForm("J_Forme", msg[0]); //J_Form  from表单的ID
+                    $("#ClientReceivableOfferDetail").modal();//弹出模态框
+                })
+            }
+            else {
+                layer.alert("只能选择一条数据!");
+            }
+        })
+
+        //点击下方表格模态框的修改按钮，保存修改的数据
+        $("#BtnAmend1").click(function () {
+            var OfferDetailID = $("#tabOfferDetail :checkbox:checked").val();
+            var HaulWayID = $("#HaulWayID").val();
+            var EtryClasses = $("#EtryClasses").val();
+            var Money = $("#Money").val();
+            var CabinetType = $("#CabinetType").val();
+            var BoxQuantity = $("#BoxQuantity").val();
+            var Remark = $("#RemarkK").val();
+
+            if (HaulWayID == 0 || EtryClasses == "" || Money == "" || CabinetType == "") {
+                layer.alert("请把信息填写完整!");
+            }
+            else {
+                $.post("UpdateMotorcadeMeasureOfferDetail", { OfferDetailID: OfferDetailID, HaulWayID: HaulWayID, EtryClasses: EtryClasses, Money: Money, CabinetType: CabinetType, BoxQuantity: BoxQuantity, Remark: Remark }, function (msg) {
+                    if (msg == "success") {
+                        layer.alert("修改成功!");
+                        $("#ClientReceivableOfferDetail").modal('hide');
+                        tabOfferDetail.refreshPage();
+                    }
+                    else {
+                        layer.alert("修改失败，请重新检查一遍!");
+                    }
+                })
+            }
+        })
+        
+        //点击下方表格删除按钮，删除所选择的报价明细数据
+        $("#btnDelete1").click(function () {
+            var Check = $("#tabOfferDetail input[type='checkbox']:checked");
+            if (Check.length == 0) {
+                layer.alert("请选择需要删除的报价明细!");
+            }
+            else if (Check.length > 0) {
+                var OfferDetailID = $("#tabOfferDetail input:checked");
+                layer.confirm("确定删除选中的报价明细吗？",
+               { icon: 3, btn: ['确定', '取消'] }, function (layerIndex) {
+                   layer.close(layerIndex);//关闭加载层
+                   for (var i = 0; i < Check.length; i++) {//for循环实现批量删除
+                       $.ajax({
+                           url: "DeleteMotorcadeMeasureOfferDetail?OfferDetailID=" + Check[i].value,//选择的checkbox的value值
+                           type: "get",//数据传输通道的类型
+                           async: false,
+                           dataType: "json",//传输的数据的类型
+                           success: function (data) {//直接理解为回调函数
+                               if (data == "success") {
+                                   layer.alert("删除成功!");
+                                   tabOfferDetail.refreshPage();
+                               } else {
+                                   layer.alert("删除失败！");
+                               }
+                           }
+                       });
+                   }
+               })
+            }
+        })
+
+        //点击下方表格打印按钮，打印所选择的报价明细数据
+        $("#btnPrint1").click(function () {
+            var myArray = new Array(); //声明一个数组   接收我所选择的数据
+            var OfferID = $("#tabOffer input:checked").val();
+            var check = $("#tabOfferDetail tbody input:checked");//获取表格中checkbox被选中的个数
+            for (var i = 0; i < check.length; i++) {
+                myArray[i] = check[i].value;
+            }
+            layer.confirm("确定要打印当前数据吗？", {
+                icon: 3,
+                btn: ["确定", "取消"]
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("PrintMotorcadeMeasureOfferDetail?myArray=" + myArray + "&OfferID=" + OfferID);
+            });
+        })
+
+        //点击下方导出按钮，导出所选择的数据
+        $("#btnLead1").click(function () {
+            var myArray = new Array(); //声明一个数组
+            var OfferID = $("#tabOffer input:checked").val();
+            var check = $("#tabOfferDetail tbody input:checked");//获取表格中checkbox被选中的个数  tbody 更准确，否则可能获取不到
+            for (var i = 0; i < check.length; i++) {
+                myArray[i] = check[i].value;
+            }
+            layer.confirm("确定要导出当前数据吗？", {
+                icon: 3,
+                btn: ["确定", "取消"]
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("ExportMotorcadeOfferDetail?myArray=" + myArray + "&OfferID=" + OfferID);
+            });
+        })
+
+
+
+
+        //点击刷新按钮，刷新页面
+        $("#btnRefresh").click(function () {
+            location.reload();
+        })
+
+    </script>
+
+    @*封装自定义的方法*@
+    <script>
+        //获取当前时间
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+            return currentdate;
+        }
+
+        //一周后的日期
+        function fun_submit() {
+            var date1 = new Date();
+            var date2 = new Date(date1);
+            date2.setDate(date1.getDate() + 6);
+            var month = date2.getMonth() + 1
+            var strDate = date2.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var times = date2.getFullYear() + "-" + month + "-" + strDate;
+            return times;
+        }
+        //计算两个时间相隔的天数
+        function isLeapYear(year) {
+            if (year % 4 == 0 && ((year % 100 != 0) || (year % 400 == 0))) {
+                return true;
+            }
+            return false;
+        }
+        //判断前后两个日期
+        function validatePeriod(fyear, fmonth, fday, byear, bmonth, bday) {
+            if (fyear < byear) {
+                return true;
+            } else if (fyear == byear) {
+                if (fmonth < bmonth) {
+                    return true;
+                } else if (fmonth == bmonth) {
+                    if (fday <= bday) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+
+        //日期加一
+        function addByTransDate(dateParameter, num) {
+            var translateDate = "", dateString = "", monthString = "", dayString = "";
+            translateDate = dateParameter.replace("-", "/").replace("-", "/");
+            var newDate = new Date(translateDate);
+            newDate = newDate.valueOf();
+            newDate = newDate + num * 24 * 60 * 60 * 1000;
+            newDate = new Date(newDate);
+            //如果月份长度少于2，则前加 0 补位
+            if ((newDate.getMonth() + 1).toString().length == 1) {
+                monthString = 0 + "" + (newDate.getMonth() + 1).toString();
+            } else {
+                monthString = (newDate.getMonth() + 1).toString();
+            }
+            //如果天数长度少于2，则前加 0 补位
+            if (newDate.getDate().toString().length == 1) {
+                dayString = 0 + "" + newDate.getDate().toString();
+            } else {
+                dayString = newDate.getDate().toString();
+            }
+            dateString = newDate.getFullYear() + "-" + monthString + "-" + dayString;
+            return dateString;
+        }
+        //日期加一
+        function showTime(date, pdVal) {
+            trans_day = "";
+            trans_day = addByTransDate(date, pdVal);
+            //处理
+            return trans_day;
+        }
+
+        //获取星期几
+        function getWeekday(sDate) {
+            var dt = new Date(sDate.replace(/-/g, '/'));
+            var a = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            return a[dt.getDay()];
+        }
+
+        //两个时间相隔天数
+        function xiangge(sDate1, sDate2) { //sDate1和sDate2是2002-12-18格式
+            var aDate, oDate1, oDate2, iDays
+            aDate = sDate1.split("-")
+            oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]) //转换为12-18-2002格式
+            aDate = sDate2.split("-")
+            oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
+            iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24) //把相差的毫秒数转换为天数
+            return iDays
+        }
+    </script>
+
+</body>
+
+</html> 

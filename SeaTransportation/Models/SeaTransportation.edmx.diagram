@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4bc0f3b779a543e696c72af1ae5aecfb" Name="Diagram1">
+        <EntityTypeShape EntityType="SeaTransportationModel.BS_City" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Bracket" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Calculate" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Charge" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Chauffeur" Width="1.5" PointX="2.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Client" Width="1.5" PointX="4.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_ClientScontacts" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_ClientSite" Width="1.5" PointX="6.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_ClientType" Width="1.5" PointX="6.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_CloseAccount" Width="1.5" PointX="8.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Commercel" Width="1.5" PointX="8.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Customs" Width="1.5" PointX="8.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Department" Width="1.5" PointX="10.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_DriverBook" Width="1.5" PointX="10.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Etrust" Width="1.5" PointX="10.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Expense" Width="1.5" PointX="4.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Gatedot" Width="1.5" PointX="12.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_HaulWay" Width="1.5" PointX="12.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Jurisdiction" Width="1.5" PointX="6.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Mention" Width="1.5" PointX="12.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Message" Width="1.5" PointX="12.75" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Offer" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_OfferDetail" Width="1.5" PointX="14.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Parities" Width="1.5" PointX="14.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_PayWay" Width="1.5" PointX="14.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Port" Width="1.5" PointX="4.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_SettleWay" Width="1.5" PointX="6.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Ship" Width="1.5" PointX="14.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Sign" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_SignCloseAccount" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_Staff" Width="1.5" PointX="16.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_User" Width="1.5" PointX="16.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SeaTransportationModel.SYS_VehicleInformation" Width="1.5" PointX="16.75" PointY="13.75" IsExpanded="true" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

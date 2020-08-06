@@ -1,0 +1,196 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forwarding</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="~/Areas/Forwarding/Contents/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Areas/Forwarding/Contents/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Areas/Forwarding/Contents/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="~/Content/layui/css/layui.css" rel="stylesheet" />
+    <style>
+        #tbDriverJobSummary th {
+            width: 12.5%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="gray-bg" style="font-family:华文行楷">
+    <!-- 页面 -->
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <!-- 司机作业汇总表 -->
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    @*list*@
+                    <div class="ibox-title">
+                        <h5>司机作业汇总表</h5>
+                        <div class="ibox-tools">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                                <li>
+                                    <a onclick="Print()">打印</a>
+                                </li>
+                                <li>
+                                    <a onclick="EtrustDerive()">导出</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    @*Select*@
+                    <div class="ibox-content">
+                        <form class="form-horizontal" role="form" id="Search" action="" method="post">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="col-sm-3">
+                                        <label class="col-sm-3 control-label">承运车队:</label>
+                                        <div class="col-sm-9">
+                                            <select type="text" class="layui-input" id="ClientTypeID" onchange="Search()" name="ClientTypeID"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="col-sm-3 control-label">司机:</label>
+                                        <div class="col-sm-9">
+                                            <select type="text" class="layui-input" id="ChauffeurID" onchange="Search()" name="ChauffeurID"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="col-sm-3 control-label">车牌号:</label>
+                                        <div class="col-sm-9">
+                                            <select type="text" class="layui-input" id="VehicleInformationID" onchange="Search()" name="VehicleInformationID"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label class="col-sm-3 control-label">签约公司:</label>
+                                        <div class="col-sm-9">
+                                            <select type="text" class="layui-input" id="ClientTypesID" onchange="Search()" name="ClientTypesID"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    @*table*@
+                    <div class="ibox-content">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" id="tbDriverJobSummary">
+                            <thead>
+                                <tr>
+                                    <th w_num="total_line">序号</th>
+                                    <th w_index="ChauffeurName">司机姓名</th>
+                                    <th w_index="ChauffeurNumber">司机代码</th>
+                                    <th w_index="ManagementFee">管理费</th>
+                                    <th w_index="S">税金</th>
+                                    <th w_index="C">司机提成</th>
+                                    <th w_index="M">运费</th>
+                                    <th w_index="J">合计</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap -->
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <!-- Bsgrid -->
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <!-- 提交表单 -->
+    <script src="~/Content/js/jquery.form.js"></script>
+    <!-- 弹出框 -->
+    <script src="~/Content/layer/layer.js"></script>
+    <!-- layui -->
+    <script src="~/Content/layui/layui.js"></script>
+    <!-- 下拉框,点击行js -->
+    <script src="~/Content/js/combobox.js"></script>
+    <!-- 自动回填 -->
+    <script src="~/Content/js/customfunction.js"></script>
+    <script>
+        //查询
+        function Laydate() {
+            $(".laydate-btns-clear").attr("onclick", 'Search()')
+            $(".laydate-btns-now").attr("onclick", 'Search()')
+            $(".laydate-btns-confirm").attr("onclick", 'Search()')
+        }
+        //layerdate
+        layui.use('laydate', function () {
+            var laydate = layui.laydate;
+            laydate.render({
+                elem: '#test1-1'
+              , type: 'datetime'
+            });
+            laydate.render({
+                elem: '#test1-2'
+              , type: 'datetime'
+            });
+        });
+        //页面加载
+        $(function () {
+            //表格绑定
+            tbDriverJobSummary = $.fn.bsgrid.init('tbDriverJobSummary', {
+                url: "/Forwarding/Statement/SelectDriverJobSummary",
+                pageSize: 15,
+                autoLoad: true,
+                pageSizeSelect: false,
+                displayBlankRows: true,
+                pagingLittleToolbar: false,
+                pagingToolbarAlign: "right",
+            })
+            //下拉框绑定
+            appendOptions("ClientTypeID", "/Forwarding/Forwarding/SelectUndertake", "CarrierTleet")
+            appendOptions("ClientTypesID", "/Forwarding/Forwarding/SelectUndertake", "MichielMol")
+            appendOptions("VehicleInformationID", "/Forwarding/Forwarding/SelectVehicleInformation", "VehicleInformation")
+            appendOptions("ChauffeurID", "/Forwarding/Forwarding/SelectChauffeur", "Chauffeur")
+        });
+        //查询
+        function Search() {
+            tbDriverJobSummary.search({
+                ClientTypeID: $("#Search [name='ClientTypeID']").val(),
+                ClientTypesID: $("#Search [name='ClientTypesID']").val(),
+                VehicleInformationID: $("#Search [name='VehicleInformationID']").val(),
+                ChauffeurID: $("#Search [name='ChauffeurID']").val()
+            });
+        }
+        //导出
+        function EtrustDerive() {
+            layer.confirm("确认要导出司机作业汇总表吗？", {
+                icon: 3,
+                btn: ['确定', '取消']
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("/Forwarding/Statement/SelectDriverJobSummary?ClientTypeID=" + $("#Search [name='ClientTypeID']").val() +
+                                                                    "&ClientTypesID=" + $("#Search [name='ClientTypesID']").val() +
+                                                                    "&VehicleInformationID=" + $("#Search [name='VehicleInformationID']").val() +
+                                                                    "&ChauffeurID=" + $("#Search [name='ChauffeurID']").val() +
+                                                                    "&Z=" + true)
+            })
+        }
+        //打印
+        function Print() {
+            layer.confirm("确认要打印司机作业汇总表吗？", {
+                icon: 3,
+                btn: ['确定', '取消']
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("/Forwarding/Statement/SelectDriverJobSummary?ClientTypeID=" + $("#Search [name='ClientTypeID']").val() +
+                                                                  "&ClientTypesID=" + $("#Search [name='ClientTypesID']").val() +
+                                                                  "&VehicleInformationID=" + $("#Search [name='VehicleInformationID']").val() +
+                                                                  "&ChauffeurID=" + $("#Search [name='ChauffeurID']").val() +
+                                                                  "&Z1=" + true)
+            })
+        }
+    </script>
+</body>
+</html>

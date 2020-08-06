@@ -1,0 +1,643 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Tree/jsTree/style.min.css" rel="stylesheet" />
+    <title>Billing</title>
+    <style type="text/css">
+        .modal-header {
+            padding: 6px 5px;
+            border-bottom: none;
+            background: #d8d8d2;
+            text-align: center;
+            color: #000;
+        }
+
+        .modal-content {
+            padding: 6px;
+        }
+
+        .modal-body {
+            padding: 0 25px;
+        }
+
+        .btn {
+            /*background:#d8d8d2;*/
+            background: #d8d8d2;
+            margin-top: 5px;
+            /*color:#fff;*/
+        }
+
+            .btn:hover {
+                background: #5190f8;
+            }
+
+        .container {
+            width: 100%;
+        }
+        /*.panel-body{
+            padding:0;
+        }*/
+        .panel-heading {
+            font-size: 16px;
+            text-align: center;
+            background-color:#d8d8d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="panel-heading">
+                <span>城市计费门点</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2">
+                <div id="A" >
+                    <ul >
+                        <li class="jstree-open">
+                            所有省份
+                             <ul>
+                                <li onclick="Tree1('安徽省')">安徽省</li>
+                                <li onclick="Tree1('北京省')">北京省</li>
+                                <li onclick="Tree1('重庆省')">重庆省</li>
+                                <li onclick="Tree1('福建省')">福建省</li>
+                                <li onclick="Tree1('贵州省')">贵州省</li>
+                                <li onclick="Tree1('广东省')">广东省</li>
+                                <li onclick="Tree1('甘肃省')">甘肃省</li>
+                              <li onclick="Tree1('黑龙江省')">黑龙江省</li>
+                                <li onclick="Tree1('河北省')">河北省</li>
+                                <li onclick="Tree1('河南省')">河南省</li>
+                                <li onclick="Tree1('湖北省')">湖北省</li>
+                                <li onclick="Tree1('湖南省')">湖南省</li>
+                                <li onclick="Tree1('海南省')">海南省</li>
+                                <li onclick="Tree1('吉林省')">吉林省</li>
+                                <li onclick="Tree1('江苏省')">江苏省</li>
+                                <li onclick="Tree1('江西省')">江西省</li>
+                                <li onclick="Tree1('辽宁省')">辽宁省</li>
+                                <li onclick="Tree1('青海省')">青海省</li>
+                                <li onclick="Tree1('山西省')">山西省</li>
+                                <li onclick="Tree1('山东省')">山东省</li>
+                                <li onclick="Tree1('四川省')">四川省</li>
+                                <li onclick="Tree1('上海省')">上海省</li>
+                                <li onclick="Tree1('台湾省')">台湾省</li>
+                                <li onclick="Tree1('天津省')">天津省</li>
+                                <li onclick="Tree1('陕西省')">陕西省</li>
+                                <li onclick="Tree1('云南省')">云南省</li>
+                                <li onclick="Tree1('浙江省')">浙江省</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+                <div>
+                    <div class="col-lg-10 col-md-10 col-sm-10" style="float:right">
+                        <button class="btn  glyphicon glyphicon-off" type="button" id="Close"> 关闭</button>
+                        <button class="btn  glyphicon glyphicon-refresh" type="button" id="Refresh"> 刷新</button>
+                        <button class="btn  glyphicon glyphicon-print" type="button" id="Print"> 打印</button>
+                        <button class="btn  glyphicon glyphicon-paste" type="button" id="ExportToExcel"> 导出</button>
+                        @*<input type="text" class="form-control" id="checkcity" name="" placeholder="点击查询城市" onmousedown="checkcity()"  style="width:200px;float:right;margin-top:10px;"/>*@
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10" style="float:right">
+                        <div class="panel-body">
+                            <div class="row examineeInfor">
+                                <table id="city" class="table table-condensed" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th w_num="total_line">序号</th>
+                                            <th w_index="CityName" width="">城市名称</th>
+                                            <th w_index="EnglishName" width="">英文名称</th>
+                                            <th w_index="CityCode" width="">城市编码</th>
+                                            <th w_index="Describe" width="">描述</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10" style="float:right">
+                        <button class="btn  glyphicon glyphicon-plus" type="button" id="Insert"> 新增</button>
+                        <button class="btn  glyphicon glyphicon-pencil" type="button" id="Update"> 编辑</button>
+                        <button class="btn  glyphicon glyphicon-remove" type="button" id="Delete"> 删除</button>
+                    </div>
+                    <div class="col-lg-10 col-md-10 col-sm-10" style="float:right">
+                        <div class="panel-body">
+                            <div class="row examineeInfor">
+                                <table id="gatedot" class="table table-condensed" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th w_index="GatedotID" w_check="true">选择</th>
+                                            <th w_num="total_line">序号</th>
+                                            <th w_index="GatedotCode" width="">门点编码</th>
+                                            <th w_index="GatedotName" width="">门点名称</th>
+                                            <th w_render="SetState">是否上级门点</th>
+                                            <th w_index="WhetherSuperiorGatedot" width="" w_hidden="true">是否上级门点</th>
+                                            <th w_render="SetStatel">是否有效</th>
+                                            <th w_index="WhetherValid" width="" w_hidden="true">是否有效</th>
+                                            <th w_index="Describe" width="">描述</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*新增计费门点*@
+                <div class="modal  bs-example-modal-sm" id="modInsertExaminee">
+                    <div class="modal-content" style="width:350px;height:360px;margin-left:640px;">
+                        <div class="modal-header">
+                            <h5 class="modal-title glyphicon glyphicon-plus"> 计费门点</h5>
+                        </div>
+                        <div class=" modal-body">
+                            <form class="form-horizontal" role="form" id="formInsert" action="/Basics/Basics/InsertGatedot" method="post">
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">省份名称:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <select id="province" name="Province" class="form-control">
+                                                <option value="0">----请选择----</option>
+                                                <option value="安徽省">安徽省</option>
+                                                <option value="北京省">北京省</option>
+                                                <option value="重庆省">重庆省</option>
+                                                <option value="福建省">福建省</option>
+                                                <option value="贵州省">贵州省</option>
+                                                <option value="广东省">广东省</option>
+                                                <option value="甘肃省">甘肃省</option>
+                                                <option value="黑龙江">黑龙江</option>
+                                                <option value="河北省">河北省</option>
+                                                <option value="河南省">河南省</option>
+                                                <option value="湖北省">湖北省</option>
+                                                <option value="湖南省">湖南省</option>
+                                                <option value="海南省">海南省</option>
+                                                <option value="吉林省">吉林省</option>
+                                                <option value="江苏省">江苏省</option>
+                                                <option value="江西省">江西省</option>
+                                                <option value="辽宁省">辽宁省</option>
+                                                <option value="青海省">青海省</option>
+                                                <option value="山西省">山西省</option>
+                                                <option value="山东省">山东省</option>
+                                                <option value="四川省">四川省</option>
+                                                <option value="上海省">上海省</option>
+                                                <option value="台湾省">台湾省</option>
+                                                <option value="天津省">天津省</option>
+                                                <option value="陕西省">陕西省</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">城市名称:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <select id="City" name="CityID" class="form-control">
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">门点编码:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="" name="GatedotCode" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">门点名称:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="" name="GatedotName" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">描述:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="" name="Describe" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-lg-offset-4">
+                                            <label>
+                                                <input type="checkbox" name="WhetherSuperiorGatedot" id="" value="true" />
+                                                是否上级门点
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-lg-offset-4">
+                                            <label>
+                                                <input type="checkbox" name="WhetherValid" id="" value="true" />
+                                                是否有效
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-lg-offset-1">
+                                        <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                                        <button class="btn glyphicon glyphicon-ok" type="button" id="Savegatedot"> 保存</button>
+                                        <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                @*修改计费门点*@
+                <div class="modal  bs-example-modal-sm" id="modUpdateExaminee">
+                    <div class="modal-content" style="width:350px;height:360px;margin-left:640px;">
+                        <div class="modal-header">
+                            <h5 class="modal-title glyphicon glyphicon-pencil"> 计费门点</h5>
+                        </div>
+                        <div class=" modal-body">
+                            <form class="form-horizontal" role="form" id="formUpdate" action="/Basics/Basics/UpdateGatedot" method="post">
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">省份名称:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <select id="provincel" name="Province" class="form-control">
+                                                <option value="0">----请选择----</option>
+                                                <option value="安徽省">安徽省</option>
+                                                <option value="北京省">北京省</option>
+                                                <option value="重庆省">重庆省</option>
+                                                <option value="福建省">福建省</option>
+                                                <option value="贵州省">贵州省</option>
+                                                <option value="广东省">广东省</option>
+                                                <option value="甘肃省">甘肃省</option>
+                                                <option value="黑龙江省">黑龙江省</option>
+                                                <option value="河北省">河北省</option>
+                                                <option value="河南省">河南省</option>
+                                                <option value="湖北省">湖北省</option>
+                                                <option value="湖南省">湖南省</option>
+                                                <option value="海南省">海南省</option>
+                                                <option value="吉林省">吉林省</option>
+                                                <option value="江苏省">江苏省</option>
+                                                <option value="江西省">江西省</option>
+                                                <option value="辽宁省">辽宁省</option>
+                                                <option value="青海省">青海省</option>
+                                                <option value="山西省">山西省</option>
+                                                <option value="山东省">山东省</option>
+                                                <option value="四川省">四川省</option>
+                                                <option value="上海省">上海省</option>
+                                                <option value="台湾省">台湾省</option>
+                                                <option value="天津省">天津省</option>
+                                                <option value="陕西省">陕西省</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">城市名称:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <select id="Cityl" name="CityID" class="form-control"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">门点编码:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="" name="GatedotCode" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">门点名称:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="" name="GatedotName" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                            <label class="control-label">描述:</label>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <input type="text" class="form-control" id="" name="Describe" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-lg-offset-4">
+                                            <label>
+                                                <input type="checkbox" name="WhetherSuperiorGatedot" id="" value="true" />
+                                                是否上级门点
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-lg-offset-4">
+                                            <label>
+                                                <input type="checkbox" name="WhetherValid" id="" value="true" />
+                                                是否有效
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:5px;">
+                                    <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-1">
+                                        <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                                        <button class="btn glyphicon glyphicon-ok" type="button" id="UpdateSave"> 保存</button>
+                                        <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <script src="~/Content/Tree/jquery.min.js"></script>
+    <link href="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/Tree/Tree.js"></script>
+    <script src="~/Content/Tree/jstree.min.js"></script>
+    <script>
+        var tabcity;
+        var tabgatedot;
+        $(function () {
+            $("#A").jstree();
+            setTimeout(function () {
+                $("#j1_1_anchor").attr("onclick", "Tree1('')")
+            }, 200)
+            //查询城市表
+            tabcity = $.fn.bsgrid.init('city', {
+                url: 'selectbilling',
+                autoLoad: true,//自动加载数据
+                stripeRows: true,//隔行变色
+                rowHoverColor: true,//划过行变色
+                displayBlankRows: true,//是否显示空白行，默认值false
+                rowSelectedColor: true,//是否显示选中行背景色
+                pageSize: 8,//默认页面大小
+                pageSizeSelect: true,//是否选择分页页数下拉框
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                //事件
+                event: {
+                    customRowEvents: {//自定义行事件
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#city tr", rowIndex + 1);
+                            chaxun1(record);
+                        }
+                    }
+                }
+            });
+            Checkcity();
+            //查询门点表
+            tabgatedot = $.fn.bsgrid.init('gatedot', {
+                url: 'selectGatedot',
+                autoLoad: false,//自动加载数据
+                stripeRows: true,//隔行变色
+                rowHoverColor: true,//划过行变色
+                displayBlankRows: true,//是否显示空白行，默认值false
+                rowSelectedColor: true,//是否显示选中行背景色
+                pageSize: 8,//默认页面大小
+                pageSizeSelect: true,//是否选择分页页数下拉框
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                //事件
+                event: {
+                    customRowEvents: {//自定义行事件
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#gatedot tr", rowIndex + 1);
+                            SetState(record);
+                            SetStatel(record);
+                        }
+                    }
+                }
+            });
+            //城市下拉框
+            appendOption("City", "selectcityxia");
+            appendOption("Cityl", "selectcityxiaxia");
+        })
+        function Tree1(Province) {
+            tabcity.search({ Province: Province })
+        }
+        //查询城市名称
+        function checkcity() {
+            Checkcity();
+        }
+        function Checkcity() {
+            var CityName = $("#checkcity").val();
+            if (CityName == null || CityName == undefined) {
+                CityName = 0;
+            }
+            tabcity.search({ CityName: CityName });
+        }
+        //点击上表查出下表
+        function chaxun1(record) {
+            var CityID = record.CityID;
+            tabgatedot.search({ CityID: CityID });
+        }
+        //true or false
+        function SetState(record) {
+            var WhetherSuperiorGatedot = record.WhetherSuperiorGatedot;
+            if (WhetherSuperiorGatedot) {
+                return '<span style="color:blue">有上级门点</span>';
+            } else {
+                return '<span style="color:red">无上级门点</span>';
+            }
+        }
+        function SetStatel(record) {
+            var WhetherValid = record.WhetherValid;
+            if (WhetherValid) {
+                return '<span style="color:blue">有效</span>';
+            } else {
+                return '<span style="color:red">无效</span>';
+            }
+        }
+        //新增改变事件
+        $("#province").change(function () {
+            var Province = $("#province").val();
+            appendOption("City", "selectcityxia?Province=" + Province);
+        });
+        //修改改变事件
+        $("#provincel").change(function () {
+            var Province = $("#provincel").val();
+            appendOption("Cityl", "selectcityxiaxia?Province=" + Province);
+        });
+        //关闭
+        $("#Close").click(function () {
+            window.location.href = "/Main/index";
+        })
+        //刷新
+        $("#Refresh").click(function () {
+            location.reload();
+        })
+        //新增
+        $("#Insert").click(function () {
+            $('#formInsert').resetForm();
+            $("#modInsertExaminee").modal("show");
+        });
+        $("#Savegatedot").click(function () {
+            var CityID = $('#formInsert [name="CityID"]').val();
+            var GatedotCode = $('#formInsert [name="GatedotCode"]').val();
+            var GatedotName = $('#formInsert [name="GatedotName"]').val();
+            var WhetherSuperiorGatedot = $('#formInsert [name="WhetherSuperiorGatedot"]').val();
+            var WhetherValid = $('#formInsert [name="WhetherValid"]').val();
+            if (GatedotCode != '') {
+                if (GatedotName != '') {
+                    if (CityID > 0) {
+                        var layerIndex = layer.load(0);
+                        $("#formInsert").ajaxSubmit(function (msg) {
+                            layer.close(layerIndex);
+                            Checkcity();
+                            $("#modInsertExaminee").modal("hide");
+                            layer.msg(msg, { icon: 1, });
+                        });
+                    }
+                    else {
+                        layer.msg("城市名称不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("门点名称不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("门点编码不能为空！", { icon: 0 });
+            }
+        })
+        //编辑
+        $("#Update").click(function () {
+            var check = $("#gatedot input:checked");
+            if (check.length == 0) {
+                layer.msg("请选择一条信息!", { icon: 0 });
+            }
+            if (check.length > 1) {
+                layer.msg("只能选择一条信息!", { icon: 0 });
+            }
+            if (check.length == 1) {
+                $.post("/Basics/Basics/SelectGatedotById", { GatedotID: check[0].value }, function (data) {
+                    loadDatatoForm("formUpdate", data);
+                })
+                $("#modUpdateExaminee").modal("show");
+            }
+        })
+        $("#UpdateSave").click(function () {
+            var GatedotCode = $('#formUpdate [name="GatedotCode"]').val();
+            var GatedotName = $('#formUpdate [name="GatedotName"]').val();
+            var CityID = $('#formUpdate [name="CityID"]').val();
+            if (GatedotCode != '') {
+                if (GatedotName != '') {
+                    if (CityID > 0) {
+                        var layerIndex = layer.load(0);
+                        $("#formUpdate").attr("action", "/Basics/Basics/UpdateGatedot?GatedotID=" + $("#gatedot input:checked")[0].value);
+                        $("#formUpdate").ajaxSubmit(function (msg) {
+                            layer.close(layerIndex);
+                            location.reload();
+                        });
+                    }
+                    else {
+                        layer.msg("城市名称不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("门点名称不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("门点编号不能为空！", { icon: 0 });
+            }
+        });
+        //删除
+        $("#Delete").click(function () {
+            var check = $("#gatedot input:checked");
+            if (check.length > 0) {
+                layer.confirm("确认删除数据",
+                    {
+                        icon: 0,
+                        btn: ['确认', '取消']
+                    },
+                    function (layerIndex) {
+                        layer.close(layerIndex);
+                        for (var i = 0; i < check.length; i++) {
+                            var id = check[i].value;
+                            $.ajax({
+                                type: "get",
+                                async: false,
+                                url: "DelectGatedot?GatedotID=" + id,
+                                success: function (data) {
+                                    if (data) {
+                                        location.reload();
+                                    } else {
+                                        layer.alert("删除失败", { icon: 0, title: '提示' })
+                                    }
+                                }
+                            })
+                        }
+                    });
+            }
+            else {
+                layer.msg('请选择删除的数据', { icon: 0 });
+            }
+        });
+        //excel导出
+        $("#ExportToExcel").click(function () {
+            var oldStr = tabgatedot.getPageCondition(tabgatedot.getCurPage());
+            if (oldStr.indexOf) {
+                layer.confirm("是否要导出当前的数据？", {
+                    icon: 3,
+                    btn: ['确定', '取消']
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("GatedotExportToExcel");
+                })
+            }
+            else {
+                layer.msg("预览是否是需要导出", { icon: 0, title: '提示' });
+            }
+        });
+        //打印
+        $("#Print").click(function () {
+            window.open("PrintAchievementGatedot");
+        })
+    </script>
+</body>
+</html>

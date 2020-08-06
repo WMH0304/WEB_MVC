@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ShiShouShiFuDB" targetNamespace="http://tempuri.org/ShiShouShiFuDB.xsd" xmlns:mstns="http://tempuri.org/ShiShouShiFuDB.xsd" xmlns="http://tempuri.org/ShiShouShiFuDB.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="ShiShouShiFuDB" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="ShiShouShiFuDB" msprop:Generator_UserDSName="ShiShouShiFuDB">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tabShiShouShiFu" msprop:Generator_TableClassName="tabShiShouShiFuDataTable" msprop:Generator_TableVarName="tabletabShiShouShiFu" msprop:Generator_TablePropName="tabShiShouShiFu" msprop:Generator_RowDeletingName="tabShiShouShiFuRowDeleting" msprop:Generator_RowChangingName="tabShiShouShiFuRowChanging" msprop:Generator_RowEvHandlerName="tabShiShouShiFuRowChangeEventHandler" msprop:Generator_RowDeletedName="tabShiShouShiFuRowDeleted" msprop:Generator_UserTableName="tabShiShouShiFu" msprop:Generator_RowChangedName="tabShiShouShiFuRowChanged" msprop:Generator_RowEvArgName="tabShiShouShiFuRowChangeEvent" msprop:Generator_RowClassName="tabShiShouShiFuRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="CalculateState" msprop:Generator_ColumnVarNameInTable="columnCalculateState" msprop:Generator_ColumnPropNameInRow="CalculateState" msprop:Generator_ColumnPropNameInTable="CalculateStateColumn" msprop:Generator_UserColumnName="CalculateState" type="xs:string" minOccurs="0" />
+              <xs:element name="CalculateNumber" msprop:Generator_ColumnVarNameInTable="columnCalculateNumber" msprop:Generator_ColumnPropNameInRow="CalculateNumber" msprop:Generator_ColumnPropNameInTable="CalculateNumberColumn" msprop:Generator_UserColumnName="CalculateNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="SettleAccounts" msprop:Generator_ColumnVarNameInTable="columnSettleAccounts" msprop:Generator_ColumnPropNameInRow="SettleAccounts" msprop:Generator_ColumnPropNameInTable="SettleAccountsColumn" msprop:Generator_UserColumnName="SettleAccounts" type="xs:string" minOccurs="0" />
+              <xs:element name="ReckoningUnit" msprop:Generator_ColumnVarNameInTable="columnReckoningUnit" msprop:Generator_ColumnPropNameInRow="ReckoningUnit" msprop:Generator_ColumnPropNameInTable="ReckoningUnitColumn" msprop:Generator_UserColumnName="ReckoningUnit" type="xs:string" minOccurs="0" />
+              <xs:element name="SFMoney" msprop:Generator_ColumnVarNameInTable="columnSFMoney" msprop:Generator_ColumnPropNameInRow="SFMoney" msprop:Generator_ColumnPropNameInTable="SFMoneyColumn" msprop:Generator_UserColumnName="SFMoney" type="xs:decimal" minOccurs="0" />
+              <xs:element name="AlreadyCancelMoney" msprop:Generator_ColumnVarNameInTable="columnAlreadyCancelMoney" msprop:Generator_ColumnPropNameInRow="AlreadyCancelMoney" msprop:Generator_ColumnPropNameInTable="AlreadyCancelMoneyColumn" msprop:Generator_UserColumnName="AlreadyCancelMoney" type="xs:decimal" minOccurs="0" />
+              <xs:element name="StayCancelMoney" msprop:Generator_ColumnVarNameInTable="columnStayCancelMoney" msprop:Generator_ColumnPropNameInRow="StayCancelMoney" msprop:Generator_ColumnPropNameInTable="StayCancelMoneyColumn" msprop:Generator_UserColumnName="StayCancelMoney" type="xs:decimal" minOccurs="0" />
+              <xs:element name="Currency" msprop:Generator_ColumnVarNameInTable="columnCurrency" msprop:Generator_ColumnPropNameInRow="Currency" msprop:Generator_ColumnPropNameInTable="CurrencyColumn" msprop:Generator_UserColumnName="Currency" type="xs:string" minOccurs="0" />
+              <xs:element name="SFDate1" msprop:Generator_ColumnVarNameInTable="columnSFDate1" msprop:Generator_ColumnPropNameInRow="SFDate1" msprop:Generator_ColumnPropNameInTable="SFDate1Column" msprop:Generator_UserColumnName="SFDate1" type="xs:string" minOccurs="0" />
+              <xs:element name="BankName" msprop:Generator_ColumnVarNameInTable="columnBankName" msprop:Generator_ColumnPropNameInRow="BankName" msprop:Generator_ColumnPropNameInTable="BankNameColumn" msprop:Generator_UserColumnName="BankName" type="xs:string" minOccurs="0" />
+              <xs:element name="BankAccount" msprop:Generator_ColumnVarNameInTable="columnBankAccount" msprop:Generator_ColumnPropNameInRow="BankAccount" msprop:Generator_ColumnPropNameInTable="BankAccountColumn" msprop:Generator_UserColumnName="BankAccount" type="xs:string" minOccurs="0" />
+              <xs:element name="PayWay" msprop:Generator_ColumnVarNameInTable="columnPayWay" msprop:Generator_ColumnPropNameInRow="PayWay" msprop:Generator_ColumnPropNameInTable="PayWayColumn" msprop:Generator_UserColumnName="PayWay" type="xs:string" minOccurs="0" />
+              <xs:element name="ChequeNumber" msprop:Generator_ColumnVarNameInTable="columnChequeNumber" msprop:Generator_ColumnPropNameInRow="ChequeNumber" msprop:Generator_ColumnPropNameInTable="ChequeNumberColumn" msprop:Generator_UserColumnName="ChequeNumber" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

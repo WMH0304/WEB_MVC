@@ -1,0 +1,644 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Tree/jsTree/style.min.css" rel="stylesheet" />
+    <title>DriverBook</title>
+    <style type="text/css">
+        .modal-header {
+            padding: 6px 5px;
+            border-bottom: none;
+            background: #d8d8d2;
+            text-align: center;
+            color: #000;
+        }
+
+        .modal-content {
+            padding: 6px;
+        }
+
+        .modal-body {
+            padding: 0 25px;
+        }
+
+        .btn {
+            /*background:#d8d8d2;*/
+            background: #d8d8d2;
+            margin-top: 5px;
+            /*color:#fff;*/
+        }
+
+            .btn:hover {
+                background: #5190f8;
+            }
+
+        .container {
+            width: 100%;
+        }
+        /*.panel-body{
+            padding:0;
+        }*/
+        .panel-heading {
+            font-size: 16px;
+            text-align: center;
+            background-color:#d8d8d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="row">
+            <div class="panel-heading">
+                <span>司机驾驶本信息</span>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <button class="btn  glyphicon glyphicon-off" type="button" id="Close"> 关闭</button>
+            <button class="btn  glyphicon glyphicon-refresh" type="button" id="Refresh"> 刷新</button>
+            <button class="btn  glyphicon glyphicon-plus" type="button" id="Insert"> 新增</button>
+            <button class="btn  glyphicon glyphicon-pencil" type="button" id="Update"> 编辑</button>
+            <button class="btn  glyphicon glyphicon-remove" type="button" id="Delete"> 删除</button>
+            <button class="btn  glyphicon glyphicon-search" type="button" id="Check"> 查询</button>
+            <button class="btn  glyphicon glyphicon-print" type="button" id="Print"> 打印</button>
+            <button class="btn  glyphicon glyphicon-paste" type="button" id="ExportToExcel"> 导出</button>
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12" style="float:right">
+            <div class="panel-body">
+                <div class="row examineeInfor">
+                    <table id="driverBook" class="table table-condensed" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th w_index="DriverBookID" w_check="true" width="3%">选择</th>
+                                <th w_num="total_line" width="3%">序号</th>
+                                <th w_index="ChauffeurName" width="9%">司机本姓名</th>
+                                <th w_index="DriverBook" width="10%">司机本编号</th>
+                                <th w_index="CustomsNumber" width="5%">海关编号</th>
+                                <th w_index="BusinessLicenseNumber" width="15%">营业执照号</th>
+                                <th w_index="IssuingAuthority" width="10%">核发机关</th>
+                                <th w_index="AccurateLoadNumber" width="10%">准载证号</th>
+                                <th w_index="timer" width="10%">有效期限</th>
+                                <th w_index="ExpirationDatetimer" width="10%">截止日期</th>
+                                <th w_index="Remark" width="15%">备注</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*新增模态框*@
+    <div class="modal  bs-example-modal-sm" id="modInsertExaminee">
+        <div class="modal-content" style="width:700px;height:290px;margin-left:450px;">
+            <div class="modal-header">
+                <h5 class="modal-title glyphicon glyphicon-plus"> 司机本资料</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="formInsert" action="/Basics/Basics/InsertDriverBook" method="post">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">所属司机:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <select id="ffeur" class="form-control" name="ChauffeurID">
+                                    <option value="0">----请选择----</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">司机本编号:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="DriverBook" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">准载证号:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="AccurateLoadNumber" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">海关编号:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="CustomsNumber" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">营业执照号:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="BusinessLicenseNumber" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">核发机关:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="IssuingAuthority" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">有效期限:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="date" class="form-control" id="" name="TermValidity" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">截止日期:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="date" class="form-control" id="" name="ExpirationDate" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">备注:</label>
+                            </div>
+                            <div class="col-lg-10 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Remark" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-7">
+                            <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                            <button class="btn glyphicon glyphicon-ok" type="button" id="SaveDriverBook"> 保存</button>
+                            <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @*修改模态框*@
+    <div class="modal  bs-example-modal-sm" id="modUpdateExaminee">
+        <div class="modal-content" style="width:700px;height:330px;margin-left:450px;">
+            <div class="modal-header">
+                <h5 class="modal-title glyphicon glyphicon-pencil"> 司机本资料</h5>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" id="formUpdate" action="/Basics/Basics/UpdateDriverBook" method="post">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">所属司机:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <select id="ffeurID" class="form-control" name="ChauffeurID">
+                                    <option value="0">----请选择----</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">司机本编号:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="DriverBook" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">准载证号:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="AccurateLoadNumber" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">海关编号:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="CustomsNumber" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">营业执照号:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="BusinessLicenseNumber" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">核发机关:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="IssuingAuthority" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">有效期限:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="date" class="form-control" id="" name="TermValidity" />
+                            </div>
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">截止日期:</label>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5">
+                                <input type="date" class="form-control" id="" name="ExpirationDate" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                <label class="control-label">备注:</label>
+                            </div>
+                            <div class="col-lg-10 col-md-5 col-sm-5">
+                                <input type="text" class="form-control" id="" name="Remark" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                            <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                            <button class="btn glyphicon glyphicon-ok" type="button" id="UpdateSave"> 保存</button>
+                            <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @*查询模态框*@
+    <div class="modal  bs-example-modal-sm" id="modCheckExaminee">
+        <div class="modal-content" style="width:380px;height:225px;margin-left:630px;">
+            <div class="modal-header">
+                <h5 class="modal-title glyphicon glyphicon-search"> 查询司机本资料</h5>
+            </div>
+            <form id="formCheckdriverBook">
+                <div class="modal-body">
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">所属司机:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <select id="Chauffeur" class="form-control">
+                                    <option value="0">----请选择----</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">海关编号:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <input type="text" class="form-control" id="Number" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                                <label class="control-label">司机本编号:</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <input type="text" class="form-control" id="Book" maxlength="20" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px;">
+                        <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                            <button class="btn glyphicon glyphicon-search" type="button" id="modelcheck"> 查询</button>
+                            <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="~/Content/Tree/jquery.min.js"></script>
+    <link href="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/Tree/Tree.js"></script>
+    <script src="~/Content/Tree/jstree.min.js"></script>
+    <script>
+        var tabdriverBook;
+        $(function () {
+            appendOption("Chauffeur", "selectchauffer");
+            appendOption("ffeur", "selectchauffer");
+            appendOption("ffeurID", "selectchauffer");
+            //查询司机本表
+            tabdriverBook = $.fn.bsgrid.init('driverBook', {
+                url: 'selectDriverBook',
+                autoLoad: true,//自动加载数据
+                stripeRows: true,//隔行变色
+                rowHoverColor: true,//划过行变色
+                displayBlankRows: true,//是否显示空白行，默认值false
+                rowSelectedColor: true,//是否显示选中行背景色
+                pageSize: 10,//默认页面大小
+                pageSizeSelect: true,//是否选择分页页数下拉框
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                //事件
+                event: {
+                    customRowEvents: {//自定义行事件
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#driverBook tr", rowIndex + 1);
+                        }
+                    }
+                }
+            })
+        })
+        //关闭
+        $("#Close").click(function () {
+            window.location.href = "/Main/index";
+        })
+        //刷新
+        $("#Refresh").click(function () {
+            location.reload();
+        })
+        //查询
+        $("#Check").click(function () {
+            $('#formCheckdriverBook').resetForm();
+            $("#modCheckExaminee").modal("show");
+            $("#modelcheck").click(function () {
+                CheckdriverBook();
+                $("#modCheckExaminee").modal("hide");
+            })
+        })
+        //查询条件
+        function CheckdriverBook() {
+            var ChauffeurID = $("#Chauffeur").val();
+            if (ChauffeurID =="") {
+                ChauffeurID = 0;
+            }
+            var CustomsNumber = $("#Number").val();
+            if (CustomsNumber == null || CustomsNumber == undefined) {
+                CustomsNumber = 0;
+            }
+            var DriverBook = $("#Book").val();
+            if (DriverBook == null || DriverBook == undefined) {
+                DriverBook = 0;
+            }
+            tabdriverBook.search({ ChauffeurID: ChauffeurID, CustomsNumber: CustomsNumber, DriverBook: DriverBook });
+        }
+        //新增
+        $("#Insert").click(function () {
+            $('#formInsert').resetForm();
+            $("#modInsertExaminee").modal("show");
+        });
+        $("#SaveDriverBook").click(function () {
+            var ChauffeurID = $('#formInsert [name="ChauffeurID"]').val();
+            var DriverBook = $('#formInsert [name="DriverBook"]').val();
+            var AccurateLoadNumber = $('#formInsert [name="AccurateLoadNumber"]').val();
+            var CustomsNumber = $('#formInsert [name="CustomsNumber"]').val();
+            var BusinessLicenseNumber = $('#formInsert [name="BusinessLicenseNumber"]').val();
+            var IssuingAuthority = $('#formInsert [name="IssuingAuthority"]').val();
+            //判断一些必填项的数据是否为空
+            if (ChauffeurID > 0) {
+                if (DriverBook != '') {
+                    if (AccurateLoadNumber != '') {
+                        if (CustomsNumber != '') {
+                            if (BusinessLicenseNumber != '') {
+                                if (IssuingAuthority != '') {
+                                    //显示 加载层（是第三方对话框的属性）
+                                    var layerIndex = layer.load(0);
+                                    //ajaxSubmit()提交表单:我们直接通过form提交的话， 提交后当前页面跳转到form的action所指向的页面。
+                                    //然而，很多时候我们并不希望提交表单后页面跳转，那么，我们就可以使用ajaxSubmit(obj)来提交数据
+                                    //ajaxSubmit(obj)方法是jQuery的一个插件jquery.form.js里面的方法，所以使用此方法需要先引入这个插件
+                                    $("#formInsert").ajaxSubmit(function (msg) {
+                                        layer.close(layerIndex);//关闭加载层
+                                        if (msg == "数据新增成功！") {
+                                            tabdriverBook.search();//调用多条件查询方法：起到刷新表格的作用
+                                            $("#modInsertExaminee").modal("hide");//关闭 modal
+                                            layer.msg(msg, { icon: 1 });
+                                        }
+                                        else {
+                                            layer.msg(msg, { icon: 0 });
+                                        }
+                                    });
+                                }
+                                else {
+                                    layer.msg("核发机关不能为空！", { icon: 0 });
+                                }
+                            }
+                            else {
+                                layer.msg("营业执照号不能为空！", { icon: 0 });
+                            }
+                        }
+                        else {
+                            layer.msg("海关编号不能为空！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("准载证号不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("司机本编号不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("所属司机不能为空！", { icon: 0 });
+            }
+        })
+        //编辑
+        $("#Update").click(function () {
+            var check = $("#driverBook input:checked");
+            if (check.length == 0) {
+                //0警告；1成功；2失败；3问号；4锁；5难过表情；6微笑表情
+                layer.msg("请选择一条信息!", { icon: 0 });
+            }
+            if (check.length > 1) {
+                layer.msg("只能选择一条信息!", { icon: 0 });
+            }
+            if (check.length == 1) {
+                $.post("/Basics/Basics/SelectDriverBookById", { DriverBookID: check[0].value }, function (data) {
+                    loadDatatoForm("formUpdate", data);
+                    $('#formUpdate [name="TermValidity"]').val(data.timer);
+                    $('#formUpdate [name="ExpirationDate"]').val(data.ExpirationDatetimer);
+                })
+                $("#modUpdateExaminee").modal("show");
+            }
+        })
+        $("#UpdateSave").click(function () {
+            var ChauffeurID = $('#formUpdate [name="ChauffeurID"]').val();
+            var DriverBook = $('#formUpdate [name="DriverBook"]').val();
+            var AccurateLoadNumber = $('#formUpdate [name="AccurateLoadNumber"]').val();
+            var CustomsNumber = $('#formUpdate [name="CustomsNumber"]').val();
+            var BusinessLicenseNumber = $('#formUpdate [name="BusinessLicenseNumber"]').val();
+            var IssuingAuthority = $('#formUpdate [name="IssuingAuthority"]').val();
+            if (ChauffeurID > 0) {
+                if (DriverBook != '') {
+                    if (AccurateLoadNumber != '') {
+                        if (CustomsNumber != '') {
+                            if (BusinessLicenseNumber != '') {
+                                if (IssuingAuthority != '') {
+                                    var layerIndex = layer.load(0);
+                                    $("#formUpdate").attr("action", "/Basics/Basics/UpdateDriverBook?DriverBookID=" + $("#driverBook input:checked")[0].value);
+                                    $("#formUpdate").ajaxSubmit(function (msg) {
+                                        layer.close(layerIndex);
+                                        if (msg == "修改成功！") {
+                                            tabdriverBook.search();
+                                            $("#modUpdateExaminee").modal("hide");
+                                            layer.msg(msg, { icon: 1 });
+                                        }
+                                        else {
+                                            layer.msg(msg, { icon: 0 });
+                                        }
+                                    });
+                                }
+                                else {
+                                    layer.msg("核发机关不能为空！", { icon: 0 });
+                                }
+                            }
+                            else {
+                                layer.msg("营业执照号不能为空！", { icon: 0 });
+                            }
+                        }
+                        else {
+                            layer.msg("海关编号不能为空！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("准载证号不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("司机本编号不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("所属司机不能为空！", { icon: 0 });
+            }
+        })
+        //删除
+        $("#Delete").click(function () {
+            var delCount = 0;//记录需要删除的数据的总数
+            var returnCount = 0;//记录删除成功的数据的总数
+            //获取选中的数据
+            var Check = $("#driverBook input[type='checkbox']:checked");
+            if (Check.length > 0) {
+                layer.confirm("确定要删除选中的数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                    offset: "100px"
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    //计算选中的题目所有作废的数据的总数
+                    //for (var i = 0; i < Check.length; i++) {
+                    //    //获取索引(获取Check[i]相对于jQuery选择器$("#tbTitlesInfor input[type='checkbox']")的索引)
+                    //    var Index = $("#Port input[type='checkbox']").index(Check[i]);
+                    //    //根据索引获取行记录值中题目的状态
+                    //    var WhetherStart = tabport.getRecord(Index).WhetherStart;
+                    //    //判断获取到的题目的状态是否为作废
+                    //    if (!WhetherStart) {
+                    //        delCount++;
+                    //    }
+                    //}
+                    //判断选中的题目是否全部是“已作废”的状态
+                    //if (delCount == Check.length) {
+                    //删除
+                    for (var i = 0; i < Check.length; i++) {
+                        $.ajax({
+                            url: "DelectDriverBook?DriverBookID=" + Check[i].value,
+                            async: false,
+                            type: "get",
+                            dataType: "json",
+                            success: function (data) {
+                                if (data) {
+                                    returnCount++;
+                                }
+                            }
+                        });
+                    }
+                    if (returnCount == Check.length) {
+                        //layer.msg("删除成功", { icon: 1, skin: "layui-layer-molv" });
+                        layer.msg("有" + (returnCount) + "条数据删除成功！", { icon: 1 });
+                        tabdriverBook.search();
+                    }
+                    else {
+                        layer.msg("有" + (delCount - returnCount) + "条数据存在异常！", { icon: 0 });
+                    }
+                    //}
+                    //else {
+                    //    layer.msg("选中的数据中存在已启用，不能删除！", { icon: 0 });
+                    //}
+                });
+            }
+            else {
+                layer.msg("请选择需要删除的数据！", { icon: 0 });
+            }
+        })
+        //excel导出
+        $("#ExportToExcel").click(function () {
+            var ChauffeurID = $("#Chauffeur").val();
+            if (ChauffeurID == "") {
+                ChauffeurID = 0;
+            }
+            var CustomsNumber = $("#Number").val();
+            if (CustomsNumber == null || CustomsNumber == undefined) {
+                CustomsNumber = 0;
+            }
+            var DriverBook = $("#Book").val();
+            if (DriverBook == null || DriverBook == undefined) {
+                DriverBook = 0;
+            }
+            var str = 'ChauffeurID=' + ChauffeurID + "&CustomsNumber=" + CustomsNumber + "&DriverBook=" + DriverBook;
+            var oldStr = tabdriverBook.getPageCondition(tabdriverBook.getCurPage());
+            if (oldStr.indexOf(str) > -1) {
+                layer.confirm("是否要导出当前的数据？", {
+                    icon: 3,
+                    btn: ['确定', '取消']
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("ExportToExcelDriverBook?" + str);
+                })
+            }
+            else {
+                layer.msg("预览是否是需要导出", { icon: 0, title: '提示' });
+            }
+        });
+        //打印
+        $("#Print").click(function () {
+            var ChauffeurID = $("#Chauffeur").val();
+            if (ChauffeurID == "") {
+                ChauffeurID = 0;
+            }
+            var CustomsNumber = $("#Number").val();
+            if (CustomsNumber == null || CustomsNumber == undefined) {
+                CustomsNumber = 0;
+            }
+            var DriverBook = $("#Book").val();
+            if (DriverBook == null || DriverBook == undefined) {
+                DriverBook = 0;
+            }
+            window.open("PrintAchievementDriverBook?ChauffeurID=" + ChauffeurID + "&CustomsNumber=" + CustomsNumber + "&DriverBook=" + DriverBook);
+        })
+    </script>
+</body>
+</html>

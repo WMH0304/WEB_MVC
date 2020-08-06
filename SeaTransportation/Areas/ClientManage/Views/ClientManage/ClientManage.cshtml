@@ -1,0 +1,1297 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>客户管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/css/skins/grid_bootstrap.min.css" rel="stylesheet" />
+
+    <link href="~/Hdmin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="~/Hdmin/css/plugins/jsTree/style.min.css" rel="stylesheet">
+    <link href="~/Hdmin/css/animate.css" rel="stylesheet">
+    <link href="~/Hdmin/css/style.css?v=4.1.0" rel="stylesheet">
+    
+
+    <style type="text/css">
+        code {
+            padding: 0px 4px;
+            color: #d14;
+            background-color: #f7f7f9;
+            border: 1px solid #e1e1e8;
+        }
+        #button button {
+            font-family: 华文行楷;
+            font-size: 16px;
+            line-height: 14px;
+        }
+
+        .row label {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+        .lol th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+        .row input{
+            /*width:180px;*/
+            height:34px;
+        }
+        #tpZ input{
+            width:15px;
+            height:15px;
+        }
+        #tpC input{
+            width:15px;
+            height:15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="col-sm-12" >
+        <div class="col-sm-2"></div>
+        <div class="col-lg-10" style="line-height:100px;">
+            <div class="col-lg-10 col-sm-10 col-md-10 text-right" id="button" style="text-align:left">
+                <button class="btn btn-brown" style="width:122px;" id="btnRefresh"><i class="glyphicon glyphicon-floppy-saved" style="font-size:14px;"></i>刷新</button>
+                <button class="btn btn-brown" style="width:122px;" id="btnInsert"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>新增</button>
+                <button class="btn btn-brown" style="width:122px;" id="btnUpdate"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>编辑</button>
+                <button class="btn btn-brown" style="width:122px;" id="btnDelete"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>删除</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnPrint"><i class="glyphicon glyphicon-check" style="font-size:14px;"></i>打印</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnLead"><i class=" glyphicon glyphicon-share-alt" style="font-size:14px;"></i>导出</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnSelect"><i class=" glyphicon glyphicon-search" style="font-size:14px;"></i>查询</button>
+            </div>
+        </div>
+
+        @*左边树形图*@
+        <div class="col-sm-2">
+            <div id="jstree1" style="margin-left:35%;font-family:华文行楷;font-size:18px;">
+                <ul>
+                    <li class="jstree-open">
+                       客户类型
+                        <ul>
+                            <li data-jstree='{"type":"css"}' onclick="Search('委托单位')">委托单位</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('发货人')">发货人</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('船公司')">船公司</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('合作代理')">合作代理</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('拖车公司')">拖车公司</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('收货人')">收货人</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('保险公司')">保险公司</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('船代公司')">船代公司</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('通知人')">通知人</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('物流公司')">物流公司</li>
+                            <li data-jstree='{"type":"css"}' onclick="Search('报关行')">报关行</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+     
+        <div class="col-sm-10" id="modInsertExaminee">
+            <div class="col-sm-12" >
+                <h4 style="font-family:华文行楷;color:cadetblue;" class="">查询条件</h4>
+            </div>
+            <div class="col-sm-12" style="margin-bottom:20px;">
+                <form id="" class="form-horizontal span24" action="" method="post">
+                    <div class="">
+                        <div class="col-sm-2" style="padding:0;">
+                            <div class="col-sm-3"  style="padding:0">
+                                <label class="control-label">客户代码</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 reset" >
+                                <input type="text" style="width:150px;height:34px;" class="form-control" id="ClientCode" name="ClientCode" onchange="if (/[^a-z\A-Z$]/.test(this.value)) { layer.alert('只能输入英文', { icon: 5, title: '提示' }); this.value = ''; }"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="padding:0;margin-left:12px;">
+                            <div class=" col-sm-3"  style="padding:0">
+                                <label class="control-label">客户简称</label>
+                            </div>
+                            <div class="col-sm-8 reset">
+                                <input type="text" style="width:150px;height:34px;" class="form-control" id="ClientAbbreviation" name="ClientAbbreviation" />
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="padding:0;margin-left:12px;">
+                            <div class="col-sm-3 text-right" style="padding:0">
+                                <label class="control-label">所属区域</label>
+                            </div>
+                            <div class="col-sm-8 reset">
+                                <select type="text" style="height:33px;width:150px;" class="form-control" id="GatedotID"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="padding:0;margin-left:12px;">
+                            <div class="col-sm-3 text-right" style="padding:0">
+                                <label class="control-label">组织结构</label>
+                            </div>
+                            <div class="col-sm-8 reset">
+                                <select type="text" style="height:33px;width:150px;" class="form-control" id="MessageID"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2" style="line-height:32px">
+                                <div class="col-sm-2"  style="line-height:36px">
+                                    <input type="checkbox"  name="options" id="WhetherStart">
+                                </div>
+                                <div class="col-sm-6" style="padding:0">
+                                    <b>是否启用</b>
+                                </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-10">
+                <table class="table table-hover choosetable" id="tabClient">
+                    <thead>
+                        <tr class="lol">
+                            <th w_index="ClientID" w_check="true"></th>
+                            <th w_num="total_line">序号</th>
+                            <th w_index="ClientCode">客户代码</th>
+                            <th w_index="ClientAbbreviation">客户简称</th>
+                            <th w_index="ClientTypee">客户类型</th>
+                            <th w_index="ChineseName">中文名称</th>
+                            <th w_index="ClientRank">客户级别</th>
+                            <th w_index="CustomsCode">海关编码</th>
+                            <th w_index="GatedotName">所属区域</th>
+                            <th w_index="ClientSource">客户来源</th>
+                            <th w_index="ClientPhone">客户电话</th>
+                            <th w_index="StaffName">业务员</th>
+                            <th w_index="OfficeHours1">上班时间</th>
+                            <th w_index="ClosingTime1">下班时间</th>
+                            <th w_index="WhetherStartt">是否启用</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        
+
+        @*新增/编辑模态框*@
+        <div class="row">
+            <form id="J_Form" class="form-horizontal span24" action="/ClientManage/ClientManage/SaveClient" method="post">
+                <div class="modal bs-example-modal-sm" id="modBaseInfor">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="width:800px;height:730px;">
+                            <div class="modal-header" style="height:47px;">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title" style="font-family:华文行楷;"><span class="glyphicon glyphicon-th-list"></span>新增客户信息</h4>
+                            </div>
+                            <div class="modal-body" style="height:450px;">
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-13px;margin-top:0px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                        <label class="control-label">客户简称</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px;" id="ClientAbbreviation1" name="ClientAbbreviation" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:164px;margin-top:0px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                        <label class="control-label">客户代码</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px;" id="ClientCode1" name="ClientCode" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-13px;margin-top:7px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                        <label class="control-label">中文名称</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px;" id="ChineseName1" name="ChineseName" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6" style="margin-left:-206px;margin-top:45px;">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:200px;margin-left:-163px;margin-top:1px;">
+                                        <label class="control-label">所属机构</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <select type="text" style="width:179px;margin-left:-23px;height:34px;" class="form-control" id="MessageID1" name="MessageID"></select>
+                                    </div>
+                                </div>
+                                <div style="margin-left:62px;margin-top:-3px;float:left;width:150px;">
+                                    <label class="btn" style="font-size:18px;width:10px;height:5px;">
+                                        <input type="checkbox" style="width:16px;float:left;margin-top:0px;" name="WhetherStart" id="WhetherStart1" value="true">
+                                        <b style="margin-top:-29px;margin-left:19px;float:left">是否启用</b>
+                                    </label>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12" style="padding:0;font-family:华文行楷;">
+                                    <div class="col-sm-2 " style="padding:0;width:70px" >
+                                        <label class="control-label">客户类型</label>
+                                    </div>  @*把 checkbox 的值保存到数据库里的一个字段,每个checkbox给一个name值,数据库不用存在,只是用来传值*@
+                                        <div class="col-sm-10 reset" style="padding:0">
+                                            <div class="col-sm-3" >
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="EntrustUnit" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9"  >
+                                                    <b style="line-height:44px">委托单位</b>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="Consigner" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9" >
+                                                    <b style="line-height:44px">发货人</b>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" value="true">
+                                                </div>
+                                                <div class="col-sm-9" >
+                                                    <b style="line-height:44px">船公司</b>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="Partner" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9" >
+                                                    <b style="line-height:44px">合作代理</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <div class="col-sm-2 " style="width:70px;padding:0">
+                                    </div>
+                                        <div class="col-sm-10 reset" style="padding:0">
+                                            <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="Trailer" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <b style="line-height:44px">拖车公司</b>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="Insurance" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <b style="line-height:44px">保险公司</b>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="Agency" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <b style="line-height:44px">船代公司</b>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="Inform" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <b style="line-height:44px">通知人</b>
+                                                </div>
+                                            </div>
+                                            </div>
+                                    <div class="col-sm-2 " style="padding:0;width:70px;">
+                                    </div>
+                                        <div class="col-sm-10 reset" style="padding:0">
+                                                <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="Delivery" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <b style="line-height:44px">收货人</b>
+                                                </div>
+                                            </div>
+                                                    <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="Logistics" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <b  style="line-height:44px">物流公司</b>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <div class="col-sm-1">
+                                                    <input type="checkbox" name="Clearance" id="" value="true">
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <b  style="line-height:44px">报关行</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12 col-xs-12" style="width:650px;">
+                                    <div class="panel">
+                                        <div class="table">
+                                            <ul class="nav nav-tabs tab-color-blue background-blue" id="myTab4">
+                                                <li class="active" style="font-family: 华文行楷;
+            font-size: 16px;">
+                                                    <a id="tbnavB" href="#tpB" data-toggle="tab">详细信息</a>
+                                                </li>
+                                                <li class="" style="font-family: 华文行楷;
+            font-size: 16px;">
+                                                    <a id="tbnavZ" href="#tpZ" data-toggle="tab">联系人</a>
+                                                </li>
+                                                <li class="" style="font-family: 华文行楷;
+            font-size: 16px;">
+                                                    <a id="tbnavC" href="#tpC" data-toggle="tab">工厂地址</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content  padding-0" id="div">
+                                                @*详细信息*@
+                                                <div class="tab-pane in active" id="tpB">
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-13px;margin-top:8px;">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">客户来源</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px" id="ClientSource1" name="ClientSource" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:46px;margin-top:8px;">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">客户级别</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px" id="ClientRank1" name="ClientRank" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:476px;margin-top:-33px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">业务员</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px" id="" name="" value="@ViewBag.AccountName" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-14px;margin-top:7px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">海关编码</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px" id="CustomsCode1" name="CustomsCode" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:25px;margin-top:6px;">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:100px;">
+                                                            <label class="control-label">所属区域</label>
+                                                        </div>
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 reset" style="margin-left:-24px;">
+                                                            <select type="text" style="height:34px;width:180px;" class="form-control" id="GatedotID1" name="GatedotID"></select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-437px;margin-top:47px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">客户传真</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px" id="ClientFax1" name="ClientFax" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-184px;margin-top:47px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">Email</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px" id="Email" name="Email" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-460px;margin-top:87px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">上班时间</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="time" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px" id="OfficeHours" name="OfficeHours" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-190px;margin-top:87px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:96px;margin-left:-31px;margin-top:0px;">
+                                                            <label class="control-label" style="width:66px;">下班时间</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="time" class="form-control" style="margin-left:38px;margin-top:-31px;width:180px" id="ClosingTime" name="ClosingTime" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:526px;margin-top:-73px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:65px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">邮编</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-63px;margin-top:29px;">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:180px" id="PostCode" name="PostCode" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-16px;margin-top:7px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">地址</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:673px;" id="Site" name="Site" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-206px;margin-top:46px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">网站</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:673px;" id="Website" name="Website" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-208px;margin-top:86px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">开户行</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;" id="OpenAccount" name="OpenAccount" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:45px;margin-top:86px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">开户账号</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:422px;" id="OpenAccountCode" name="OpenAccountCode" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-18px;margin-top:7px;float:left">
+                                                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:130px;margin-left:-52px;margin-top:0px;">
+                                                            <label class="control-label">描述</label>
+                                                        </div>
+                                                        <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                                            <input type="text" class="form-control" style="margin-left:54px;margin-top:-31px;width:676px;" id="Describe" name="Describe" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:615px;font-family: 华文行楷;font-size:18px;margin-top:6px;float:left">
+                                                        <button id="BtnAdd" type="button" class="btn btn-primary">保存</button>
+                                                        <button id="BtnEdit" type="button" class="btn btn-primary">修改</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left:57px;margin-top:-34px;float:left">关闭</button>
+                                                    </div>
+                                                </div>
+
+                                                @*联系人*@
+                                                <div class="tab-pane" id="tpZ">
+                                                    <table class="table table-hover choosetable" style="margin-top:10px;" id="tabScontacts">
+                                                        <thead>
+                                                            <tr class="lol">
+                                                                <th w_index="ClientID" w_hidden="true"></th>
+                                                                <th w_index="ClientScontactsID" w_check="true"></th>
+                                                                <th w_num="total_line">序号</th>
+                                                                <th w_index="contactsName">联系人名称</th>
+                                                                <th w_index="contactsPhone">联系人电话</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                    <div style="margin-left:405px;margin-top:26px;float:left;font-family:华文行楷">
+                                                        <button id="BtnAdd1" type="button" style="margin-left:-226px;" class="btn btn-primary">新增</button>
+                                                        <button id="BtnEdit1" type="button" class="btn btn-info">修改</button>
+                                                        <button id="BtnShan1" type="button" class="btn btn-brown">删除</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left:148px;margin-top:0px;float:left" id="GuanBi">关闭</button>
+                                                    </div>
+                                                </div>
+
+                                                @*工厂地址*@
+                                                <div class="tab-pane" id="tpC">
+                                                    <table class="table table-hover choosetable" style="margin-top:10px;" id="tabClientSite">
+                                                        <thead>
+                                                            <tr class="lol">
+                                                                <th w_index="ClientID" w_hidden="true"></th>
+                                                                <th w_index="ClientSiteID" w_check="true"></th>
+                                                                <th w_num="total_line">序号</th>
+                                                                <th w_index="ContactsName">联系人名称</th>
+                                                                <th w_index="ContactsPhone">联系人电话</th>
+                                                                <th w_index="ClientSite">客户地址</th>
+                                                                <th w_index="FactoryName">工厂名称</th>
+                                                                <th w_index="FactoryCode">工厂代号</th>
+                                                                <th w_index="GatedotName">所属区域</th>
+                                                                <th w_index="Remark">备注</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
+                                                    <div style="margin-left:405px;margin-top:26px;float:left;font-family:华文行楷">
+                                                        <button id="BtnAdd2" type="button" style="margin-left:-226px;" class="btn btn-primary">新增</button>
+                                                        <button id="BtnEdit2" type="button" class="btn btn-info">修改</button>
+                                                        <button id="BtnShan2" type="button" class="btn btn-brown">删除</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left:148px;margin-top:0px;float:left" id="GuanBi1">关闭</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        @*客户联系人 新增/编辑模态框*@
+        <div class="row">
+            <div style="margin-left:195px;margin-top:246px;" class="modal bs-example-modal-sm" id="ClientScontacts">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:630px;">
+                        <div class="modal-header" style="height:47px;">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" style="font-family:华文行楷;"><span class="glyphicon glyphicon-ok"></span></h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form" id="J_Formm" action="" method="post">
+                                <div class="form-group" style="margin-left:-4px;margin-top:6px;font-size:18px;">
+                                    <label class="control-label" style="font-family:华文行楷;">联系人名称</label>
+                                    <input id="contactsName" name="contactsName" style="width:185px;margin-left:98px;margin-top:-26px;" type="text" class="form-control" />
+                                </div>
+                                <div class="form-group" style="margin-left:283px;margin-top:-53px;font-size:18px;">
+                                    <label class="control-label" style="font-family:华文行楷;">联系人电话</label>
+                                    <input id="contactsPhone" name="contactsPhone" style="width:185px;margin-left:96px;margin-top:-26px;" type="text" class="form-control" />
+                                </div>
+                                <div style="margin-left:411px;font-family: 华文行楷;font-size:18px;">
+                                    <button id="BtnEnsure" type="button" class="btn btn-primary">确定</button>
+                                    <button id="BtnAmend" type="button" class="btn btn-info">修改</button>
+                                    <button type="button" style="margin-left:63px;margin-top:-62px;" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @*工厂地址 新增/编辑模态框*@
+        <div class="row">
+            <div style="margin-left:195px;margin-top:246px;" class="modal bs-example-modal-sm" id="ModalClientSite">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:690px;">
+                        <div class="modal-header" style="height:47px;">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" style="font-family:华文行楷;"><span class="glyphicon glyphicon-ok"></span></h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form" id="J_Forme" action="" method="post">
+                                <div class="form-group" style="margin-left:-4px;margin-top:6px;font-size:18px;">
+                                    <label class="control-label" style="font-family:华文行楷;">联系人名称</label>
+                                    <input id="ContactsName" name="ContactsName" style="width:185px;margin-left:98px;margin-top:-26px;" type="text" class="form-control" />
+                                </div>
+                                <div class="form-group" style="margin-left:283px;margin-top:-53px;font-size:18px;">
+                                    <label class="control-label" style="font-family:华文行楷;">联系人电话</label>
+                                    <input id="ContactsPhone" name="ContactsPhone" style="width:185px;margin-left:96px;margin-top:-26px;" type="text" class="form-control" onkeyup="if(isNaN(value))execCommand('undo')" onafterpaste="if(isNaN(value))execCommand('undo')"/>
+                                </div>
+                                <div class="form-group" style="margin-left:-4px;margin-top:6px;font-size:18px;">
+                                    <label class="control-label" style="font-family:华文行楷;">客户地址</label>
+                                    <input id="ClientSite" name="ClientSite" style="width:185px;margin-left:98px;margin-top:-26px;" type="text" class="form-control" />
+                                </div>
+                                <div class="form-group" style="margin-left:283px;margin-top:-53px;font-size:18px;">
+                                    <label class="control-label" style="font-family:华文行楷;">所属区域</label>
+                                    <select id="GatedotID3" name="GatedotID" style="width:185px;margin-left:96px;margin-top:-26px;" type="text" class="form-control"></select>
+                                </div>
+                                <div class="form-group" style="margin-left:-4px;margin-top:6px;font-size:18px;">
+                                    <label class="control-label" style="font-family:华文行楷;">工厂名称</label>
+                                    <input id="FactoryName" name="FactoryName" style="width:185px;margin-left:98px;margin-top:-26px;" type="text" class="form-control" />
+                                </div>
+                                <div class="form-group" style="margin-left:283px;margin-top:-53px;font-size:18px;">
+                                    <label class="control-label" style="font-family:华文行楷;">工厂代号</label>
+                                    <input id="FactoryCode" name="FactoryCode" style="width:185px;margin-left:96px;margin-top:-26px;" type="text" class="form-control" onchange="if (/[^\A-Z$]/.test(this.value)) { layer.alert('只能输入大写英文', { icon: 5, title: '提示' }); this.value = ''; }"/>
+                                </div>
+                                <div class="form-group" style="margin-left:-2px;margin-top:-1px;font-size:18px;">
+                                    <label class="control-label" style="font-family:华文行楷;">备注</label>
+                                    <input id="Remark" name="Remark" style="width:469px;margin-left:96px;margin-top:-26px;" type="text" class="form-control" />
+                                </div>
+                                <div style="margin-left:411px;font-family: 华文行楷;font-size:18px;">
+                                    <button id="BtnEnsure1" type="button" class="btn btn-primary">确定</button>
+                                    <button id="BtnAmend1" type="button" class="btn btn-info">修改</button>
+                                    <button type="button" style="margin-left:63px;margin-top:-62px;" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+     </div>
+    <script src="~/Hdmin/js/jquery.min.js?v=2.1.4"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Hdmin/js/plugins/jsTree/jstree.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+
+    
+
+    <script>
+        var tabClient;
+        var tabScontacts;
+        var tabClientSite;
+
+        //事件加载事件
+        $(function () {
+            //绑定所在组织结构下拉框
+            createSelect("MessageID", "/Commerce/Examine/SelectMessage");
+            createSelect("MessageID1", "/Commerce/Examine/SelectMessage");
+            //绑定所属区域下拉框
+            createSelect("GatedotID", "SelectGatedot");
+            createSelect("GatedotID1", "SelectGatedot");
+            createSelect("GatedotID3", "SelectGatedot");
+
+            //初始化表格数据
+            tabClient = $.fn.bsgrid.init("tabClient", {
+                url: "SelectClient",
+                autoLoad: true,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 6,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                pagingToolbarAlign:"right",
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabClient tr", rowIndex + 1, record);
+                            tabScontacts.search("ClientID=" + record.ClientID);  //要把这个ID传到控制器进行查询
+                            tabClientSite.search("ClientID=" + record.ClientID);
+                        }
+                    }
+                }
+            });
+
+            //初始化联系人表格
+            tabScontacts = $.fn.bsgrid.init('tabScontacts', {
+                url: 'SelectScontacts',
+                autoLoad: false,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabScontacts tr", rowIndex + 1, record);
+                        }
+                    }
+                }
+            });
+
+            //初始化工厂地址表格
+            tabClientSite = $.fn.bsgrid.init('tabClientSite', {
+                url: 'SelectClientSite',
+                autoLoad: false,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabClientSite tr", rowIndex + 1, record);
+                        }
+                    }
+                }
+            });
+
+            tabClientSearch();
+
+
+            $('#jstree1').jstree({
+                'core': {
+                    'check_callback': true
+                },
+                'plugins': ['types', 'dnd'],
+                'types': {
+                    'default': {
+                        'icon': 'fa fa-folder'
+                    },
+                    'html': {
+                        'icon': 'fa fa-file-code-o'
+                    },
+                    'svg': {
+                        'icon': 'fa fa-file-picture-o'
+                    },
+                    'css': {
+                        'icon': 'fa fa-file-code-o'
+                    },
+                    'img': {
+                        'icon': 'fa fa-file-image-o'
+                    },
+                    'js': {
+                        'icon': 'fa fa-file-text-o'
+                    }
+
+                }
+            })
+            setTimeout(function () {
+                $("#j1_1_anchor").attr('onclick', "Search('')")
+            },500)
+           
+        })
+
+        //多条件查询的条件
+        function tabClientSearch() {
+            var ClientCode = $("#ClientCode").val(); //客户代码
+            var ClientAbbreviation = $("#ClientAbbreviation").val();//客户简称
+            var GatedotID = $("#GatedotID").val();//门点ID
+            var MessageID = $("#MessageID").val();//本公司ID
+            var WhetherStart = $("#WhetherStart").val();//是否启用
+
+            if (ClientCode == undefined) {
+                ClientCode = "";
+            }
+            if (ClientAbbreviation == undefined) {
+                ClientAbbreviation = "";
+            }
+            if (GatedotID == undefined) {
+                GatedotID = 0;
+            }
+            if (MessageID == undefined) {
+                MessageID = 0;
+            }
+            if (WhetherStart == undefined) {
+                WhetherStart = 0;
+            }
+           
+            tabClient.search({ ClientCode: ClientCode, ClientAbbreviation: ClientAbbreviation, GatedotID: GatedotID, MessageID: MessageID, WhetherStart: WhetherStart });
+        }
+        function Search(A) {
+            tabClient.search({ ClientType: A });
+        }
+        //点击查询按钮进行多条件查询
+        $("#btnSelect").click(function () {
+            tabClientSearch();
+        });
+
+        //点击新增按钮，弹出模态框
+        $("#btnInsert").click(function () {
+            $("#modBaseInfor .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 新增客户信息');
+            $("#BtnAdd").css("display", "block");//显示保存按钮
+            $("#BtnEdit").css("display", "none");//隐藏修改按钮                     
+
+            $("#tbnavZ").css("display", "none");
+            $("#tbnavC").css("display", "none");
+
+            $("#ClientAbbreviation1").val("");//清空输入框
+            $("#ClientCode1").val("");
+            $("#ChineseName1").val("");
+            $("#MessageID1").val(0);
+            $("#WhetherStart1").val(null);
+            $("#ClientSource1").val("");
+            $("#ClientRank1").val("");
+            $("#CustomsCode1").val("");
+            $("#GatedotID1").val(0);
+            $("#ClientFax1").val(0);
+            $("#Email").val("");
+            $("#OfficeHours").val("");
+            $("#ClosingTime").val("");
+            $("#PostCode").val("");
+            $("#Site").val("");
+            $("#Website").val("");
+            $("#OpenAccount").val("");
+            $("#OpenAccountCode").val("");
+            $("#Describe").val("");
+
+            $("#modBaseInfor").modal();
+        })
+              
+        //点击保存按钮，保存数据
+        $("#BtnAdd").click(function () {
+            var ClientAbbreviation = $("#ClientAbbreviation1").val();//客户简称
+            var ClientCode = $("#ClientCode1").val();//客户代码
+            var ChineseName = $("#ChineseName1").val();//中文名称
+            var GatedotID = $("#GatedotID1").val();//所属区域
+            if (ClientAbbreviation == "" || ClientCode == "" || ChineseName == "" ||GatedotID==0) {
+                layer.alert("请把重要信息填写完整!");
+            }
+            else {
+                $("#J_Form").ajaxSubmit(function (msg) {
+                    if (msg == "success") {
+                        layer.alert("保存成功", { icon: 1, title: '提示' });
+                        $("#modBaseInfor").modal("hide");
+                        tabClient.refreshPage();
+                    }
+                    else {
+                        alert("保存出错");
+                    }
+                })
+            }
+        })
+
+        //点击编辑按钮，弹出编辑按钮
+        $("#btnUpdate").click(function () {
+            var check = $("#tabClient :checkbox:checked");
+            var ClientID = $("#tabClient :checkbox:checked").val();
+            if (check.length == 0) {
+                //0警告  1 成功 2 失败  3问号 4锁 5难过表情  6微笑表情
+                layer.alert("请选择一条信息！", { icon: 0, title: '提示', offest: "-50px" });//offest  离顶部距离100px
+            }
+            if (check.length > 1) {
+                layer.alert("只能选择一条信息!", { icon: 0, title: '提示', offest: "100px" });
+            }
+            if (check.length == 1) {
+                $("#modBaseInfor .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 修改客户信息');
+                $("#BtnAdd").css("display", "none");//隐藏保存按钮
+                $("#BtnEdit").css("display", "block");//显示修改按钮
+
+                $("#tbnavZ").css("display", "block");
+                $("#tbnavC").css("display", "block");
+
+                $.post("SelectClient", { ClientID: ClientID, AAA: "AAA" }, function (msg) {  //表单回填数据,参数为表格主键ID,一个为随便声明的，然后传过去控制器  控制器查出来的数据跟页面的name值一样,就可以回填
+                    loadDatatoForm("J_Form", msg[0]); //J_Form  from表单的ID
+                    $("#J_Form [name='OfficeHours']").val(msg[0].OfficeHours1);//回填上班时间
+                    $("#J_Form [name='ClosingTime']").val(msg[0].ClosingTime1);//回填下班时间
+                    $("#modBaseInfor").modal("show");//弹出模态框
+                })
+            }
+        })
+
+        //点击修改按钮，保存数据
+        $("#BtnEdit").click(function () {
+            var ClientID = $("#tabClient :checkbox:checked").val();
+            var ClientAbbreviation = $("#ClientAbbreviation1").val();//客户简称
+            var ClientCode = $("#ClientCode1").val();//客户代码
+            var ChineseName = $("#ChineseName1").val();//中文名称
+            var MessageID = $("#MessageID1").val();//所属机构
+            var GatedotID = $("#GatedotID1").val();//所属区域
+            var WhetherStart = $("#WhetherStart1").val();//是否启用
+            var ClientSource = $("#ClientSource1").val();//客户来源
+            var ClientRank = $("#ClientRank1").val();//客户级别
+            var CustomsCode = $("#CustomsCode1").val();//海关编码
+            var GatedotID = $("#GatedotID1").val();//所属区域
+            var ClientFax = $("#ClientFax1").val();//客户传真
+            var Email = $("#Email").val();
+            var OfficeHours = $("#OfficeHours").val();//上班时间
+            var ClosingTime = $("#ClosingTime").val();//下班时间
+            var PostCode = $("#PostCode").val();//邮编
+            var Site = $("#Site").val();//地址
+            var Website = $("#Website").val();//网站
+            var OpenAccount = $("#OpenAccount").val();//开户行
+            var OpenAccountCode = $("#OpenAccountCode").val();//开户行账户
+            var Describe = $("#Describe").val();//描述
+
+            if (ClientAbbreviation == "" || ClientCode == "" || ChineseName == "" || MessageID == 0 || GatedotID == 0) {
+                layer.alert("请把重要信息填写完整!");
+            }
+            else {
+                $.post("SaveUpdate", { ClientID: ClientID, ClientAbbreviation: ClientAbbreviation, ClientCode: ClientCode, ChineseName: ChineseName, MessageID: MessageID, WhetherStart: WhetherStart, ClientSource: ClientSource, ClientRank: ClientRank, CustomsCode: CustomsCode, GatedotID: GatedotID, ClientFax: ClientFax, Email: Email, OfficeHours: OfficeHours, ClosingTime: ClosingTime, PostCode: PostCode, Site: Site, Website: Website, OpenAccount: OpenAccount, OpenAccountCode: OpenAccountCode, Describe:Describe}, function (msg) {
+                    if (msg == "success") {
+                        layer.alert("修改成功!");
+                        location.reload();
+                    }
+                    else {
+                        layer.alert("修改失败，请重新检查一遍!");
+                    }
+                })
+            }
+        })
+
+        //点击删除按钮，进行删除
+        $("#btnDelete").click(function () {
+            var Check = $("#tabClient input[type='checkbox']:checked");
+
+            if (Check.length == 0) {
+                layer.alert("请选择需要删除的客户信息!");
+            }
+            else if (Check.length > 0) {
+                var ClientID = $("#tabClient input:checked");
+                layer.confirm("确定删除选中的客户信息吗？",
+               { icon: 3, btn: ['确定', '取消'] }, function (layerIndex) {
+                   layer.close(layerIndex);
+                   for (var i = 0; i < Check.length; i++) {//for循环实现批量删除
+                       $.ajax({
+                           url: "DeleteClient?ClientID=" + Check[i].value,//选择的checkbox的value值
+                           type: "get",//数据传输通道的类型
+                           async: false,
+                           dataType: "json",//传输的数据的类型
+                           success: function (data) {//直接理解为回调函数
+                               if (data == "success") {
+                                   layer.alert("删除成功!");
+                                   tabClient.refreshPage();
+                               } else {
+                                   layer.alert("删除失败！");
+                               }
+                           }
+                       });
+                   }
+               })
+            }
+        })
+
+        //点击打印按钮，打印数据
+        $("#btnPrint").click(function () {
+            var ClientCode = $("#ClientCode").val(); //客户代码
+            var ClientAbbreviation = $("#ClientAbbreviation").val();//客户简称
+            var GatedotID = $("#GatedotID").val();//门点ID
+            var MessageID = $("#MessageID").val();//本公司ID
+            var WhetherStart = $("#WhetherStart").val();//是否启用
+
+            if (ClientCode == undefined) {
+                ClientCode = "";
+            }
+            if (ClientAbbreviation == undefined) {
+                ClientAbbreviation = "";
+            }
+            if (GatedotID == undefined) {
+                GatedotID = 0;
+            }
+            if (MessageID == undefined) {
+                MessageID = 0;
+            }
+            if (WhetherStart == undefined) {
+                WhetherStart = 0;
+            }
+
+            //拼接查询条件
+            var str = "ClientCode=" + ClientCode + "&ClientAbbreviation=" + ClientAbbreviation + "&GatedotID=" + GatedotID + "&MessageID=" + MessageID + "&WhetherStart=" + WhetherStart;
+            //getPageCondition获取当前页请求条件
+            var curCondition = tabClient.getPageCondition(tabClient.getCurPage());
+
+            if (curCondition.indexOf(str) > -1) {
+                layer.confirm("确定要打印当前数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"]
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("PrintAchievement?" + str);
+                });
+            }
+            else {
+                layer.alert("请先查询出客户信息，预览是否是需要打印的数据", { icon: 0, title: '提示' });
+            }
+        })
+
+        //点击导出按钮，导出数据
+        $("#btnLead").click(function () {
+            var ClientCode = $("#ClientCode").val(); //客户代码
+            var ClientAbbreviation = $("#ClientAbbreviation").val();//客户简称
+            var GatedotID = $("#GatedotID").val();//门点ID
+            var MessageID = $("#MessageID").val();//本公司ID
+            var WhetherStart = $("#WhetherStart").val();//是否启用
+
+            if (ClientCode == undefined) {
+                ClientCode = "";
+            }
+            if (ClientAbbreviation == undefined) {
+                ClientAbbreviation = "";
+            }
+            if (GatedotID == undefined) {
+                GatedotID = 0;
+            }
+            if (MessageID == undefined) {
+                MessageID = 0;
+            }
+            if (WhetherStart == undefined) {
+                WhetherStart = 0;
+            }
+
+            //拼接查询条件
+            var str = "ClientCode=" + ClientCode + "&ClientAbbreviation=" + ClientAbbreviation + "&GatedotID=" + GatedotID + "&MessageID=" + MessageID + "&WhetherStart=" + WhetherStart;
+            //getPageCondition获取当前页请求条件
+            var curCondition = tabClient.getPageCondition(tabClient.getCurPage());
+
+            if (curCondition.indexOf(str) > -1) {
+                layer.confirm("确定要导出当前数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"]
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("ExportClientInfor?" + str);
+                });
+            }
+            else {
+                layer.alert("请先查询出客户信息，预览是否是需要导出的数据", { icon: 0, title: '提示' });
+            }
+        })
+
+        //点击联系人新增按钮,弹出模态框
+        $("#BtnAdd1").click(function () {
+            $("#ClientScontacts .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 新增联系人');
+            $("#BtnEnsure").css("display", "block");//显示保存按钮
+            $("#BtnAmend").css("display", "none");//隐藏修改按钮
+
+            $("#contactsName").val("");
+            $("#contactsPhone").val("");
+
+            $("#ClientScontacts").modal();
+        })
+
+        //点击联系人模态框的保存按钮，保存数据
+        $("#BtnEnsure").click(function () {
+            var ClientID = $("#tabClient :checkbox:checked").val();
+            var contactsName = $("#contactsName").val();
+            var contactsPhone = $("#contactsPhone").val();
+
+            if (ClientID == 0 || contactsName == "" || contactsPhone=="") {
+                layer.alert("请把信息填写完整!");
+            }
+            else {
+                $.post("SaveClientScontacts", { ClientID: ClientID, contactsName: contactsName, contactsPhone: contactsPhone }, function (msg) {
+                    if (msg == "success") {
+                        layer.alert("保存成功", { icon: 1, title: '提示' });
+                        $("#ClientScontacts").modal("hide");
+                        tabScontacts.refreshPage();
+                    }
+                    else {
+                        alert("保存出错,可能是电话号码重复了!");
+                    }
+                })
+            }
+        })
+
+        //点击编辑按钮，弹出编辑模态框
+        $("#BtnEdit1").click(function () {           
+            var check = $("#tabScontacts input:checked");
+            var ClientScontactsID = check[0].value;
+            var ClientID = $("#tabClient :checkbox:checked").val();
+            if (check.length == 0) {
+                //0警告  1 成功 2 失败  3问号 4锁 5难过表情  6微笑表情
+                layer.alert("请选择一条信息！", { icon: 0, title: '提示', offest: "-50px" });//offest  离顶部距离100px
+            }
+            if (check.length > 1) {
+                layer.alert("只能选择一条信息!", { icon: 0, title: '提示', offest: "100px" });
+            }
+            if (check.length == 1) {
+                $("#ClientScontacts .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 修改联系人');
+                $("#BtnEnsure").css("display", "none");//显示修改按钮
+                $("#BtnAmend").css("display", "block");//隐藏保存按钮
+
+                $.post("SelectScontacts", { ClientScontactsID: check[0].value, BBB: "BBB", ClientID: ClientID }, function (msg) {  //表单回填数据,参数为表格主键ID,一个为随便声明的，然后传过去控制器  控制器查出来的数据跟页面的name值一样,就可以回填
+                    loadDatatoForm("J_Formm", msg[0]); //J_Form  from表单的ID
+                    $("#ClientScontacts").modal();
+                })
+            }
+
+        })
+
+        //点击联系人模态框修改按钮，保存修改
+        $("#BtnAmend").click(function () {
+            var ClientScontactsID = $("#tabScontacts :checkbox:checked").val();
+            var ClientID = $("#tabClient :checkbox:checked").val();
+            var contactsName = $("#contactsName").val();
+            var contactsPhone = $("#contactsPhone").val();
+
+            $.post("UpdateClientScontacts", { ClientScontactsID: ClientScontactsID, ClientID: ClientID, contactsName: contactsName, contactsPhone: contactsPhone }, function (msg) {
+                if (msg == "success") {
+                    layer.alert("修改成功", { icon: 1, title: '提示' });
+                    $("#ClientScontacts").modal("hide");
+                    tabScontacts.refreshPage();
+                }
+                else {
+                    alert("修改失败");
+                }
+            })
+        })
+
+        //点击联系人模态框删除按钮，保存删除
+        $("#BtnShan1").click(function () {
+            var Check = $("#tabScontacts input[type='checkbox']:checked");
+
+            if (Check.length == 0) {
+                layer.alert("请选择需要删除的客户联系人信息!");
+            }
+            else if (Check.length > 0) {
+                var ClientScontactsID = $("#tabScontacts input:checked");
+                layer.confirm("确定删除选中的客户联系人信息吗？",
+               { icon: 3, btn: ['确定', '取消'] }, function (layerIndex) {
+                   layer.close(layerIndex);
+                   for (var i = 0; i < Check.length; i++) {//for循环实现批量删除
+                       $.ajax({
+                           url: "DeleteClientScontacts?ClientScontactsID=" + Check[i].value,//选择的checkbox的value值
+                           type: "get",//数据传输通道的类型
+                           async: false,
+                           dataType: "json",//传输的数据的类型
+                           success: function (data) {//直接理解为回调函数
+                               if (data == "success") {
+                                   layer.alert("删除成功!");
+                                   tabScontacts.refreshPage();
+                               } else {
+                                   layer.alert("删除失败！");
+                               }
+                           }
+                       });
+                   }
+               })
+            }
+        })
+        
+        //点击新增按钮，弹出模态框
+        $("#BtnAdd2").click(function () {
+            $("#ModalClientSite .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 新增工厂地址');
+            $("#BtnEnsure1").css("display", "block");//显示保存按钮
+            $("#BtnAmend1").css("display", "none");//隐藏修改按钮
+
+            $("#ContactsName").val("");
+            $("#ContactsPhone").val("");
+            $("#ClientSite").val("");
+            $("#GatedotID3").val("");
+            $("#FactoryName").val("");
+            $("#FactoryCode").val("");
+            $("#Remark").val("");
+
+            $("#ModalClientSite").modal();
+        })
+
+        //点击工厂地址弹出框确定按钮，保存新增工厂地址
+        $("#BtnEnsure1").click(function () {
+            var ContactsName = $("#ContactsName").val();
+            var ContactsPhone = $("#ContactsPhone").val();
+            var ClientSite = $("#ClientSite").val();
+            var GatedotID = $("#GatedotID3").val();
+            var FactoryName = $("#FactoryName").val();
+            var FactoryCode = $("#FactoryCode").val();
+
+            if (ContactsName == "" || ContactsPhone == "" || ClientSite == "" || GatedotID == 0 || FactoryName == "" || FactoryCode=="") {
+                layer.alert("请把信息填写完整!");
+            }
+            else {
+                var ClientID = $("#tabClient :checkbox:checked").val();
+                $("#J_Forme").attr("action", "SaveClientSite?ClientID=" + ClientID); //表单提交传参
+
+                $("#J_Forme").ajaxSubmit(function (msg) {
+                    if (msg == "success") {
+                        layer.alert("保存成功", { icon: 1, title: '提示' });
+                        $("#ModalClientSite").modal("hide");
+                        tabClientSite.refreshPage();
+                    }
+                    else {
+                        alert("保存出错，可能是工厂代号不能重复!");
+                    }
+                })
+            }           
+        })
+
+        //点击工厂地址的修改按钮，弹出修改模态框，回填数据
+        $("#BtnEdit2").click(function () {
+            var check = $("#tabClientSite input:checked");
+            var ClientSiteID = $("#tabClientSite :checkbox:checked").val();
+            var ClientID = $("#tabClient :checkbox:checked").val();
+            if (check.length == 0) {
+                //0警告  1 成功 2 失败  3问号 4锁 5难过表情  6微笑表情
+                layer.alert("请选择一条信息！", { icon: 0, title: '提示', offest: "-50px" });//offest  离顶部距离100px
+            }
+            if (check.length > 1) {
+                layer.alert("只能选择一条信息!", { icon: 0, title: '提示', offest: "100px" });
+            }
+            if (check.length == 1) {
+                $("#ModalClientSite .modal-title").html('<span class="glyphicon glyphicon-th-list"></span> 修改工厂地址');
+                $("#BtnAmend1").css("display", "block");//显示修改按钮
+                $("#BtnEnsure1").css("display", "none");//隐藏保存按钮
+
+                $.post("SelectClientSite", { ClientSiteID: ClientSiteID, BBB: "BBB", ClientID: ClientID }, function (msg) {  //表单回填数据,参数为表格主键ID,一个为随便声明的，然后传过去控制器  控制器查出来的数据跟页面的name值一样,就可以回填
+                    loadDatatoForm("J_Forme", msg[0]); //J_Form  from表单的ID
+                    $("#ModalClientSite").modal();
+                })
+            }
+        })
+
+        //点击工厂地址模态框的修改按钮，保存修改
+        $("#BtnAmend1").click(function () {
+            var ClientSiteID = $("#tabClientSite :checkbox:checked").val();
+            var ClientID = $("#tabClient :checkbox:checked").val();
+            var ContactsName = $("#ContactsName").val().trim();
+            var ContactsPhone = $("#ContactsPhone").val().trim();
+            var ClientSite = $("#ClientSite").val().trim();
+            var GatedotID = $("#GatedotID3").val();
+            var FactoryName = $("#FactoryName").val().trim();
+            var FactoryCode = $("#FactoryCode").val().trim();
+            var Remark = $("#Remark").val().trim();
+
+            if (ContactsName == "" || ContactsPhone == "" || ClientSite == "" || GatedotID == 0 || FactoryName == "" || FactoryCode == "") {
+                layer.alert("请把信息填写完整!");
+            }
+            else {
+                $.post("UpdateClientSite", {ClientSiteID:ClientSiteID,ClientID:ClientID, ContactsName: ContactsName, ContactsPhone: ContactsPhone, ClientSite: ClientSite, GatedotID: GatedotID, FactoryName: FactoryName, FactoryCode: FactoryCode, Remark: Remark }, function (msg) {
+                    if (msg == "success") {
+                        layer.alert("修改成功!");
+                        $("#ModalClientSite").modal('hide');
+                        tabClientSite.refreshPage();
+                    }
+                    else {
+                        layer.alert("修改失败，请重新检查一遍!");
+                    }
+                })
+            }           
+        })
+
+        //点击工厂地址模态框删除按钮，删除选中的数据
+        $("#BtnShan2").click(function () {
+            var Check = $("#tabClientSite input[type='checkbox']:checked");
+
+            if (Check.length == 0) {
+                layer.alert("请选择需要删除的工厂地址!");
+            }
+            else if (Check.length > 0) {
+                var ClientSiteID = $("#tabClientSite input:checked");
+                layer.confirm("确定删除选中的工厂地址吗？",
+               { icon: 3, btn: ['确定', '取消'] }, function (layerIndex) {
+                   layer.close(layerIndex);
+                   for (var i = 0; i < Check.length; i++) {//for循环实现批量删除
+                       $.ajax({
+                           url: "DeleteClientSite?ClientSiteID=" + Check[i].value,//选择的checkbox的value值
+                           type: "get",//数据传输通道的类型
+                           async: false,
+                           dataType: "json",//传输的数据的类型
+                           success: function (data) {//直接理解为回调函数
+                               if (data == "success") {
+                                   layer.alert("删除成功!");
+                                   tabClientSite.refreshPage();
+                               } else {
+                                   layer.alert("删除失败！");
+                               }
+                           }
+                       });
+                   }
+               })
+            }
+        })
+
+
+
+
+
+
+
+
+
+
+
+        //联系人电话号码验证
+        $("#contactsPhone").blur(function () {
+            if ((/^1[34578]\d{9}$/).test($("#contactsPhone").val())) {
+
+            }
+            else {
+                layer.alert("请输入正确的手机号", { icon: 0, title: "提示" });
+                $("#contactsPhone").val("")
+            }
+        });
+
+        //工厂地址电话号码验证
+        $("#ContactsPhone").blur(function () {
+            if ((/^1[34578]\d{9}$/).test($("#ContactsPhone").val())) {
+
+            }
+            else {
+                layer.alert("请输入正确的手机号", { icon: 0, title: "提示" });
+                $("#ContactsPhone").val("")
+            }
+        });
+
+
+        //点击刷新按钮，刷新页面
+        $("#btnRefresh").click(function () {
+            location.reload();
+        })
+
+    </script>
+
+</body>
+
+</html> 

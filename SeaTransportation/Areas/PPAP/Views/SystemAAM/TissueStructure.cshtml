@@ -1,0 +1,624 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TissueStructure</title>
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    @*CSS样式(包含默认皮肤样式)*@
+
+    <link href="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <link href="~/Content/Tree/jsTree/style.min.css" rel="stylesheet" />
+    @*自定义样式*@
+    <style type="text/css">
+        .container {
+            width: 100%;
+            padding: 0;
+        }
+
+        .panel-heading {
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .panel-body {
+            padding-top: 0;
+        }
+
+            .panel-body label {
+                font-weight: normal;
+                font-size: 16px;
+            }
+
+        .setPadding {
+            border: 1px solid #eee;
+            padding: 5px 0 5px 10px;
+        }
+
+            .setPadding button {
+                padding: 4px 6px;
+                font-size: 12px;
+            }
+
+        .form-horizontal label {
+            font-size: 12px;
+        }
+
+        .form-horizontal select, .form-horizontal input {
+            height: 26px;
+            padding: 0;
+        }
+
+        .reset {
+            padding: 0;
+        }
+
+        .examineeInfor {
+            border: 1px solid #eee;
+            padding: 0;
+        }
+
+        .h5 {
+            margin: 0;
+            background: #eef;
+            padding: 6px 10px;
+        }
+
+        .examineeInfor th, .examineeInfor td {
+            font-weight: normal;
+            text-align: center;
+        }
+
+        #examineeInfor th {
+            padding: 4px 8px;
+        }
+
+        .modal-header {
+            padding: 6px 5px;
+            border-bottom: none;
+            background: #337ab7;
+            text-align: center;
+            color: #fff;
+        }
+
+        .modal-content {
+            padding: 6px;
+        }
+
+        .modal-body {
+            border: 1px solid #ddd;
+            padding: 0 25px;
+        }
+
+        .modal-content label {
+            font-weight: normal;
+            font-size: 12px;
+        }
+
+        .img-box {
+            border: 1px solid #eee;
+            padding: 10px;
+        }
+
+        .modal-dialog {
+            width: 400px;
+        }
+
+        .modal .form-group {
+            margin-bottom: 0;
+            margin-top: 2px;
+        }
+
+        .form-group input {
+            height: 26px;
+        }
+
+        .setSex {
+            position: relative;
+            top: -10px;
+            left: 2px;
+        }
+
+        .text-center {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    @*页面*@
+    <div class="container">
+
+        <div class="panel">
+            <div class="panel-heading">组织结构</div>
+            <div class="panel-body">
+                @*搜索栏按钮栏*@
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        <div id="A"></div>
+                    </div>
+                    <div class="row setPadding" style="margin-left: -13px">
+                        @*按钮*@
+                        <div class="col-lg-10 col-md-5 col-sm-5" style="float:right">
+                            <button class="btn btn-group" type="button" id="close">关闭</button>
+                            <button class="btn btn-group" type="button" id="refresh">刷新</button>
+                            <button class="btn btn-group" type="button" id="add">新增</button>
+                            <button class="btn btn-group" type="button" id="redact">编辑</button>
+                            <button class="btn btn-group" type="button" id="delete">删除</button>
+                            <button class="btn btn-group" type="button" id="demand">查询</button>
+                            <button class="btn btn-group" type="button" id="Stamp" onclick="Stamp()">打印</button>
+                            <button class="btn btn-group" type="button" id="DaoChu">导出</button>
+                        </div>
+
+                        @*表格数据绑定*@
+                        <div class="col-lg-10 col-md-5 col-sm-5" style="float:right">
+                            <table id="Tiss" style="width:100%">
+                                <tr>
+                                    <th w_check="true" w_index="MessageID" id="MessageID"></th>
+                                    <th w_num="total_line">NO.</th>
+                                    <th w_index="TissueCode">组织代码</th>
+                                    <th w_index="ChineseName">中文名称</th>
+                                    <th w_index="ChineseAbbreviation">中文简称</th>
+                                    <th w_index="EnglishCode">英文代码</th>
+                                    <th w_index="EnglishName">英文名称</th>
+                                    <th w_index="Site">地址</th>
+                                    <th w_index="Relation">联系人</th>
+                                    <th w_index="Describe">描述</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @*新增考生模态窗体*@
+            <div class="modal  bs-example-modal-sm" id="modInsertExaminee">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        @*模态框头部*@
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">
+                                <span aria-hidden="true">&times;</span>
+                                <span class="sr-only">Close</span>
+                            </button>
+                            <h5 class="modal-title">蓝色的帅气</h5>
+                        </div>
+                        @*新增模态框内容*@
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form" id="formInsertExaminee" action="InsertStudent" method="post">
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                        <label class="control-label">组织代码:</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" id="TissueCode" name="TissueCode" autocomplete="off" />
+                                        @*<lable id="StudentIDNumlength" style="font:12px;color:#0094ff;">00位</lable>*@
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                        <label class="control-label">中文名称:</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" id="ChineseName" name="ChineseName" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                        <label class="control-label">中文简称：</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" id="ChineseAbbreviation" name="ChineseAbbreviation" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                        <label class="control-label">英文代码:</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" id="EnglishCode" name="EnglishCode" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                        <label class="control-label">英文名称:</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" id="EnglishName" name="EnglishName" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                        <label class="control-label">地址:</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" id="Site" name="Site" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                        <label class="control-label">联系人:</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" id="Relation" name="Relation" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                        <label class="control-label">描述:</label>
+                                    </div>
+                                    <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                        <input type="text" class="form-control" id="Describe" name="Describe" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="padding:10px;">
+                                    <div class="col-lg-8 col-md-8 col-sm-8 pull-right">
+                                        <button class="btn btn-primary" type="button" id="l">查询</button>
+                                        <button class="btn btn-primary" type="button" id="ll">新增</button>
+                                        <button class="btn btn-primary" type="button" id="lll">重置</button>
+                                        <button class="btn btn-primary" type="button" id="llll">修改</button>
+                                        <button class="btn btn-primary" type="button" id="lllll">保存</button>
+                                        <button class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*外部js引用*@
+    <script src="~/Content/Tree/jquery.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>@*jquery.bsgrid*@
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>@*查询表格*@
+    <script src="~/Content/layer/layer.js"></script>@*对话框*@
+
+    <script src="~/Content/js/customfunction.js"></script>@*下拉框数据绑定、表单数据回填*@
+    <script src="~/Content/js/combobox.js"></script>   @*点击选中行*@
+    <script src="~/Content/js/jquery.form.js"></script>@*提交表单*@
+    <script src="~/Content/Tree/jstree.min.js"></script>
+    <script src="~/Content/Tree/Tree.js"></script>
+    <script>
+            var tttt;
+            Tree("#A", "/PPAP/SystemAAM/Tree")
+
+            $(function () {
+                //初始化表格数据
+                tttt = $.fn.bsgrid.init("Tiss", {
+                    url: "Selectll",
+                    autoLoad: true,
+                    pageSizeSelect: true,//分页大小选择下拉框
+                    pageSize: 7,//初始化每一页数据条数
+                    stripeRows: true,//隔行换色
+                    rowHoverColor: true,//鼠标滑过变色
+                    pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                    displayBlankRows: false,//不显示空白行
+                    event: {
+                        //当前行事件
+                        customRowEvents: {
+                            click: function (record, rowIndex, trObj, options) {
+                                //调用行点击事件
+                                Check("#Tiss tr", rowIndex + 1);
+                                ddddd(record);
+                            }
+                        }
+                    }
+                });
+            });
+
+            function Tree1(MessageID) {
+                tttt.search({MessageID:MessageID})
+            }
+            //*************************
+                $("#close").click(function (){//关闭
+                       window.history.go(-1);
+                       });
+                $("#refresh").click(function () {
+                    location.reload();//刷新
+                });
+            ///**************************新增**********************************
+                $("#add").click(function () {  //新增弹出框
+                    $("#modInsertExaminee").modal("show");
+                    $("#lllll").css("display", "block");
+                    //隐藏
+                    $("#l").css("display", "none");//查询
+                    $("#ll").css("display", "none");//新增
+                    $("#lll").css("display", "none");//重置
+                    $("#llll").css("display", "none");//修改
+                    $("#lllll").click(function () {
+                        $("#modInsertExaminee").modal("hide");
+                    });
+                    $("#lllll").click(function () {
+                        //获取新增数据
+                        var TissueCode = $("#TissueCode").val().trim();
+                        var ChineseName = $("#ChineseName").val().trim();
+                        var ChineseAbbreviation = $("#ChineseAbbreviation").val().trim();
+                        var EnglishCode = $("#EnglishCode").val().trim();
+                        var EnglishName = $("#EnglishName").val().trim();
+                        var Site = $("#Site").val().trim();
+                        var Relation = $("#Relation").val().trim();
+                        var Describe = $("#Describe").val().trim();
+                        //   请求数据
+                        $.getJSON("Inserll?TissueCode=" + TissueCode + "&ChineseName=" + ChineseName + "&ChineseAbbreviation=" + ChineseAbbreviation + "&EnglishCode=" + EnglishCode + "&EnglishName=" + EnglishName + "&Site=" + Site + "&Relation=" + Relation + "&Describe=" + Describe,
+                            function (data) {
+                            if (data == "success") {
+                                //刷新页面
+                                location.reload();
+                            }
+                        });
+                    });
+                });
+                    ///*****************************条件查询******************************
+                $("#demand").click(function () {//查询弹出模态框
+
+                    $("#modInsertExaminee").modal("show");
+
+                    $("#l").css("display", "block");
+                    //  隐藏按钮
+                    $("#ll").css("display", "none");//新增
+                    $("#lll").css("display", "none");//重置
+                    $("#llll").css("display", "none");//修改
+                    $("#lllll").css("display", "none");//保存
+                    $("#l").click(function () {
+                        $("#modInsertExaminee").modal("hide");
+                    });
+            //        //多条件查询
+                            $("#l").click(function () {//获取文本框信息
+                                var TissueCode = $("#TissueCode").val();
+                                var ChineseName = $("#ChineseName").val();
+                                var ChineseAbbreviation = $("#ChineseAbbreviation").val();
+                                var EnglishCode = $("#EnglishCode").val();
+                                var EnglishName = $("#EnglishName").val();
+                                var Site = $("#Site").val();
+                                var Relation = $("#Relation").val();
+                                var Describe = $("#Describe").val();
+                                if (TissueCode == undefined) {
+                                    TissueCode = "";
+                                }
+                                if (ChineseName == undefined) {
+                                    ChineseName = "";
+                                }
+                                if (ChineseAbbreviation == undefined) {
+                                    ChineseAbbreviation = "";
+                                }
+                                if (EnglishCode == undefined) {
+                                    EnglishCode = "";
+                                }
+                                if (EnglishName == undefined) {
+                                    EnglishName = "";
+                                }
+                                if (Site == undefined) {
+                                    Site = "";
+                                }
+                                if (Relation == undefined) {
+                                    Relation = "";
+                                }
+                                if (Describe == undefined) {
+                                    Describe = "";
+                                }
+                                tttt.search({ TissueCode: TissueCode, ChineseName: ChineseName, ChineseAbbreviation: ChineseAbbreviation, EnglishCode: EnglishCode, EnglishName: EnglishName, Site: Site, Relation: Relation, Describe: Describe });
+                            });
+                        });
+            //***********************修改***********************************
+                $("#redact").click(function () {
+                    //隐藏按钮
+                    $("#l").css("display", "none");//查询
+                    $("#ll").css("display", "none");//新增
+                    $("#lllll").css("display", "none");//保存
+                    //显示按钮
+                    $("#lll").css("display", "block");//重置
+                    $("#llll").css("display", "block");//修改
+                    var Check = $("#Tiss input:checked");
+                    console.log();
+
+                    if (Check.length == 0) {
+                        layer.msg("请选择一条信息", { icon: 0, })
+                    }
+                    if (Check.length > 1) {
+                        layer.msg("只能选择一条信息", { icon: 0 });
+                    }
+                    if (Check.length == 1) {
+
+                        //$.post("/PPAP/SystemAAM/Selectll",{ MessageID: Check[0].value }, function (data) {
+                        //    loadDatatoForm("modInsertExaminee", data)
+                        //});
+                        //var MessageID = MessageID + Check[0].value;
+                        //tttt.search({ MessageID: MessageID });
+                        $("#modInsertExaminee").modal("show");
+
+                       // },100)
+                    }
+
+                });
+             //   location.reload();
+                    //数据回填
+                    function ddddd(record) {
+                        $("#TissueCode").val(record.TissueCode);
+                        $("#ChineseName").val(record.ChineseName);
+                        $("#ChineseAbbreviation").val(record.ChineseAbbreviation);
+                        $("#EnglishCode").val(record.EnglishCode);
+                        $("#EnglishName").val(record.EnglishName);
+                        $("#Site").val(record.Site);
+                        $("#Relation").val(record.Relation);
+                        $("#Describe").val(record.Describe);
+                    }
+                    $("#llll").click(function () {
+                        //修改保存
+                        var Check = $("#Tiss input:checked");
+                       // var ccc = Check[0].value();
+                        var TissueCode = $("#TissueCode").val().trim();
+                        var ChineseName = $("#ChineseName").val().trim();
+                        var ChineseAbbreviation = $("#ChineseAbbreviation").val().trim();
+                        var EnglishCode = $("#EnglishCode").val().trim();
+                        var EnglishName = $("#EnglishName").val().trim();
+                        var Site = $("#Site").val().trim();
+                        var Relation = $("#Relation").val().trim();
+                        var Describe = $("#Describe").val().trim();
+                        //请求数据
+
+                        $.post("UpDate?TissueCode=" + TissueCode + "&ChineseName=" + ChineseName + "&ChineseAbbreviation=" + ChineseAbbreviation + "&EnglishCode=" + EnglishCode + "&EnglishName=" + EnglishName + "&Site=" + Site + "&Relation=" + Relation + "&Describe=" + Describe + "&MessageID=" + Check[0].value,
+                            function (data) {
+                                if (data == "success") {
+                                    //刷新页面
+                                    location.reload();
+                                };
+                            });
+                    });
+
+            //删除
+              //      function doDelete() {
+                        $("#delete").click(function () {
+                            //获取选中行
+                            var check = $("#Tiss input:checked");
+                            //声明一个变量记录删除数据的条数
+                            //var ReturnLength = 0;
+                            if (check.length > 0) {
+                                layer.confirm("确定要删除吗？", {
+                                    icon: 3,
+                                    btn: ['确定', '取消'],
+                                    offset: "50px"
+                                }, function (layerIndex) {
+                                    //关闭提示框
+                                    layer.close(layerIndex);
+                                    for (var i = 0; i < check.length; i++) {
+                                        var id = check[i].value;
+                                        $.ajax({
+                                            url: "Delete?MessageID=" + id,
+                                            type: "get",//数据传输通道类型
+                                            async: false,
+                                            dataType: "json",
+                                            success: function (data) {
+                                                if (data) {
+                                                    location.reload();
+                                                } else {
+                                                    layer.msg(data, { icon: 0, title: "提示" });
+                                                }
+
+                                            }
+                                        });
+                                    }
+                                })
+                            }
+                            else {
+                                //引用第三方对话框。
+                                layer.alert("请选择要删除的信息", { icon: 0, title: '提示' });
+                            }
+                       });
+                        //导出
+                    $("#DaoChu").click(function () {
+                        var TissueCode = $("#TissueCode").val().trim();
+                        var ChineseName = $("#ChineseName").val().trim();
+                        var ChineseAbbreviation = $("#ChineseAbbreviation").val().trim();
+                        var EnglishCode = $("#EnglishCode").val().trim();
+                        var EnglishName = $("#EnglishName").val().trim();
+                        var Site = $("#Site").val().trim();
+                        var Relation = $("#Relation").val().trim();
+                        var Describe = $("#Describe").val().trim();
+                        if (TissueCode == undefined || TissueCode == null) {
+                            TissueCode = "";
+                        }
+                        if (ChineseName == undefined || ChineseName == null) {
+                            ChineseName = "";
+                        }
+                        if (ChineseAbbreviation == undefined || ChineseAbbreviation == null) {
+                            ChineseAbbreviation = "";
+                        }
+                        if (EnglishCode == undefined || EnglishCode == null) {
+                            EnglishCode = "";
+                        }
+                        if (EnglishName == undefined || EnglishName == null) {
+                            EnglishName = "";
+                        }
+                        if (Site == undefined || Site == null) {
+                            Site = "";
+                        }
+                        if (Relation == undefined || Relation == null) {
+                            Relation = "";
+                        }
+                        if (Describe == undefined || Describe == null) {
+                            Describe = "";
+                        }
+                        var str = "TissueCode=" + TissueCode + "&ChineseName=" + ChineseName + "&ChineseAbbreviation=" + ChineseAbbreviation + "&EnglishCode=" + EnglishCode + "&EnglishName=" + EnglishName + "&Site=" + Site + "&Relation=" + Relation + "&Describe=" + Describe
+
+                        if (tttt.getTotalRows() > 0) {
+                            layer.confirm("确定要导出当前数据吗？", {
+                                icon: 3,
+                                btn: ["确定", "取消"]
+
+                            }, function (layerIndex) {
+                                layer.close(layerIndex)
+                                window.open("FlowLeave?" + str);
+
+                            });
+                        } else {
+                            layer.alert("请先查询出考生，预览是否是需要导出的考生", { icon: 0, title: '提示' });
+                        }
+                    });
+            ///打印
+            //  function Stamp() {
+                    $("#Stamp").click(function () {
+                        var check = $("#Tiss input:checked");
+                        var TissueCode = $("#TissueCode").val().trim();
+                        var ChineseName = $("#ChineseName").val().trim();
+                        var ChineseAbbreviation = $("#ChineseAbbreviation").val().trim();
+                        var EnglishCode = $("#EnglishCode").val().trim();
+                        var EnglishName = $("#EnglishName").val().trim();
+                        var Site = $("#Site").val().trim();
+                        var Relation = $("#Relation").val().trim();
+                        var Describe = $("#Describe").val().trim()
+                        if (TissueCode == undefined || TissueCode == null) {
+                            TissueCode = "";
+                        }
+                        if (ChineseName == undefined || ChineseName == null) {
+                            ChineseName = "";
+                        }
+                        if (ChineseAbbreviation == undefined || ChineseAbbreviation == null) {
+                            ChineseAbbreviation = "";
+                        }
+                        if (EnglishCode == undefined || EnglishCode == null) {
+                            EnglishCode = "";
+                        }
+                        if (EnglishName == undefined || EnglishName == null) {
+                            EnglishName = "";
+                        }
+                        if (Site == undefined || Site == null) {
+                            Site = "";
+                        }
+                        if (Relation == undefined || Relation == null) {
+                            Relation = "";
+                        }
+                        if (Describe == undefined || Describe == null) {
+                            Describe = "";
+                        }
+                        var str = "TissueCode=" + TissueCode + "&ChineseName=" + ChineseName + "&ChineseAbbreviation=" + ChineseAbbreviation + "&EnglishCode=" + EnglishCode + "&EnglishName=" + EnglishName + "&Site=" + Site + "&Relation=" + Relation + "&Describe=" + Describe
+
+                        if (tttt.getTotalRows() > 0) {
+                            layer.confirm("确定要打印当前数据吗？", {
+                                icon: 0,
+                                msg: 3,
+                                btn: ["确定", "取消"]
+                            }, function (layerIndex) {
+                                layer.close(layerIndex)
+                                window.open("Stamp?" + str);
+                            });
+                        } else {
+                            layer.alert("请先查询出考生，预览是否是需要打印的考生", { icon: 0, title: '提示' });
+                        }
+                    });
+
+
+
+
+
+
+    </script>
+</body>
+</html>

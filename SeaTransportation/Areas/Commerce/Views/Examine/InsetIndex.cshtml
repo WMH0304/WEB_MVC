@@ -1,0 +1,1182 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>新增结算单</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/css/skins/grid_bootstrap.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        code {
+            padding: 0px 4px;
+            color: #d14;
+            background-color: #f7f7f9;
+            border: 1px solid #e1e1e8;
+        }
+        /*#button button i{
+            color:white;
+        }*/
+        #button button {
+            font-family: 华文行楷;
+            font-size: 16px;
+            line-height: 14px;
+        }
+
+        .row label {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .row input {
+            width: 150px;
+            height: 33px;
+        }
+
+        .lol th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="panel-heading" style="height:55px;margin-left:-3496px;margin-top:30px;">
+            <div class="col-lg-10 col-sm-10 col-md-10 text-right" id="button">
+                <button class="btn btn-brown" style="width:84px;" id="btnGuanbi"><i class="glyphicon glyphicon-remove" style="font-size:14px;"></i>关闭</button>
+                <button class="btn btn-brown" style="width:122px;" id="btnSign"><i class="glyphicon glyphicon-floppy-saved" style="font-size:14px;"></i>标记对账</button>
+                <button class="btn btn-brown" style="width:84px;" onclick="printAchievement()"><i class="glyphicon glyphicon-check" style="font-size:14px;"></i>打印</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnDaoChu"><i class=" glyphicon glyphicon-share-alt" style="font-size:14px;"></i>导出</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnSelect"><i class=" glyphicon glyphicon-search" style="font-size:14px;"></i>查询</button>
+            </div>
+        </div>
+
+        <h4 style="font-family:华文行楷;margin-left:-138px;color:cadetblue;margin-top:0px;">查询条件</h4>
+        <div class="row" id="modInsertExaminee">
+            <form id="" class="form-horizontal span24" action="/KeFangYuDing/KeFang/Insertnews" method="post">
+                <div class="row">
+                    <input type="hidden" id="ClientCode" name="ClientCode" />
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-167px;margin-top:-15px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">委托单号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                            <input type="text" class="form-control" id="EtrustNmber" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-163px;margin-top:-14px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">柜号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-15px;margin-top:2px;">
+                            <input type="text" class="form-control" id="Cupboard" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-157px;margin-top:-14px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">封条号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <input type="text" class="form-control" id="Seal" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:575px;margin-top:-36px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">还柜时间</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:1px;">
+                            <input type="date" class="form-control" id="HuaiWeightTime" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:914px;margin-top:-36px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="width:20px;">
+                            <label class="control-label">至</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-10px;margin-top:1px;">
+                            <input type="date" class="form-control" id="HuaiWeightTimes" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-167px;margin-top:1px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">客户简称</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                            <input type="text" class="form-control" id="ClientAbbreviation" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-165px;margin-top:3px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">提柜地点</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="TiGui"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-155px;margin-top:2px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">还柜地点</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="HuanGui"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-137px;margin-top:-1px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">船公司</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="Client"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:826px;margin-top:-37px;float:left">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">船名</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-15px;margin-top:2px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="ChineseName"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-172px;margin-top:4px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">航次</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <input type="text" class="form-control" id="HangCi" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-161px;margin-top:4px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">进出口岸</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="PortID"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-155px;margin-top:4px;float:left">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">目的港</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="GoalHarborID"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-136px;margin-top:1px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">承运公司</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="UndertakeID"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:824px;margin-top:-36px;float:left">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">状态</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="EtrustType">
+                                <option value="">----请选择----</option>
+                                <option value="运输完成">运输完成</option>
+                                <option value="新单">新单</option>
+                                <option value="已派车">已派车</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-173px;margin-top:2px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">司机</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="Chauffeur"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-159px;margin-top:2px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">车牌号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-15px;margin-top:2px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="PlateNumbers"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-157px;margin-top:2px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">托架编号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="BracketCode"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-136px;margin-top:0px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">订舱号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                            <input type="text" class="form-control" id="BookingSpace" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:826px;margin-top:-37px;float:left">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">订单号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-15px;margin-top:2px;">
+                            <input type="text" class="form-control" id="IndentNumber" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-173px;margin-top:2px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">作业类别</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <input type="text" class="form-control" id="WorkCategory" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-162px;margin-top:2px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">车型</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <input type="text" class="form-control" id="CheXing" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-150px;margin-top:0px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">结算单位</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                            <input type="text" class="form-control" id="ReckoningUnit" name="" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-141px;margin-top:2px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">费用名称</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-15px;margin-top:2px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="ExpenseName"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:824px;margin-top:-36px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">收付类型</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <select type="text" style="height:33px;width:150px;" class="form-control" id="SettleAccounts">
+                                <option value="">----请选择----</option>
+                                <option value="应收">应收</option>
+                                <option value="应付">应付</option>
+                                <option value="成本">成本</option>
+                            </select>
+                        </div>   @*在页面写下拉框的数据用于查询的时候，要用字符串string进行传参查询，记得要写上value值*@
+                    </div>
+                </div>
+            </form>
+        </div>
+        @*标记对账模态框*@
+        <div class="row">
+            <div class="modal bs-example-modal-sm" id="modBaseInfor">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:560px;">
+                        <div class="modal-header" style="height:47px;">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" style="font-family:华文行楷;"><span class="glyphicon glyphicon-ok"></span>标记对账</h4>
+                            <h4 style="font-family:华文行楷;margin-left:-2px;color:cadetblue;margin-top:11px;">结算单信息</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form" id="SignForm" action="InsetSign" method="post">
+                                <input type="hidden" id="SignCloseAccountID" name="SignCloseAccountID" />  @*接收传送过来的SignCloseAccountID*@
+                                <div class="form-group" style="margin-left:-4px;margin-top:6px;">
+                                    <label class="control-label">本次应收</label>
+                                    <input id="ShouldS" name="BCYShou" style="width:100px;margin-left:72px;margin-top:-26px;" type="text" class="form-control" readonly />
+                                </div>
+                                <div class="form-group" style="margin-left:176px;margin-top:-53px;">
+                                    <label class="control-label">本次应付</label>
+                                    <input id="ShouldF" name="BCYFu" style="width:100px;margin-left:72px;margin-top:-26px;" type="text" class="form-control" readonly />
+                                </div>
+                                <div class="form-group" style="margin-left:359px;margin-top:-53px;">
+                                    <label class="control-label">结算金额</label>
+                                    <input id="ShouldJ" name="SettleMoney" style="width:100px;margin-left:72px;margin-top:-26px;" type="text" class="form-control" readonly />
+                                </div>
+                                <div class="form-group" style="margin-top:-12px;">
+                                    <label class="control-label" style="margin-left:5px;"><i style="color:red">*</i>对账说明</label>
+                                    <input id="SignExplain" name="SignExplain" type="text" style="width:465px;margin-left:82px;margin-top:-26px;" class="form-control" />
+                                </div>
+                                <div class="form-group" style="margin-left:-4px;margin-top:-13px;">
+                                    <label class="control-label">结算单位</label>
+                                    <input id="ReckoningUnit1" name="ReckoningUnit" style="margin-left:71px;margin-top:-26px;width:185px;" type="text" class="form-control" readonly />
+                                </div>  @*这个字段回填看的，不需要保存到数据库*@
+                                <div class="form-group" style="margin-left:276px;margin-top:-52px;">
+                                    <label class="control-label">结算单号</label>
+                                    <input id="SettleNumber" name="SettleNumber" style="margin-left:71px;margin-top:-26px;width:185px;" type="text" class="form-control" readonly />
+                                </div>
+                                <div class="form-group" style="margin-left:-4px;margin-top:-13px;">
+                                    <label class="control-label">对账日期</label>
+                                    <input id="SignDate" name="SignDate" style="margin-left:71px;margin-top:-26px;width:185px;" type="date" class="form-control" />
+                                </div>
+                                <div class="form-group" style="margin-left:276px;margin-top:-52px;">
+                                    <label class="control-label">预结日期</label>
+                                    <input id="YuSettleDate" name="YuSettleDate" style="margin-left:71px;margin-top:-26px;width:185px;" type="date" class="form-control" />
+                                </div>
+                                <div class="form-group" style="margin-left:-4px;margin-top:-13px;">
+                                    <label class="control-label">结算方式</label>
+                                    <select type="text" style="margin-left:71px;margin-top:-26px;width:150px;" class="form-control" id="SettleWayID" name="SettleWayID"></select>
+                                </div>
+                                <div>
+                                    <button type="button" style="margin-left:221px;margin-top:-46px;float:left" id="Button1">＋</button>
+                                </div>
+                                <div class="form-group" style="margin-left:276px;margin-top:-52px;">
+                                    <label class="control-label">付款方式</label>
+                                    <select type="text" style="margin-left:71px;margin-top:-26px;width:150px;" class="form-control" id="PayWayID" name="PayWayID"></select>
+                                </div>
+                                <div>
+                                    <button type="button" style="margin-left:502px;margin-top:-46px;float:left" id="Button2">＋</button>
+                                </div>
+                                <div style="margin-left:287px;font-family: 华文行楷;font-size:18px;">
+                                    <button id="BtnAdd" type="button" class="btn btn-primary" disabled>打印对账单</button>
+                                    <button id="BtnEdit" type="button" class="btn btn-warning">确认对账</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*结算方式加号按钮的模态框*@
+        <div class="row">
+            <div class="modal bs-example-modal-sm" id="SettleWayModal">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:560px;">
+                        <div class="modal-header" style="height:47px;">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" style="font-family:华文行楷;"><span class="glyphicon glyphicon-ok"></span>结算方式</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form" id="">
+                                <div class="form-group" style="margin-left:-4px;margin-top:13px;">
+                                    <label class="control-label">结算方式</label>
+                                    <input id="SettleWay" name="SettleWay" style="margin-left:71px;margin-top:-26px;width:185px;" type="text" class="form-control" onchange="if (/[^\u4E00-\u9FA5$]/.test(this.value)) { layer.alert('只能输入中文', { icon: 5, title: '提示' }); this.value = ''; }" />
+                                </div>
+                                <div style="margin-left:287px;font-family: 华文行楷;font-size:18px;">
+                                    <button id="BtnQueD" type="button" class="btn btn-warning">确定</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*付款方式加号按钮的模态框*@
+        <div class="row">
+            <div class="modal bs-example-modal-sm" id="PayWayModal">
+                <div class="modal-dialog">
+                    <div class="modal-content" style="width:560px;">
+                        <div class="modal-header" style="height:47px;">
+                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                            <h4 class="modal-title" style="font-family:华文行楷;"><span class="glyphicon glyphicon-ok"></span>付款方式</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form" id="">
+                                <div class="form-group" style="margin-left:-4px;margin-top:13px;">
+                                    <label class="control-label">付款方式</label>
+                                    <input id="PayWay" name="PayWay" style="margin-left:71px;margin-top:-26px;width:185px;" type="text" class="form-control" onchange="if (/[^\u4E00-\u9FA5$]/.test(this.value)) { layer.alert('只能输入中文', { icon: 5, title: '提示' }); this.value = ''; }" />
+                                </div>
+                                <div style="margin-left:287px;font-family: 华文行楷;font-size:18px;">
+                                    <button id="BtnPay" type="button" class="btn btn-warning">确定</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*下方表格*@
+        <div style="margin-left:-143px;margin-top:15px;">
+            <table class="table table-hover choosetable" style="width:1373px;" id="tabInsert">
+                <thead>
+                    <tr class="lol">
+                        <th w_index="ChargeID" w_check="true"></th>
+                        <th w_num="total_line">序号</th>
+                        <th w_index="ExpenseName">费用名称</th>
+                        <th w_index="SettleAccounts">收付类型</th>
+                        <th w_index="UnitPrice">金额</th>
+                        <th w_index="YiJieMoney">已结算</th>
+                        <th w_index="UnitPrice">未结算</th>
+                        <th w_index="Parities">汇率</th>
+                        <th w_index="Currency">币种</th>
+                        <th w_index="IndentNumber">订单号</th>
+                        <th w_index="EtrustNmber">委托单号</th>
+                        <th w_index="Cupboard">柜号</th>
+                        <th w_index="Seal">封条号</th>
+                        <th w_index="EtrustType">业务状态</th>
+                        <th w_index="ClientAbbreviation">客户简称</th>
+                        <th w_index="ReckoningUnit">结算单位</th>
+                        <th w_index="CheXing">柜(车)型</th>
+                        <th w_index="WorkCategory">作业类别</th>
+                        <th w_index="HuaiWeightTime1">还柜时间</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        @*表格下方文本框*@
+        <div style="width:1000px;height:35px;margin-left:0px;margin-top:10px;">
+            <form class="form-horizontal" role="form" id="zuhechaxunfrom">
+                <input type="reset" class="hidden" />
+                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:0px;margin-top:4px;">
+                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="margin-top:8px;">
+                        <label class="control-label">本次应收</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:6px;">
+                        <input type="text" class="form-control" id="BenCiYingS" name="" readonly />
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-72px;margin-top:4px;">
+                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="margin-top:8px;">
+                        <label class="control-label">本次应付</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:6px;">
+                        <input type="text" class="form-control" id="BenCiYingF" name="" readonly />
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-72px;margin-top:4px;">
+                    <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="margin-top:8px;">
+                        <label class="control-label">结算金额</label>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:6px;">
+                        <input type="text" class="form-control" id="JieSuanM" name="" readonly />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+
+    <script>
+        var tabInsert;
+
+        //打开页面就启用加载，必要
+        $(document).ready(function () {
+
+            //绑定提柜地点下拉框
+            createSelect("TiGui", "SelecrDiDian");
+            //绑定还柜地点下拉框
+            createSelect("HuanGui", "SelecrDiDian");
+            //绑定船名下拉框
+            createSelect("ChineseName", "SelectShip");
+            //绑定司机下拉框
+            createSelect("Chauffeur", "SelectChauffeur");
+            //绑定车牌下拉框
+            createSelect("PlateNumbers", "SelectPlateNumbers");
+            //绑定费用名称下拉框
+            createSelect("ExpenseName", "SelectExpense");
+            //绑定托架编号下拉框
+            createSelect("BracketCode", "SelectBracket");
+            //绑定船公司下拉框
+            createSelect("Client", "SelectClient");
+            //绑定进出口岸下拉框
+            createSelect("PortID", "SelectPort");
+            //绑定目的港下拉框
+            createSelect("GoalHarborID", "SelectPort");
+            //绑定承运公司下拉框
+            createSelect("UndertakeID", "SelectClientt");
+            //绑定结算方式下拉框
+            createSelect("SettleWayID", "SelectSettleWay");
+            //绑定付款方式下拉框
+            createSelect("PayWayID", "SelectPayWay");
+
+            $("#BenCiYingF").val(0);//本次应付  就是一开始让文本框显示值为0
+            $("#BenCiYingS").val(0);//本次应收
+            $("#JieSuanM").val(0);//结算金额
+
+            var nowdata = getNowFormatDate();//今天日期
+            $("#StartDate").attr('min', '' + nowdata + '');//日期输入不能小于今天
+            $("#FinishDate").attr('min', '' + nowdata + '');//日期输入不能小于今天
+            $("#SignDate").val(getNowFormatDate());
+
+            //结算单号（自动生成）
+            $.getJSON("getCode", function (data) {
+                $("#SettleNumber").val(data);
+            });
+
+            //点击表头的Input，为全选中(在此调用Pitch()进行选中相加减)
+            $("#tabInsert thead tr th").eq(0).click(function () {
+                setTimeout(function () {
+                    Pitch()
+                }, 100)
+            })
+
+            tabInsert = $.fn.bsgrid.init("tabInsert", {
+                url: "SelectInset",
+                autoLoad: true,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 8,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabInsert tr", rowIndex + 1, record);
+                            Pitch();  //在点击行事件调用金额自动相加，回填到下拉框的方法
+                            SignInfor(record);//标记对账回填结算单位
+                        }
+                    }
+                }
+            });
+        })
+
+        //点击每一条结算单，金额会自动相加回填在下方文本框上
+        function Pitch() {
+            $("#BenCiYingF").val(0)
+            $("#BenCiYingS").val(0)
+            $("#JieSuanM").val(0)
+            for (var i = 0; i < $("#tabInsert tbody tr").length; i++) {
+                if ($("#tabInsert tbody tr").eq(i).children().eq(0).children().prop('checked') == true) {
+                    if ($("#tabInsert tbody tr").eq(i).children().eq(3).html() == "应收") {
+                        var A = (parseFloat($("#tabInsert tbody tr").eq(i).children().eq(4).html()) + parseFloat($("#BenCiYingS").val())).toFixed(3)
+                        $("#BenCiYingS").val(A)
+                    } else if ($("#tabInsert tbody tr").eq(i).children().eq(3).html() == "应付") {
+                        var B = (parseFloat($("#tabInsert tbody tr").eq(i).children().eq(4).html()) + parseFloat($("#BenCiYingF").val())).toFixed(3)
+                        $("#BenCiYingF").val(B)
+                    }
+                    var C = (parseFloat($("#BenCiYingS").val()) - parseFloat($("#BenCiYingF").val())).toFixed(3);
+                    $("#JieSuanM").val(C);
+                }
+            }
+        }
+
+        //新增结算单多条件查询
+        function tabInsertSearch() {
+            var EtrustNmber = $("#EtrustNmber").val();//委托单号
+            var Cupboard = $("#Cupboard").val();//柜号
+            var Seal = $("#Seal").val();//封条号
+            var HuaiWeightTime = $("#HuaiWeightTime").val();//还柜时间
+            var HuaiWeightTimes = $("#HuaiWeightTimes").val();
+            var ClientAbbreviation = $("#ClientAbbreviation").val();//客户简称
+            var TiGuiDiDianID = $("#TiGui").val();//提柜地点
+            var HuaiGuiDiDianID = $("#HuanGui").val();//还柜地点
+            var ClientID = $("#Client").val();//船公司
+            var ShipID = $("#ChineseName").val();//船名
+            var HangCi = $("#HangCi").val();//航次
+            var PortID = $("#PortID").val();//进出口岸
+            var GoalHarborID = $("#GoalHarborID").val();//目的港
+            var UndertakeID = $("#UndertakeID").val();//承运公司
+            var EtrustType = $("#EtrustType").val();//状态
+            var ChauffeurID = $("#Chauffeur").val();//司机
+            var VehicleInformationID = $("#PlateNumbers").val();//车牌号
+            var BracketID = $("#BracketCode").val();//托架编号
+            var BookingSpace = $("#BookingSpace").val();//订舱号
+            var IndentNumber = $("#IndentNumber").val();//订单号
+            var WorkCategory = $("#WorkCategory").val();//作业类别
+            var CheXing = $("#CheXing").val();//车型
+            var ReckoningUnit = $("#ReckoningUnit").val();//结算单位
+            var ExpenseID = $("#ExpenseName").val();//费用名称
+            var SettleAccounts = $("#SettleAccounts").val();//收付款类型
+
+            if (EtrustNmber == undefined) { //委托单号
+                EtrustNmber = "";
+            }
+            if (Cupboard == undefined) { //柜号
+                Cupboard = "";
+            }
+            if (Seal == undefined) { //封条号
+                Seal = "";
+            }
+            if (HuaiWeightTime == undefined) { //还柜时间
+                HuaiWeightTime = "";
+            }
+            if (HuaiWeightTimes==undefined) {
+                HuaiWeightTimes = "";
+            }
+            if (ClientAbbreviation == undefined) { //客户简称
+                ClientAbbreviation = "";
+            }
+            if (TiGuiDiDianID == undefined) { //提柜地点
+                TiGuiDiDianID = 0;
+            }
+            if (HuaiGuiDiDianID == undefined) { //还柜地点
+                HuaiGuiDiDianID = 0;
+            }
+            if (ClientID == undefined) { //船公司
+                ClientID = 0;
+            }
+            if (ShipID == undefined) { //船名
+                ShipID = 0;
+            }
+            if (HangCi == undefined) { //航次
+                HangCi = "";
+            }
+            if (PortID == undefined) { //进出口岸
+                PortID = 0;
+            }
+            if (GoalHarborID == undefined) { //目的港
+                GoalHarborID = 0;
+            }
+            if (UndertakeID == undefined) { //承运公司
+                UndertakeID = 0;
+            }
+            if (EtrustType == undefined) { //状态
+                EtrustType = "";
+            }
+            if (ChauffeurID == undefined) { //司机
+                ChauffeurID = 0;
+            }
+            if (VehicleInformationID == undefined) { //车牌号
+                VehicleInformationID = 0;
+            }
+            if (BracketID == undefined) { //托架编号
+                BracketID = 0;
+            }
+            if (BookingSpace == undefined) { //订舱号
+                BookingSpace = "";
+            }
+            if (IndentNumber == undefined) { //订单号
+                IndentNumber = "";
+            }
+            if (WorkCategory == undefined) { //作业类别
+                WorkCategory = "";
+            }
+            if (CheXing == undefined) { //车型
+                CheXing = "";
+            }
+            if (ReckoningUnit == undefined) { //结算单位
+                ReckoningUnit = "";
+            }
+            if (ExpenseID == undefined) { //费用名称
+                ExpenseID = 0;
+            }
+            if (SettleAccounts == undefined) { //收付款类型
+                SettleAccounts = "";
+            }
+
+            tabInsert.search({ EtrustNmber: EtrustNmber, Cupboard: Cupboard, Seal: Seal, HuaiWeightTime: HuaiWeightTime,HuaiWeightTimes:HuaiWeightTimes, ClientAbbreviation: ClientAbbreviation, TiGuiDiDianID: TiGuiDiDianID, HuaiGuiDiDianID: HuaiGuiDiDianID, ClientID: ClientID, ShipID: ShipID, HangCi: HangCi, PortID: PortID, GoalHarborID: GoalHarborID, UndertakeID: UndertakeID, EtrustType: EtrustType, ChauffeurID: ChauffeurID, VehicleInformationID: VehicleInformationID, BracketID: BracketID, BookingSpace: BookingSpace, IndentNumber: IndentNumber, WorkCategory: WorkCategory, CheXing: CheXing, ReckoningUnit: ReckoningUnit, ExpenseID: ExpenseID, SettleAccounts: SettleAccounts })
+        }
+
+        //点击查询按钮进行多条件查询
+        $("#btnSelect").click(function () {
+            tabInsertSearch();
+            $("#zuhechaxunfrom [type='reset']").click();//重置表单
+            $("#BenCiYingF").val(0);//本次应付  就是一开始让文本框显示值为0
+            $("#BenCiYingS").val(0);//本次应收
+            $("#JieSuanM").val(0);//结算金额
+        });
+
+        //点击结算方式加号按钮，弹出新增结算方式模态框
+        $("#Button1").click(function () {
+
+            $("#SettleWayModal").modal();
+        })
+        //保存新增结算方式代码
+        $("#BtnQueD").click(function () {
+            var SettleWay = $("#SettleWay").val().trim();
+            $.post("InsertSettleWay", { SettleWay: SettleWay }, function (msg) {
+                if (msg == "success") {
+                    layer.alert("保存成功!");
+                    $("#SettleWayModal").modal('hide');
+                    location.reload();
+                }
+                else {
+                    layer.alert("保存失败!");
+                }
+            })
+        })
+        //点击付款方式加号按钮，弹出新增付款方式模态框
+        $("#Button2").click(function () {
+            $("#PayWayModal").modal();
+        })
+        //保存新增付款方式代码
+        $("#BtnPay").click(function () {
+            var PayWay = $("#PayWay").val();
+            $.post("InsertPayWay", { PayWay: PayWay }, function (msg) {
+                if (msg == "success") {
+                    layer.alert("保存成功!");
+                    $("#PayWayModal").modal('hide');
+                    location.reload();
+                }
+                else {
+                    layer.alert("保存失败!");
+                }
+            })
+        })
+
+        //点击标记对账，弹出标记对账模态框
+        $("#btnSign").click(function () {
+            //点击弹出标记对账弹出框的时候，调用此方法，获取选中的费用的金额，加起来回填到文本框
+                $("#ShouldS").val(0)
+                $("#ShouldF").val(0)
+                $("#ShouldJ").val(0)   //文本框放计算结果时,要首先让它显示值为0
+                for (var i = 0; i < $("#tabInsert tbody tr").length; i++) {
+                    if ($("#tabInsert tbody tr").eq(i).children().eq(0).children().prop('checked') == true) {
+                        if ($("#tabInsert tbody tr").eq(i).children().eq(3).html() == "应收") {
+                            var A = (parseFloat($("#tabInsert tbody tr").eq(i).children().eq(4).html()) + parseFloat($("#ShouldS").val())).toFixed(3)
+                            $("#ShouldS").val(A)
+                        } else if ($("#tabInsert tbody tr").eq(i).children().eq(3).html() == "应付") {
+                            var B = (parseFloat($("#tabInsert tbody tr").eq(i).children().eq(4).html()) + parseFloat($("#ShouldF").val())).toFixed(3)
+                            $("#ShouldF").val(B)
+                        }
+                        var C = (parseFloat($("#ShouldS").val()) - parseFloat($("#ShouldF").val())).toFixed(3);
+                        $("#ShouldJ").val(C);
+                    }
+                }
+
+            $("#modBaseInfor").modal("show");//弹出模态框
+        })
+
+        //回填结算单位
+        function SignInfor(record) {
+            $("#ReckoningUnit1").val(record.ReckoningUnit);
+        }
+
+        //标记对账模态框，点击确定对账按钮之后，禁用本按钮，把打印对账单按钮启用
+        //解除禁用和调用禁用
+        function OPenDisabled() {
+            var Bill = document.getElementById("BtnAdd");
+            BtnAdd.disabled = false;
+            var Contrast = document.getElementById("BtnEdit");
+            BtnEdit.disabled = true;
+        }
+        //点击确认对账保存的同时，把确认对账按钮禁用，解除打印对账单的禁用
+        $("#BtnEdit").click(function () {
+            if ($("#SignForm [name='SignExplain']").val() != "" && $("#SignForm [name='SignExplain']").val() != null && $("#SignForm [name='SignExplain']").val() != undefined) {
+                if ($("#SignForm [name='SettleWayID']").val() > 0) {
+                    if ($("#SignForm [name='PayWayID']").val() > 0) {
+                        var myArray = new Array(); //声明一个数组
+                        var check = $("#tabInsert input:checked");//获取表格中checkbox被选中的个数
+                        for (var i = 0; i < check.length; i++) {
+                            myArray[i] = check[i].value;
+                        }
+                        $("#SignForm").attr("action", "InsetSign?myArray=" + myArray);
+                        //用表单ID提交(用表单提交，上面的name要跟数据库对应)
+                        $("#SignForm").ajaxSubmit(function (msg) {
+                            if (msg == "success") {
+                                layer.alert("保存成功", { icon: 1, title: '提示' });
+                                OPenDisabled();
+                            }
+                            else {
+                                alert("保存出错");
+                            }
+                        })
+                    }
+                    else {
+                        layer.msg("请填写付款方式", { icon: 6 });
+                    }
+                }
+                else {
+                    layer.msg("请填写结算方式", { icon: 6 });
+                }
+            }
+            else {
+                layer.msg("请填写对账说明", { icon: 6 });
+            }
+           
+        })
+
+        //点击打印对账单按钮打印对账单
+        $("#BtnAdd").click(function(){
+            var myArray = new Array(); //声明一个数组
+            var ChargeID = $("#tabInsert input:checked").val();
+            var check = $("#tabInsert tbody input:checked");//获取表格中checkbox被选中的个数
+            for (var i = 0; i < check.length; i++) {
+                myArray[i] = check[i].value;
+            }
+            layer.confirm("确定要打印当前数据吗？", {
+                icon: 3,
+                btn: ["确定", "取消"]
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("PrintAchievementII?myArray=" + myArray + "&ChargeID=" + ChargeID);
+            });
+        })
+
+
+        //打印(页面的打印代码)
+        function printAchievement() {
+            var EtrustNmber = $("#EtrustNmber").val();//委托单号
+            var Cupboard = $("#Cupboard").val();//柜号
+            var Seal = $("#Seal").val();//封条号
+            var HuaiWeightTime = $("#HuaiWeightTime").val();//还柜时间
+            var ClientAbbreviation = $("#ClientAbbreviation").val();//客户简称
+            var TiGuiDiDianID = $("#TiGui").val();//提柜地点
+            var HuaiGuiDiDianID = $("#HuanGui").val();//还柜地点
+            var ClientID = $("#Client").val();//船公司
+            var ShipID = $("#ChineseName").val();//船名
+            var HangCi = $("#HangCi").val();//航次
+            var PortID = $("#PortID").val();//进出口岸
+            var GoalHarborID = $("#GoalHarborID").val();//目的港
+            var UndertakeID = $("#UndertakeID").val();//承运公司
+            var EtrustType = $("#EtrustType").val();//状态
+            var ChauffeurID = $("#Chauffeur").val();//司机
+            var VehicleInformationID = $("#PlateNumbers").val();//车牌号
+            var BracketID = $("#BracketCode").val();//托架编号
+            var BookingSpace = $("#BookingSpace").val();//订舱号
+            var IndentNumber = $("#IndentNumber").val();//订单号
+            var WorkCategory = $("#WorkCategory").val();//作业类别
+            var CheXing = $("#CheXing").val();//车型
+            var ReckoningUnit = $("#ReckoningUnit").val();//结算单位
+            var ExpenseID = $("#ExpenseName").val();//费用名称
+            var SettleAccounts = $("#SettleAccounts").val();//收付款类型
+
+            if (EtrustNmber == undefined) { //委托单号
+                EtrustNmber = "";
+            }
+            if (Cupboard == undefined) { //柜号
+                Cupboard = "";
+            }
+            if (Seal == undefined) { //封条号
+                Seal = "";
+            }
+            if (HuaiWeightTime == undefined) { //还柜时间
+                HuaiWeightTime = "";
+            }
+            if (ClientAbbreviation == undefined) { //客户简称
+                ClientAbbreviation = "";
+            }
+            if (TiGuiDiDianID == undefined) { //提柜地点
+                TiGuiDiDianID = 0;
+            }
+            if (HuaiGuiDiDianID == undefined) { //还柜地点
+                HuaiGuiDiDianID = 0;
+            }
+            if (ClientID == undefined) { //船公司
+                ClientID = 0;
+            }
+            if (ShipID == undefined) { //船名
+                ShipID = 0;
+            }
+            if (HangCi == undefined) { //航次
+                HangCi = "";
+            }
+            if (PortID == undefined) { //进出口岸
+                PortID = 0;
+            }
+            if (GoalHarborID == undefined) { //目的港
+                GoalHarborID = 0;
+            }
+            if (UndertakeID == undefined) { //承运公司
+                UndertakeID = 0;
+            }
+            if (EtrustType == undefined) { //状态
+                EtrustType = "";
+            }
+            if (ChauffeurID == undefined) { //司机
+                ChauffeurID = 0;
+            }
+            if (VehicleInformationID == undefined) { //车牌号
+                VehicleInformationID = 0;
+            }
+            if (BracketID == undefined) { //托架编号
+                BracketID = 0;
+            }
+            if (BookingSpace == undefined) { //订舱号
+                BookingSpace = "";
+            }
+            if (IndentNumber == undefined) { //订单号
+                IndentNumber = "";
+            }
+            if (WorkCategory == undefined) { //作业类别
+                WorkCategory = "";
+            }
+            if (CheXing == undefined) { //车型
+                CheXing = "";
+            }
+            if (ReckoningUnit == undefined) { //结算单位
+                ReckoningUnit = "";
+            }
+            if (ExpenseID == undefined) { //费用名称
+                ExpenseID = 0;
+            }
+            if (SettleAccounts == undefined) { //收付款类型
+                SettleAccounts = "";
+            }
+
+            var str = "EtrustNmber=" + EtrustNmber + "&Cupboard=" + Cupboard + "&Seal=" + Seal + "&HuaiWeightTime=" + HuaiWeightTime + "&ClientAbbreviation=" + ClientAbbreviation + "&TiGuiDiDianID=" + TiGuiDiDianID + "&HuaiGuiDiDianID=" + HuaiGuiDiDianID + "&ClientID=" + ClientID + "&ShipID=" + ShipID + "&HangCi=" + HangCi + "&PortID=" + PortID + "&GoalHarborID=" + GoalHarborID + "&UndertakeID=" + UndertakeID + "&EtrustType=" + EtrustType + "&ChauffeurID=" + ChauffeurID + "&VehicleInformationID=" + VehicleInformationID + "&BracketID=" + BracketID + "&BookingSpace=" + BookingSpace + "&IndentNumber=" + IndentNumber + "&WorkCategory=" + WorkCategory + "&CheXing=" + CheXing + "&ReckoningUnit=" + ReckoningUnit + "&ExpenseID=" + ExpenseID + "&SettleAccounts=" + SettleAccounts;
+
+            //getPageCondition获取当前页请求条件
+            var curCondition = tabInsert.getPageCondition(tabInsert.getCurPage());
+
+            if (curCondition.indexOf(str) > -1) {
+                layer.confirm("确定要打印当前数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"]
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("PrintAchievementI?" + str);
+                });
+            }
+            else {
+                layer.alert("请先查询出成绩信息，预览是否是需要打印的数据", { icon: 0, title: '提示' });
+            }
+        }
+
+        //导出
+        $("#btnDaoChu").click(function () {
+
+            var EtrustNmber = $("#EtrustNmber").val();//委托单号
+            var Cupboard = $("#Cupboard").val();//柜号
+            var Seal = $("#Seal").val();//封条号
+            var HuaiWeightTime = $("#HuaiWeightTime").val();//还柜时间
+            var ClientAbbreviation = $("#ClientAbbreviation").val();//客户简称
+            var TiGuiDiDianID = $("#TiGui").val();//提柜地点
+            var HuaiGuiDiDianID = $("#HuanGui").val();//还柜地点
+            var ClientID = $("#Client").val();//船公司
+            var ShipID = $("#ChineseName").val();//船名
+            var HangCi = $("#HangCi").val();//航次
+            var PortID = $("#PortID").val();//进出口岸
+            var GoalHarborID = $("#GoalHarborID").val();//目的港
+            var UndertakeID = $("#UndertakeID").val();//承运公司
+            var EtrustType = $("#EtrustType").val();//状态
+            var ChauffeurID = $("#Chauffeur").val();//司机
+            var VehicleInformationID = $("#PlateNumbers").val();//车牌号
+            var BracketID = $("#BracketCode").val();//托架编号
+            var BookingSpace = $("#BookingSpace").val();//订舱号
+            var IndentNumber = $("#IndentNumber").val();//订单号
+            var WorkCategory = $("#WorkCategory").val();//作业类别
+            var CheXing = $("#CheXing").val();//车型
+            var ReckoningUnit = $("#ReckoningUnit").val();//结算单位
+            var ExpenseID = $("#ExpenseName").val();//费用名称
+            var SettleAccounts = $("#SettleAccounts").val();//收付款类型
+
+            if (EtrustNmber == undefined) { //委托单号
+                EtrustNmber = "";
+            }
+            if (Cupboard == undefined) { //柜号
+                Cupboard = "";
+            }
+            if (Seal == undefined) { //封条号
+                Seal = "";
+            }
+            if (HuaiWeightTime == undefined) { //还柜时间
+                HuaiWeightTime = "";
+            }
+            if (ClientAbbreviation == undefined) { //客户简称
+                ClientAbbreviation = "";
+            }
+            if (TiGuiDiDianID == undefined) { //提柜地点
+                TiGuiDiDianID = 0;
+            }
+            if (HuaiGuiDiDianID == undefined) { //还柜地点
+                HuaiGuiDiDianID = 0;
+            }
+            if (ClientID == undefined) { //船公司
+                ClientID = 0;
+            }
+            if (ShipID == undefined) { //船名
+                ShipID = 0;
+            }
+            if (HangCi == undefined) { //航次
+                HangCi = "";
+            }
+            if (PortID == undefined) { //进出口岸
+                PortID = 0;
+            }
+            if (GoalHarborID == undefined) { //目的港
+                GoalHarborID = 0;
+            }
+            if (UndertakeID == undefined) { //承运公司
+                UndertakeID = 0;
+            }
+            if (EtrustType == undefined) { //状态
+                EtrustType = "";
+            }
+            if (ChauffeurID == undefined) { //司机
+                ChauffeurID = 0;
+            }
+            if (VehicleInformationID == undefined) { //车牌号
+                VehicleInformationID = 0;
+            }
+            if (BracketID == undefined) { //托架编号
+                BracketID = 0;
+            }
+            if (BookingSpace == undefined) { //订舱号
+                BookingSpace = "";
+            }
+            if (IndentNumber == undefined) { //订单号
+                IndentNumber = "";
+            }
+            if (WorkCategory == undefined) { //作业类别
+                WorkCategory = "";
+            }
+            if (CheXing == undefined) { //车型
+                CheXing = "";
+            }
+            if (ReckoningUnit == undefined) { //结算单位
+                ReckoningUnit = "";
+            }
+            if (ExpenseID == undefined) { //费用名称
+                ExpenseID = 0;
+            }
+            if (SettleAccounts == undefined) { //收付款类型
+                SettleAccounts = "";
+            }
+
+            var str = "EtrustNmber=" + EtrustNmber + "&Cupboard=" + Cupboard + "&Seal=" + Seal + "&HuaiWeightTime=" + HuaiWeightTime + "&ClientAbbreviation=" + ClientAbbreviation + "&TiGuiDiDianID=" + TiGuiDiDianID + "&HuaiGuiDiDianID=" + HuaiGuiDiDianID + "&ClientID=" + ClientID + "&ShipID=" + ShipID + "&HangCi=" + HangCi + "&PortID=" + PortID + "&GoalHarborID=" + GoalHarborID + "&UndertakeID=" + UndertakeID + "&EtrustType=" + EtrustType + "&ChauffeurID=" + ChauffeurID + "&VehicleInformationID=" + VehicleInformationID + "&BracketID=" + BracketID + "&BookingSpace=" + BookingSpace + "&IndentNumber=" + IndentNumber + "&WorkCategory=" + WorkCategory + "&CheXing=" + CheXing + "&ReckoningUnit=" + ReckoningUnit + "&ExpenseID=" + ExpenseID + "&SettleAccounts=" + SettleAccounts;
+
+            //getPageCondition获取当前页请求条件
+            var curCondition = tabInsert.getPageCondition(tabInsert.getCurPage());
+
+            if (curCondition.indexOf(str) > -1) {
+                layer.confirm("确定要导出当前数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"]
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("ExportInsert?" + str);
+                });
+            }
+            else {
+                layer.alert("请先查询出成绩信息，预览是否是需要导出的数据", { icon: 0, title: '提示' });
+            }
+        })
+
+        //点击关闭按钮跳转到财务结算页面
+        $("#btnGuanbi").click(function () {
+            window.location.href = "/Commerce/Examine/FinanceIndex";
+        })
+
+
+    </script>
+
+
+    @*封装自定义的方法*@
+    <script>
+        //获取当前时间
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var seperator2 = ":";
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+            return currentdate;
+        }
+        ////一周后的日期
+        //function getNowFormatDates() {
+        //    var date = new Date();
+        //    var seperator1 = "-";
+        //    var seperator2 = ":";
+        //    var month = date.getMonth() + 1;
+        //    var strDate = date.getDate()+4;
+        //    if (month >= 1 && month <= 9) {
+        //        month = "0" + month;
+        //    }
+        //    if (strDate >= 0 && strDate <= 9) {
+        //        strDate = "0" + strDate;
+        //    }
+        //    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+        //    return currentdate;
+        //}
+        //一周后的日期
+        function fun_submit() {
+            var date1 = new Date();
+            var date2 = new Date(date1);
+            date2.setDate(date1.getDate() + 6);
+            var month=date2.getMonth() + 1
+            var strDate = date2.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var times = date2.getFullYear() + "-" + month + "-" + strDate;
+            return times;
+        }
+        //计算两个时间相隔的天数
+        function isLeapYear(year) {
+            if (year % 4 == 0 && ((year % 100 != 0) || (year % 400 == 0))) {
+                return true;
+            }
+            return false;
+        }
+        //判断前后两个日期
+        function validatePeriod(fyear, fmonth, fday, byear, bmonth, bday) {
+            if (fyear < byear) {
+                return true;
+            } else if (fyear == byear) {
+                if (fmonth < bmonth) {
+                    return true;
+                } else if (fmonth == bmonth) {
+                    if (fday <= bday) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
+
+        //日期加一
+        function addByTransDate(dateParameter, num) {
+            var translateDate = "", dateString = "", monthString = "", dayString = "";
+            translateDate = dateParameter.replace("-", "/").replace("-", "/");
+            var newDate = new Date(translateDate);
+            newDate = newDate.valueOf();
+            newDate = newDate + num * 24 * 60 * 60 * 1000;
+            newDate = new Date(newDate);
+            //如果月份长度少于2，则前加 0 补位
+            if ((newDate.getMonth() + 1).toString().length == 1) {
+                monthString = 0 + "" + (newDate.getMonth() + 1).toString();
+            } else {
+                monthString = (newDate.getMonth() + 1).toString();
+            }
+            //如果天数长度少于2，则前加 0 补位
+            if (newDate.getDate().toString().length == 1) {
+                dayString = 0 + "" + newDate.getDate().toString();
+            } else {
+                dayString = newDate.getDate().toString();
+            }
+            dateString = newDate.getFullYear() + "-" + monthString + "-" + dayString;
+            return dateString;
+        }
+        //日期加一
+        function showTime(date, pdVal) {
+            trans_day = "";
+            trans_day = addByTransDate(date, pdVal);
+            //处理
+            return trans_day;
+        }
+
+        //获取星期几
+        function getWeekday(sDate) {
+            var dt = new Date(sDate.replace(/-/g, '/'));
+            var a = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            return a[dt.getDay()];
+        }
+
+        //两个时间相隔天数
+        function xiangge(sDate1, sDate2) { //sDate1和sDate2是2002-12-18格式
+            var aDate, oDate1, oDate2, iDays
+            aDate = sDate1.split("-")
+            oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]) //转换为12-18-2002格式
+            aDate = sDate2.split("-")
+            oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
+            iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24) //把相差的毫秒数转换为天数
+            return iDays
+        }
+    </script>
+
+</body>
+</html> 

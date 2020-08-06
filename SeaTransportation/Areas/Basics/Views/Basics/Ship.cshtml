@@ -1,0 +1,805 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Tree/jsTree/style.min.css" rel="stylesheet" />
+    <title>Ship</title>
+    <style type="text/css">
+        .modal-header {
+            padding: 6px 5px;
+            border-bottom: none;
+            background: #d8d8d2;
+            text-align: center;
+            color: #000;
+        }
+        .modal-content {
+            padding: 6px;
+        }
+        .modal-body {
+            padding: 0 25px;
+        }
+        .btn {
+            background:#d8d8d2;
+            margin-top: 5px;
+        }
+        .btn:hover{
+            background:#5190f8;
+        }
+        .container{
+            width:100%;
+        }
+        /*#Button button{
+            font-family:华文行楷
+        }*/
+        .panel-heading {
+            font-size: 16px;
+            text-align: center;
+            background-color:#d8d8d2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" @*style="font-family:华文行楷"*@>
+        <div class="row">
+            <div class="panel-heading">
+                <span style="float:left;">船公司</span>
+                <span>船舶详细信息</span>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-lg-2 col-md-2 col-sm-2" @*style="font-family:华文行楷"*@>
+                <div id="A"></div>
+            </div>
+            <div class="col-lg-10 col-md-12 col-sm-12" id="Button">
+                <button class="btn  glyphicon glyphicon-off" type="button" id="Close"> 关闭</button>
+                <button class="btn  glyphicon glyphicon-refresh" type="button" id="Refresh"> 刷新</button>
+                <button class="btn  glyphicon glyphicon-plus" type="button" id="Insert"> 新增</button>
+                <button class="btn  glyphicon glyphicon-pencil" type="button" id="Update"> 编辑</button>
+                <button class="btn  glyphicon glyphicon-remove" type="button" id="Delete"> 删除</button>
+                <button class="btn  glyphicon glyphicon-search" type="button" id="Check"> 查询</button>
+                <button class="btn  glyphicon glyphicon-print" type="button" id="Print"> 打印</button>
+                <button class="btn  glyphicon glyphicon-paste" type="button" id="ExportToExcel"> 导出</button>
+            </div>
+            <div class="col-lg-10 col-md-12 col-sm-12" style="float:right;">
+                <div class="panel-body">
+                    <div class="row examineeInfor">
+                        <table id="Ship" class="table table-condensed" style="width:100%;">
+                            <thead>
+                                <tr>
+                                    <th w_index="ShipID" w_check="true">选择</th>
+                                    <th w_num="total_line">序号</th>
+                                    <th w_index="ShipCode" width="">船舶代码</th>
+                                    <th w_index="ChineseName" width="">中文名</th>
+                                    <th w_index="EnglishName" width="">英文名</th>
+                                    <th w_index="Abbreviation" width="">简称</th>
+                                    <th w_index="ChineseNamel" width="">船公司</th>
+                                    <th w_index="Operator" width="">经营者</th>
+                                    <th w_index="ShipEast" width="">船东</th>
+                                    <th w_index="ShipType  " width="">船舶类型</th>
+                                    <th w_index="CaptainName" width="">船长姓名</th>
+                                    <th w_index="ShipMobile" width="">联系电话</th>
+                                    <th w_render="SetState">是否启用</th>
+                                    <th w_index="WhetherStart " w_hidden="true">启用</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*新增模态框*@
+        <div class="modal  bs-example-modal-sm" id="modInsertExaminee">
+            <div class="modal-content" style="width:700px;height:330px;margin-left:450px;">
+                <div class="modal-header">
+                    <h5 class="modal-title glyphicon glyphicon-plus"> 船舶资料</h5>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="formInsert" action="/Basics/Basics/InsertShip" method="post">
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船舶代码:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="ShipCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">简称:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="Abbreviation" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">中文名:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="ChineseName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">英文名:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="" name="EnglishName" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z]+$/, '')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船公司:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <select id="ClientTypeID" name="ClientTypeID" class="form-control">
+                                        <option value=""></option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">经营者:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="Operator" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船东:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="ShipEast" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船舶类型:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <select name="ShipType" class="form-control">
+                                        <option value="">----请选择----</option>
+                                        <option value="木材船">木材船</option>
+                                        <option value="油船">油船</option>
+                                        <option value="集装箱船">集装箱船</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船长姓名:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="CaptainName" />
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-2">
+                                    <label>
+                                        <input type="checkbox" name="WhetherStart" id="" value="true" />
+                                        是否启用
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">联系电话:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="ShipMobile" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                                <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                                <button class="btn glyphicon glyphicon-ok" type="button" id="Saveship"> 保存</button>
+                                <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @*修改模态框*@
+        <div class="modal  bs-example-modal-sm" id="modUpdateExaminee">
+            <div class="modal-content" style="width:700px;height:330px;margin-left:450px;">
+                <div class="modal-header">
+                    <h5 class="modal-title glyphicon glyphicon-pencil"> 船舶资料</h5>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" id="formUpdate" action="/Basics/Basics/UpdateShip" method="post">
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船舶代码:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="ShipCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">简称:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="Abbreviation" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">中文名:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="ChineseName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">英文名:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="EnglishName" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z]+$/, '')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船公司:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <select id="ClientTypeIDl" name="ClientTypeID" class="form-control">
+                                        <option value="0"></option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">经营者:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="Operator" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船东:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="ShipEast" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船舶类型:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <select name="ShipType" class="form-control">
+                                        <option value="0"></option>
+                                        <option value="木材船">木材船</option>
+                                        <option value="油船">油船</option>
+                                        <option value="集装箱船">集装箱船</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船长姓名:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="CaptainName" />
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-lg-offset-2">
+                                    <label>
+                                        <input type="checkbox" name="WhetherStart" value="true" />
+                                        是否启用
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">联系电话:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" name="ShipMobile" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                                <button class="btn glyphicon glyphicon-repeat" type="reset"> 重置</button>
+                                <button class="btn glyphicon glyphicon-ok" type="button" id="UpdateSave"> 保存</button>
+                                <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        @*查询模态框*@
+        <div class="modal  bs-example-modal-sm" id="modCheckExaminee">
+            <div class="modal-content" style="width:700px;height:290px;margin-left:450px;">
+                <div class="modal-header">
+                    <h5 class="modal-title glyphicon glyphicon-search"> 查询船舶资料</h5>
+                </div>
+                <form id="formCheckship">
+                    <div class="modal-body">
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船舶代码:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="ShipCode" maxlength="10" onkeyup="value = value.replace(/[^A-Z]+$/,'')" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">简称:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="Abbreviation" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">中文名:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="ChineseName" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">英文名:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="EnglishName" maxlength="10" onkeyup="value = value.replace(/[^a-z/A-Z]+$/, '')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船公司:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="ChineseNamel" maxlength="10" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">经营者:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="Operator" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船东:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="ShipEast" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船舶类型:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <select id="ShipType" class="form-control">
+                                        <option value="">----请选择----</option>
+                                        <option value="木材船">木材船</option>
+                                        <option value="油船">油船</option>
+                                        <option value="集装箱船">集装箱船</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">船长姓名:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="CaptainName" />
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-2 text-right">
+                                    <label class="control-label">联系电话:</label>
+                                </div>
+                                <div class="col-lg-4 col-md-5 col-sm-5">
+                                    <input type="text" class="form-control" id="ShipMobile" maxlength="11" onkeyup="value=value.replace(/[^0-9]/g,'')" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top:5px;">
+                            <div class="col-lg-11 col-md-8 col-sm-10 col-lg-offset-4">
+                                <button class="btn glyphicon glyphicon-search" type="button" id="modelcheck"> 查询</button>
+                                <button class="btn glyphicon glyphicon-remove" data-dismiss="modal"> 关闭</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="~/Content/Tree/jquery.min.js"></script>
+    <link href="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/Tree/Tree.js"></script>
+    <script src="~/Content/Tree/jstree.min.js"></script>
+    <script>
+        var tabship;
+        $(function () {
+            Tree("#A", "/Basics/Basics/selectshi");
+            appendOption("ClientTypeID", "selectshi");
+            appendOption("ClientTypeIDl", "selectshi");
+            appendOption("ChineseNamel", "selectshi");
+            //查询船舶表
+            tabship = $.fn.bsgrid.init('Ship', {
+                url: 'selectShip',
+                autoLoad: true,//自动加载数据
+                stripeRows: true,//隔行变色
+                rowHoverColor: true,//划过行变色
+                displayBlankRows: true,//是否显示空白行，默认值false
+                rowSelectedColor: true,//是否显示选中行背景色
+                pageSize: 10,//默认页面大小
+                pageSizeSelect: true,//是否选择分页页数下拉框
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                event: {
+                    customRowEvents: {
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#Ship tr", rowIndex + 1);
+                        }
+                    }
+                }
+            });
+        })
+        function Tree1(ClientTypeID) {
+            tabship.search({ ClientTypeID: ClientTypeID })
+        }
+        //查询
+        $("#Check").click(function () {
+            $('#formCheckship').resetForm();
+            $("#modCheckExaminee").modal("show");
+            $("#modelcheck").click(function () {
+                Checkship();
+                $("#modCheckExaminee").modal("hide");
+            })
+        })
+        //查询条件
+        function Checkship() {
+            var ShipCode = $("#ShipCode").val();
+            if (ShipCode == null || ShipCode == undefined) {
+                ShipCode = 0;
+            }
+            var Abbreviation = $("#Abbreviation").val();
+            if (Abbreviation == null || Abbreviation == undefined) {
+                Abbreviation = 0;
+            }
+            var ChineseName = $("#ChineseName").val();
+            if (ChineseName == null || ChineseName == undefined) {
+                ChineseName = 0;
+            }
+            var EnglishName = $("#EnglishName").val();
+            if (EnglishName == null || EnglishName == undefined) {
+                EnglishName = 0;
+            }
+            var ChineseNamel = $("#ChineseNamel").val();
+            if (ChineseNamel == null || ChineseNamel == undefined) {
+                ChineseNamel = 0;
+            } 
+            var Operator = $("#Operator").val();
+            if (Operator == null || Operator == undefined) {
+                Operator = 0;
+            } 
+            var ShipEast = $("#ShipEast").val();
+            if (ShipEast == null || ShipEast == undefined) {
+                ShipEast = 0;
+            } 
+            var ShipType = $("#ShipType").val();
+            if (ShipType == null || ShipType == undefined) {
+                ShipType = 0;
+            } 
+            var CaptainName = $("#CaptainName").val();
+            if (CaptainName == null || CaptainName == undefined) {
+                CaptainName = 0;
+            } 
+            var ShipMobile = $("#ShipMobile").val();
+            if (ShipMobile == null || ShipMobile == undefined) {
+                ShipMobile = 0;
+            }
+            tabship.search({ ShipCode: ShipCode, Abbreviation: Abbreviation, ChineseName: ChineseName, EnglishName: EnglishName, ChineseNamel: ChineseNamel, Operator: Operator, ShipEast: ShipEast, ShipType: ShipType, CaptainName: CaptainName, ShipMobile: ShipMobile })
+        };
+        //true or false
+        function SetState(record) {
+            var WhetherStart = record.WhetherStart;
+            if (WhetherStart) {
+                return '<span style="color:blue">√</span>';
+            } else {
+                return '<span style="color:red">×</span>';
+            }
+        }
+        //关闭
+        $("#Close").click(function () {
+            window.location.href = "/Main/index";
+        })
+        //刷新
+        $("#Refresh").click(function () {
+            location.reload();
+        })
+        //新增
+        $("#Insert").click(function () {
+            $('#formInsert').resetForm();
+            $("#modInsertExaminee").modal("show");
+        });
+        $("#Saveship").click(function () {
+            var ShipCode = $('#formInsert [name="ShipCode"]').val();
+            var ChineseName = $('#formInsert [name="ChineseName"]').val();
+            var ClientTypeID = $('#formInsert [name="ClientTypeID"]').val();
+            var ShipType = $('#formInsert [name="ShipType"]').val();
+            //判断一些必填项的数据是否为空
+            if (ShipCode != '') {
+                if (ChineseName != '') {
+                    if (ClientTypeID > 0) {
+                        if (ShipType != '') {
+                            var layerIndex = layer.load(0);
+                            $("#formInsert").ajaxSubmit(function (msg) {
+                                layer.close(layerIndex);
+                                if (msg == "数据新增成功！") {
+                                    tabship.search();
+                                    $("#modInsertExaminee").modal("hide");
+                                    layer.msg(msg, { icon: 1 });
+                                }
+                                else {
+                                    layer.msg(msg, { icon: 0 });
+                                }
+                            });
+                        }
+                        else {
+                            layer.msg("船舶类型不能为空！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("船公司不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("中文名不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("船舶代码不能为空！", { icon: 0 });
+            }
+        })
+        //编辑
+        $("#Update").click(function () {
+            var check = $("#Ship input:checked");
+            if (check.length == 0) {
+                layer.msg("请选择一条信息!", { icon: 0});
+            }
+            if (check.length > 1) {
+                layer.msg("只能选择一条信息!", { icon: 0 });
+            }
+            if (check.length == 1) {
+                $.post("/Basics/Basics/SelectshipById", { ShipID: check[0].value }, function (data) {
+                    loadDatatoForm("formUpdate", data);
+                })
+                $("#modUpdateExaminee").modal("show");
+            }
+        })
+        $("#UpdateSave").click(function () {
+            var ShipCode = $('#formUpdate [name="ShipCode"]').val();
+            var ChineseName = $('#formUpdate [name="ChineseName"]').val();
+            var ClientTypeID = $('#formUpdate [name="ClientTypeID"]').val();
+            var ShipType = $('#formUpdate [name="ShipType"]').val();
+            if (ShipCode != '') {
+                if (ChineseName != '') {
+                    if (ClientTypeID > 0) {
+                        if (ShipType != '') {
+                            var layerIndex = layer.load(0);
+                            $("#formUpdate").attr("action", "/Basics/Basics/UpdateShip?ShipID=" + $("#Ship input:checked")[0].value);
+                            $("#formUpdate").ajaxSubmit(function (msg) {
+                                layer.close(layerIndex);
+                                if (msg == "修改成功！") {
+                                    tabship.search();
+                                    $("#modUpdateExaminee").modal("hide");
+                                    layer.msg(msg, { icon: 1 });
+                                }
+                                else {
+                                    layer.msg(msg, { icon: 0 });
+                                }
+                            });
+                        }
+                        else {
+                            layer.msg("船舶类型不能为空！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("船公司不能为空！", { icon: 0 });
+                    }
+                }
+                else {
+                    layer.msg("中文名不能为空！", { icon: 0 });
+                }
+            }
+            else {
+                layer.msg("船舶代码不能为空！", { icon: 0 });
+            }
+        })
+        //删除
+        $("#Delete").click(function () {
+            var delCount = 0;//记录需要删除的数据的总数
+            var returnCount = 0;//记录删除成功的数据的总数
+            //获取选中的数据
+            var Check = $("#Ship input[type='checkbox']:checked");
+            if (Check.length > 0) {
+                layer.confirm("确定要删除选中的数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                    offset: "100px"
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    //计算选中的题目所有作废的数据的总数
+                    for (var i = 0; i < Check.length; i++) {
+                        //获取索引(获取Check[i]相对于jQuery选择器$("#tbTitlesInfor input[type='checkbox']")的索引)
+                        var Index = $("#Ship input[type='checkbox']").index(Check[i]);
+                        //根据索引获取行记录值中题目的状态
+                        var WhetherStart = tabship.getRecord(Index).WhetherStart;
+                        //判断获取到的题目的状态是否为作废
+                        if (!WhetherStart) {
+                            delCount++;
+                        }
+                    }
+                    //判断选中的题目是否全部是“已作废”的状态
+                    if (delCount == Check.length) {
+                        //删除
+                        for (var i = 0; i < Check.length; i++) {
+                            $.ajax({
+                                url: "DelectShip?ShipID=" + Check[i].value,
+                                async: false,
+                                type: "get",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data) {
+                                        returnCount++;
+                                    }
+                                }
+                            });
+                        }
+                        if (returnCount == Check.length) {
+                            //layer.msg("删除成功", { icon: 1, skin: "layui-layer-molv" });
+                            layer.msg("有" + (returnCount) + "条数据删除成功！", { icon: 1 });
+                            tabship.search();
+                        }
+                        else {
+                            layer.msg("有" + (delCount - returnCount) + "条数据存在异常！", { icon: 0 });
+                        }
+                    }
+                    else {
+                        layer.msg("选中的数据中存在已启用，不能删除！", { icon: 0 });
+                    }
+                });
+            }
+            else {
+                layer.msg("请选择需要删除的数据！", { icon: 0 });
+            }
+        });
+        //excel导出
+        $("#ExportToExcel").click(function () {
+            var ShipCode = $("#ShipCode").val();
+            if (ShipCode == null || ShipCode == undefined) {
+                ShipCode = 0;
+            }
+            var Abbreviation = $("#Abbreviation").val();
+            if (Abbreviation == null || Abbreviation == undefined) {
+                Abbreviation = 0;
+            }
+            var ChineseName = $("#ChineseName").val();
+            if (ChineseName == null || ChineseName == undefined) {
+                ChineseName = 0;
+            }
+            var EnglishName = $("#EnglishName").val();
+            if (EnglishName == null || EnglishName == undefined) {
+                EnglishName = 0;
+            }
+            var ChineseNamel = $("#ChineseNamel").val();
+            if (ChineseNamel == null || ChineseNamel == undefined) {
+                ChineseNamel = 0;
+            }
+            var Operator = $("#Operator").val();
+            if (Operator == null || Operator == undefined) {
+                Operator = 0;
+            }
+            var ShipEast = $("#ShipEast").val();
+            if (ShipEast == null || ShipEast == undefined) {
+                ShipEast = 0;
+            }
+            var ShipType = $("#ShipType").val();
+            if (ShipType == null || ShipType == undefined) {
+                ShipType = 0;
+            }
+            var CaptainName = $("#CaptainName").val();
+            if (CaptainName == null || CaptainName == undefined) {
+                CaptainName = 0;
+            }
+            var ShipMobile = $("#ShipMobile").val();
+            if (ShipMobile == null || ShipMobile == undefined) {
+                ShipMobile = 0;
+            }
+            var str = 'ShipCode=' + ShipCode + "&Abbreviation=" + Abbreviation + "&ChineseName=" + ChineseName + "&EnglishName=" + EnglishName + "&ChineseNamel=" + ChineseNamel + "&Operator=" + Operator + "&ShipEast=" + ShipEast + "&ShipType=" + ShipType + "&CaptainName=" + CaptainName + "&ShipMobile=" + ShipMobile;
+            var oldStr = tabship.getPageCondition(tabship.getCurPage());
+            if (oldStr.indexOf(str) > -1) {
+                layer.confirm("是否要导出当前的数据？", {
+                    icon: 3,
+                    btn: ['确定', '取消']
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("ExportToExcel?" + str);
+                })
+            }
+            else {
+                layer.msg("需要经过筛选", { icon: 0, title: '提示' });
+            }
+        });
+        //打印
+        $("#Print").click(function () {
+            var ShipCode = $("#ShipCode").val();
+            if (ShipCode == null || ShipCode == undefined) {
+                ShipCode = 0;
+            }
+            var Abbreviation = $("#Abbreviation").val();
+            if (Abbreviation == null || Abbreviation == undefined) {
+                Abbreviation = 0;
+            }
+            var ChineseName = $("#ChineseName").val();
+            if (ChineseName == null || ChineseName == undefined) {
+                ChineseName = 0;
+            }
+            var EnglishName = $("#EnglishName").val();
+            if (EnglishName == null || EnglishName == undefined) {
+                EnglishName = 0;
+            }
+            var ChineseNamel = $("#ChineseNamel").val();
+            if (ChineseNamel == null || ChineseNamel == undefined) {
+                ChineseNamel = 0;
+            }
+            var Operator = $("#Operator").val();
+            if (Operator == null || Operator == undefined) {
+                Operator = 0;
+            }
+            var ShipEast = $("#ShipEast").val();
+            if (ShipEast == null || ShipEast == undefined) {
+                ShipEast = 0;
+            }
+            var ShipType = $("#ShipType").val();
+            if (ShipType == null || ShipType == undefined) {
+                ShipType = 0;
+            }
+            var CaptainName = $("#CaptainName").val();
+            if (CaptainName == null || CaptainName == undefined) {
+                CaptainName = 0;
+            }
+            var ShipMobile = $("#ShipMobile").val();
+            if (ShipMobile == null || ShipMobile == undefined) {
+                ShipMobile = 0;
+            }
+            window.open("PrintAchievement?ShipCode=" + ShipCode + "&Abbreviation=" + Abbreviation + "&ChineseName=" + ChineseName + "&EnglishName=" + EnglishName + "&ChineseNamel=" + ChineseNamel + "&Operator=" + Operator + "&ShipEast=" + ShipEast + "&ShipType=" + ShipType + "&CaptainName=" + CaptainName + "&ShipMobile=" + ShipMobile);
+        })
+    </script>
+</body>
+</html>

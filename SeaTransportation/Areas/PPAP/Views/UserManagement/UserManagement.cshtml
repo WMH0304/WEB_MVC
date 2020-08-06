@@ -1,0 +1,635 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>用户管理</title>
+
+    @*CSS样式(包含默认皮肤样式)*@
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <link href="~/Content/Tree/jsTree/style.min.css" rel="stylesheet" />
+    @*自定义样式*@
+    <style type="text/css">
+        .container {
+            width: 100%;
+            padding: 0;
+        }
+
+        .panel-heading {
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .panel-body {
+            padding-top: 0;
+        }
+
+            .panel-body label {
+                font-weight: normal;
+                font-size: 16px;
+            }
+
+        .setPadding {
+            border: 1px solid #eee;
+            padding: 5px 0 5px 10px;
+        }
+
+            .setPadding button {
+                padding: 4px 6px;
+                font-size: 12px;
+            }
+
+        .form-horizontal label {
+            font-size: 12px;
+        }
+
+        .form-horizontal select, .form-horizontal input {
+            height: 26px;
+            padding: 0;
+        }
+
+        .reset {
+            padding: 0;
+        }
+
+        .examineeInfor {
+            border: 1px solid #eee;
+            padding: 0;
+        }
+
+        .h5 {
+            margin: 0;
+            background: #eef;
+            padding: 6px 10px;
+        }
+
+        .examineeInfor th, .examineeInfor td {
+            font-weight: normal;
+            text-align: center;
+        }
+
+        #examineeInfor th {
+            padding: 4px 8px;
+        }
+
+        .modal-header {
+            padding: 6px 5px;
+            border-bottom: none;
+            background: #337ab7;
+            text-align: center;
+            color: #fff;
+        }
+
+        .modal-content {
+            padding: 6px;
+        }
+
+        .modal-body {
+            border: 1px solid #ddd;
+            padding: 0 25px;
+        }
+
+        .modal-content label {
+            font-weight: normal;
+            font-size: 12px;
+        }
+
+        .img-box {
+            border: 1px solid #eee;
+            padding: 10px;
+        }
+
+        .modal-dialog {
+            width: 400px;
+        }
+
+        .modal .form-group {
+            margin-bottom: 0;
+            margin-top: 2px;
+        }
+
+        .form-group input {
+            height: 26px;
+        }
+
+        .setSex {
+            position: relative;
+            top: -10px;
+            left: 2px;
+        }
+
+        .text-center {
+            color: red;
+        }
+
+        li {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    @*页面*@
+
+
+    <div class="panel">
+        <div class="panel-heading">用户管理</div>
+        <div class="panel-body">
+            @*搜索栏按钮栏*@
+            <div class="row">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2 col-sm-2">
+                        公司
+                        <div id="A"></div>
+                        部门
+                        <div id="b" name="bbbb"></div>
+                    </div>
+                    <div class="row setPadding" style="margin-left: -13px">
+                        @*按钮*@
+                        <div class="col-lg-10 col-md-5 col-sm-5" style="float:right">
+                            <button class="btn btn-group" type="button" id="close">关闭</button>
+                            <button class="btn btn-group" type="button" id="refresh">刷新</button>
+                            <button class="btn btn-group" type="button" id="add">新增</button>
+                            <button class="btn btn-group" type="button" id="redact">编辑</button>
+                            <button class="btn btn-group" type="button" id="delete">删除</button>
+                            <button class="btn btn-group" type="button" id="demand">查询</button>
+                            <button class="btn btn-group" type="button" id="Stamp" onclick="Stamp()">打印</button>
+                            <button class="btn btn-group" type="button" id="Derive">导出</button>
+                        </div>
+
+                        @*表格数据绑定*@
+                        <div class="col-lg-10 col-md-5 col-sm-5" style="float:right">
+                            <table id="Tiss" style="width:100%">
+                                <tr>
+                                    <th w_index="UserID" w_check="true" id="UserID"></th>
+                                    <th w_num="total_line">NO.</th>
+                                    <th w_index="AccountName">账户名</th>
+                                    <th w_index="password" W_hidden="true">密码</th>
+                                    <th w_index="StaffName">员工姓名</th>
+                                    <th w_index="Time">最后登录时间</th>
+                                    <th w_index="Describe" w_edit="text">描述</th>
+                                    <th w_render="WhetherStart">是否启用</th>
+                                    <th w_index="ChineseName">所属组织</th>
+                                    <th w_index="DepartmentName">所属部门</th>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*新增考生模态窗体*@
+    <div class="modal  bs-example-modal-sm" id="modInsertExaminee">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @*模态框头部*@
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    用户信息
+                    @*<ul id="myTab" class="nav nav-tabs">
+                        <li class="active"><a href="#UserInfo">用户信息</a></li>
+                        <li><a href="#UserRole" data-toggle="tab">用户角色</a></li>
+                        <li><a href="#" data-toggle="tab">用户权限</a></li>
+                    </ul>*@
+                </div>
+                @*新增模态框内容*@
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active" id="UserInfo">
+                        <form class="form-horizontal" role="form" id="formInsertExaminee" action="InserUserManagement" method="post">
+                            <div class="form-group " id="accountName">
+                                <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                    <label class="control-label">账户名:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                    <input type="text" class="form-control" id="AccountName" name="AccountName" autocomplete="off" />
+                                </div>
+                            </div>
+                            <div class="form-group" id="accountName">
+                                <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                    <label class="control-label">密码:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                    <input type="text" class="form-control" id="password" name="password" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group" id="finallyRegisterTime">
+                                <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                    <label class="control-label">最后登录时间：</label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                    <input type="date" class="form-control" id="Time" name="FinallyRegisterTime" />
+                                </div>
+                            </div>
+                            <div class="form-group" id="describe">
+                                <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                    <label class="control-label">描述:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                    <input type="text" class="form-control" id="Describe" name="Describe" />
+                                </div>
+                            </div>
+                            <div class="form-group" id="whetherStart">
+                                <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                    <label class="control-label">是否启用:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                    <input type="checkbox" @*class="form-control" id="WhetherStart" *@ name="WhetherStart" value="true" />
+                                </div>
+                            </div>
+                            <div class="form-group" id="chineseName">
+                                <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                    <label class="control-label">所属组织:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                    <select type="text" class="form-control" id="MessageID" name="MessageID"></select>
+                                </div>
+                            </div>
+                            <div class="form-group" id="departmentName">
+                                <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                    <label class="control-label">所属部门:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                    <select type="text" class="form-control" id="DepartmentID" name="DepartmentID"></select>
+                                </div>
+                            </div>
+                            <div class="form-group" id="departmentName">
+                                <div class="col-lg-3 col-md-3 col-sm-3 text-right">
+                                    <label class="control-label">员工:</label>
+                                </div>
+                                <div class="col-lg-8 col-md-8 col-sm-8 reset">
+                                    <select type="text" class="form-control" id="StaffID" name="StaffID"></select>
+
+                                </div>
+                            </div>
+                            <div class="row  col-lg-offset-4">
+                                <div style="padding:10px;">
+                                    <button class="btn btn-primary" type="reset" id="l">查询</button>
+                                    <button class="btn btn-primary" type="reset" id="ll">新增</button>
+                                    <button class="btn btn-primary" type="reset" id="lll">重置</button>
+                                    <button class="btn btn-primary" type="reset" id="llll">修改</button>
+                                    <button class="btn btn-primary" type="button" id="lllll">保存</button>
+                                    <button class="btn btn-danger" data-dismiss="modal">关闭</button>
+
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+                <div class="modal-body" id="UserRole">
+                    <button type="button" class="close" data-dismiss="modal"></button>
+                    <form class="form-horizontal" role="form" id="vassalage" action="InsertStudent" method="post">
+
+                        <div class="col-lg-3 col-md-3 col-sm-3" style="float:left">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                用户角色
+                                <div id="userRole" name="userRole" class="cccc"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*外部js引用*@
+    <script src="~/Content/Tree/jquery.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-1.11.3.min.js"></script>
+
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>@*jquery.bsgrid*@
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>@*查询表格*@
+    <script src="~/Content/layer/layer.js"></script>
+
+    <script src="~/Content/js/customfunction.js"></script>@*下拉框数据绑定、表单数据回填*@
+    <script src="~/Content/js/combobox.js"></script>   @*点击选中行*@
+    <script src="~/Content/js/jquery.form.js"></script>@*提交表单*@
+    <script src="~/Content/Tree/jstree.min.js"></script>
+    <script src="~/Content/Tree/Tree.js"></script>
+    <script src="~/Content/Echarts/echarts.js"></script>
+    <script>
+        var sss;
+        var www = 0;
+        $(function () {
+            //初始化表格数据
+            appendOption("MessageID", "/Main/Message");
+            appendOption("DepartmentID", "/Main/Department");
+            appendOption("StaffID", "/PPAP/UserManagement/Staff");
+            Tree("#A", "/PPAP/SystemAAM/Tree");
+            Tree("#b", "/PPAP/SystemAAM/rrr")
+            Tree("#UserRole", "/PPAP/SystemAAM/www")
+
+            sss = $.fn.bsgrid.init("Tiss", {
+                url: "SelectUserManagement",
+                autoLoad: true,
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 20,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: false,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        click: function (record, rowIndex, trObj, options) {
+
+                            Check("#Tiss tr", rowIndex + 1);
+                            www = record.UserID;
+                            //console.log(www);
+                            //调用行点击事件
+                        }
+                    }
+                }
+            });
+            $(function () {
+                $("#myTab a").click(function (e) {
+                    e.preventDefault();
+                    $(this).tab("show");
+                })
+            })
+            function Tree1(MessageID) {
+                tttt.search({ MessageID: MessageID })
+            }
+        });
+
+        //*************************
+        $("#close").click(function () {//关闭
+            window.history.go(-1);
+        });
+        $("#refresh").click(function () {
+            location.reload();//刷新
+        });
+        function WhetherStart(record) {
+            var WhetherStart = record.WhetherStart;
+            if (WhetherStart) {
+                return '<span style ="color:blue">√</span>';
+            } else {
+                return '<span style ="color:red">×</span>';
+            }
+        }
+        //************************查询
+        $("#demand").click(function () {
+            $("#modInsertExaminee").modal("show");
+            $("#l").css("display", "block");
+            //  隐藏按钮
+            $("#ll").css("display", "none");//新增
+            $("#lll").css("display", "none");//重置
+            $("#llll").css("display", "none");//修改
+            $("#lllll").css("display", "none");//保存
+            // $("#accountName").css("display", "none");     //账户名
+            $("#finallyRegisterTime").css("display", "none");//最后登录时间
+            $("#describe").css("display", "none");           //账户名
+            $("#whetherStart").css("display", "none");       //最后登录时间
+            $("#chineseName").css("display", "none");        //账户名
+            $("#departmentName").css("display", "none");     //最后登录时间
+            $("#l").click(function () {
+                $("#modInsertExaminee").modal("hide");
+            });
+
+            $("#l").click(function () {
+                var AccountName = $("#AccountName").val();
+                var password = $("#password").val();
+                var StaffName = $("#StaffName").val();
+                if (AccountName == undefined) {
+                    AccountName = "";
+                }
+                if (password == null || password == undefined) {
+                    password = 0;
+                }
+
+                if (StaffName == undefined) {
+                    StaffName = "";
+                }
+                sss.search({ AccountName: AccountName, StaffName: StaffName, password: password });
+            });
+        });
+        //****************新增*************************
+        $("#add").click(function () {  //新增弹出框
+            $("#modInsertExaminee").modal("show");
+            $("#lllll").css("display", "block");
+            //隐藏
+            $("#l").css("display", "none");//查询
+            $("#ll").css("display", "none");//新增
+            $("#lll").css("display", "none");//重置
+            $("#llll").css("display", "none");//修改
+            $("#finallyRegisterTime").css("display", "none");//最后登录时间
+            $("#whetherStart").css("dispaly", "none");//是否启用
+            $("#lllll").click(function () {
+                $("#modInsertExaminee").modal("hide");
+            });
+        });
+        $("#MessageID").change(function () {
+            var MessageID = $("#MessageID").val();
+            appendOption("DepartmentID", "/Main/Department?MessageID=" + MessageID)
+        });
+        $("#DepartmentID").change(function () {
+            var MessageID = $("#MessageID").val();
+            var StaffID = $("#DepartmentID").val();
+            appendOption("StaffID", "/PPAP/UserManagement/Staff?DepartmentID=" + StaffID + "&MessageID" + MessageID)
+        });
+
+        $("#lllll").click(function () {
+            //获取新增数据
+            var MessageID = $("#formInsertExaminee [name='MessageID']").val();//公司
+            var DepartmentID = $("#formInsertExaminee  [name='DepartmentID']").val();////部门
+            var StaffID = $("#formInsertExaminee [name ='StaffID']").val();              //员工
+            var AccountName = $("#formInsertExaminee [name = 'AccountName']").val();//  账号名
+            var password = $("#formInsertExaminee [name ='password']").val();// /密码
+            var Describe = $("#formInsertExaminee [name ='Describe']").val();//描述
+            //var WhetherStart = $("#formInsertExaminee [name ='WhetherStart']").prop('checked');// /是否启用
+            if (MessageID > 0 && DepartmentID > 0 && StaffID > 0 && AccountName != "" && password != "" && Describe != "") {
+                var layerIndex = layer.load(3);
+                //ajaxSubmit()提交表单:我们直接通过form提交的话,提交后当前页面跳转到form的action所指向的页面。
+                //然而，很多时候我们并不希望提交表单后页面跳转，那么，我们就可以使用ajaxSubmit(obj)来提交数据
+                //ajaxSubmit(obj)方法是jQuery的一个插件jquery.form.js里面的方法，所以使用此方法需要先引入这个插件
+                $("#formInsertExaminee").ajaxSubmit(function (msg) {
+                    //关闭加载层
+                    layer.close(layerIndex);
+                    //关闭模态框
+                    // $("#modInsertExaminee").modal("hide");
+                    if (msg == "success") {
+                        //提示信息
+                        layer.msg("新增成功！", { icon: 1, title: '提示' });
+                        //刷新页面
+                        location.reload();//刷新
+                    } else {
+                        layer.alert(msg, { icon: 0, title: '提示' });
+                    }
+                });
+            }
+            else {
+                layer.alert('请填写完整信息', { icon: 0, title: '提示' });
+            }
+        });
+
+
+
+        ///             修改
+        //****************修改********************
+        $("#redact").click(function () {
+            $(".UserRole").css("display", "none");
+            $("#l").css("display", "none");//查询
+            $("#ll").css("display", "none");//新增
+            $("#lllll").css("display", "none");//保存
+            $("#finallyRegisterTime").css("display", "none");//登陆时间
+            //显示按钮
+            $("#lll").css("display", "block");//重置
+            $("#llll").css("display", "block");//修改
+            $("#formInsertExaminee").attr("action", "/PPAP/UserManagement/UpDateManagement");
+            var Check = $("#Tiss input:checked");
+            //  console.log(Check);
+            if (Check.length == 0) {
+                layer.msg("请选择一条信息", { icon: 0, });
+            }
+            if (Check.length > 1) {
+                layer.msg("只能选择一条信息", { icon: 0 });
+            }
+            if (Check.length == 1) {
+                $.post("/PPAP/UserManagement/SelectUserManagement?A=" + 1 + "&UserID=" + Check[0].value, function (data) {
+                    setTimeout(function myfunction() {
+                        loadDatatoForm("modInsertExaminee", data[0]);
+                        $('#formInsertExaminee').resetForm();
+                        $("#modInsertExaminee").modal('show');
+                    }, 100)
+                    appendOption("DepartmentID", "/Main/Department?MessageID=" + data[0].MessageID)
+                    ///       appendOption("DepartmentID", "/Main/Department?MessageID=" + data[0].MessageID + "&StaffID" + dara[0].StaffID);
+                    appendOption("StaffID", "/PPAP/UserManagement/Staff?DepartmentID=" + data[0].DepartmentID);
+
+                });
+            }
+        });
+        $("#llll").click(function () {
+            var MessageID = $("#modInsertExaminee [name='MessageID']").val();
+            var DepartmentID = $("#modInsertExaminee  [name='DepartmentID']").val();
+            var UserID = $("#modInsertExaminee [name = 'UserID']").val();
+            var AccountName = $("#modInsertExaminee [name = 'AccountName']").val();
+            //         var password = $("#modInsertExaminee [name ='password']").val();
+            var Describe = $("#modInsertExaminee [name ='Describe']").val();
+            var WhetherStart = $("#modInsertExaminee [name ='WhetherStart']").val();
+
+            if (MessageID > 0 && DepartmentID > 0 && AccountName != "" && password != "" && Describe != "" && WhetherStart != "") {
+                var layerIndex = layer.load(0);
+                $("#formInsertExaminee").ajaxSubmit(function (msg) {
+                    layer.close(layerIndex);
+                    $("#modInsertExaminee").modal("hide");
+                    if (msg == "success") {
+                        //提示信息
+                        layer.msg("修改成功!", { icon: 1, title: '提示' });
+                        //刷新页面
+                        location.reload();//刷新
+                    } else {
+                        layer.alert(msg, { icon: 0, title: '提示' });
+                    }
+                });
+            } else {
+                layer.alert("请填写完整信息", { icon: 0, title: '提示' });
+            }
+        });
+        ///************** 删除    *********************
+        $("#delete").click(function () {
+            var Check = $("#Tiss input:checked");
+            if (Check.length > 0) {
+                layer.confirm("确定删除吗？", {
+                    icon: 3,
+                    btn: ['确定', '取消'],
+                    offset: "50px",
+                }, function (layerIndex) {
+
+                    layer.close(layerIndex);
+                    for (var i = 0; i < Check.length; i++) {
+                        var id = Check[i].value;
+                        $.ajax({
+                            url: "UpDateManagement?UserID=" + id,
+                            type: "get",//数据传输通道类型
+                            async: false,
+                            dataType: "json",
+                            success: function (data) {
+                                if (data) {
+
+                                    location.reload();
+                                } else {
+                                    layer.msg(data, { icon: 0, title: "提示" });
+                                }
+
+                            }
+                        });
+                    }
+                })
+            }
+            else {
+                //引用第三方对话框。
+                layer.alert("请选择要删除的信息", { icon: 0, title: '提示' });
+            }
+        });
+
+        //************** 导出    *************************
+        $("#Derive").click(function () {
+            var MessageID = $("#modInsertExaminee [name='MessageID']").val();
+            var DepartmentID = $("#modInsertExaminee  [name='DepartmentID']").val();
+            var UserID = $("#modInsertExaminee [name = 'UserID']").val();
+            var AccountName = $("#modInsertExaminee [name = 'AccountName']").val();
+            var password = $("#modInsertExaminee [name ='password']").val();
+            var Describe = $("#modInsertExaminee [name ='Describe']").val();
+            var WhetherStart = $("#modInsertExaminee [name ='WhetherStart']").val();
+
+
+            var str = "AccountName" + AccountName + "password" + password + "Describe" + Describe + "WhetherStart" + WhetherStart
+            if (sss.getTotalRows() > 0) {
+                layer.confirm("确定要导出当前数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                }, function (layerIndex) {
+                    layer.close(layerIndex)
+                    window.open("FlowLeaveManagement?" + str);
+
+                });
+            } else {
+                layer.alert("请先查询出考生，预览是否是需要导出的数据", { icon: 0, title: '提示' });
+            }
+
+        });
+        //************  打印         ***********
+        $("#Stamp").click(function () {
+            var MessageID = $("#modInsertExaminee [name='MessageID']").val();
+            var DepartmentID = $("#modInsertExaminee  [name='DepartmentID']").val();
+            var UserID = $("#modInsertExaminee [name = 'UserID']").val();
+            var AccountName = $("#modInsertExaminee [name = 'AccountName']").val();
+            var password = $("#modInsertExaminee [name ='password']").val();
+            var Describe = $("#modInsertExaminee [name ='Describe']").val();
+            var WhetherStart = $("#modInsertExaminee [name ='WhetherStart']").val();
+
+
+            var str = "AccountName" + AccountName + "password" + password + "Describe" + Describe + "WhetherStart" + WhetherStart
+            if (sss.getTotalRows() > 0) {
+                layer.confirm("确定要打印当前数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                }, function (layerIndex) {
+                    layer.close(layerIndex)
+                    window.open("StampUser?" + str);
+
+                });
+            } else {
+                layer.alert("请先查询出考生，预览是否是需要dy的数据", { icon: 0, title: '提示' });
+            }
+
+        });
+
+    </script>
+
+</body>
+</html>

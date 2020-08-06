@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="InsertDB" targetNamespace="http://tempuri.org/InsertDB.xsd" xmlns:mstns="http://tempuri.org/InsertDB.xsd" xmlns="http://tempuri.org/InsertDB.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="InsertDB" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="InsertDB" msprop:Generator_UserDSName="InsertDB">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="tabInsert" msprop:Generator_TableClassName="tabInsertDataTable" msprop:Generator_TableVarName="tabletabInsert" msprop:Generator_TablePropName="tabInsert" msprop:Generator_RowDeletingName="tabInsertRowDeleting" msprop:Generator_RowChangingName="tabInsertRowChanging" msprop:Generator_RowEvHandlerName="tabInsertRowChangeEventHandler" msprop:Generator_RowDeletedName="tabInsertRowDeleted" msprop:Generator_UserTableName="tabInsert" msprop:Generator_RowChangedName="tabInsertRowChanged" msprop:Generator_RowEvArgName="tabInsertRowChangeEvent" msprop:Generator_RowClassName="tabInsertRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ExpenseName" msprop:Generator_ColumnVarNameInTable="columnExpenseName" msprop:Generator_ColumnPropNameInRow="ExpenseName" msprop:Generator_ColumnPropNameInTable="ExpenseNameColumn" msprop:Generator_UserColumnName="ExpenseName" type="xs:string" minOccurs="0" />
+              <xs:element name="SettleAccounts" msprop:Generator_ColumnVarNameInTable="columnSettleAccounts" msprop:Generator_ColumnPropNameInRow="SettleAccounts" msprop:Generator_ColumnPropNameInTable="SettleAccountsColumn" msprop:Generator_UserColumnName="SettleAccounts" type="xs:string" minOccurs="0" />
+              <xs:element name="UnitPrice" msprop:Generator_ColumnVarNameInTable="columnUnitPrice" msprop:Generator_ColumnPropNameInRow="UnitPrice" msprop:Generator_ColumnPropNameInTable="UnitPriceColumn" msprop:Generator_UserColumnName="UnitPrice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="YiJieMoney" msprop:Generator_ColumnVarNameInTable="columnYiJieMoney" msprop:Generator_ColumnPropNameInRow="YiJieMoney" msprop:Generator_ColumnPropNameInTable="YiJieMoneyColumn" msprop:Generator_UserColumnName="YiJieMoney" type="xs:string" minOccurs="0" />
+              <xs:element name="Parities" msprop:Generator_ColumnVarNameInTable="columnParities" msprop:Generator_ColumnPropNameInRow="Parities" msprop:Generator_ColumnPropNameInTable="ParitiesColumn" msprop:Generator_UserColumnName="Parities" type="xs:string" minOccurs="0" />
+              <xs:element name="Currency" msprop:Generator_ColumnVarNameInTable="columnCurrency" msprop:Generator_ColumnPropNameInRow="Currency" msprop:Generator_ColumnPropNameInTable="CurrencyColumn" msprop:Generator_UserColumnName="Currency" type="xs:string" minOccurs="0" />
+              <xs:element name="IndentNumber" msprop:Generator_ColumnVarNameInTable="columnIndentNumber" msprop:Generator_ColumnPropNameInRow="IndentNumber" msprop:Generator_ColumnPropNameInTable="IndentNumberColumn" msprop:Generator_UserColumnName="IndentNumber" type="xs:string" minOccurs="0" />
+              <xs:element name="EtrustNmber" msprop:Generator_ColumnVarNameInTable="columnEtrustNmber" msprop:Generator_ColumnPropNameInRow="EtrustNmber" msprop:Generator_ColumnPropNameInTable="EtrustNmberColumn" msprop:Generator_UserColumnName="EtrustNmber" type="xs:string" minOccurs="0" />
+              <xs:element name="Cupboard" msprop:Generator_ColumnVarNameInTable="columnCupboard" msprop:Generator_ColumnPropNameInRow="Cupboard" msprop:Generator_ColumnPropNameInTable="CupboardColumn" msprop:Generator_UserColumnName="Cupboard" type="xs:string" minOccurs="0" />
+              <xs:element name="Seal" msprop:Generator_ColumnVarNameInTable="columnSeal" msprop:Generator_ColumnPropNameInRow="Seal" msprop:Generator_ColumnPropNameInTable="SealColumn" msprop:Generator_UserColumnName="Seal" type="xs:string" minOccurs="0" />
+              <xs:element name="EtrustType" msprop:Generator_ColumnVarNameInTable="columnEtrustType" msprop:Generator_ColumnPropNameInRow="EtrustType" msprop:Generator_ColumnPropNameInTable="EtrustTypeColumn" msprop:Generator_UserColumnName="EtrustType" type="xs:string" minOccurs="0" />
+              <xs:element name="ClientAbbreviation" msprop:Generator_ColumnVarNameInTable="columnClientAbbreviation" msprop:Generator_ColumnPropNameInRow="ClientAbbreviation" msprop:Generator_ColumnPropNameInTable="ClientAbbreviationColumn" msprop:Generator_UserColumnName="ClientAbbreviation" type="xs:string" minOccurs="0" />
+              <xs:element name="ReckoningUnit" msprop:Generator_ColumnVarNameInTable="columnReckoningUnit" msprop:Generator_ColumnPropNameInRow="ReckoningUnit" msprop:Generator_ColumnPropNameInTable="ReckoningUnitColumn" msprop:Generator_UserColumnName="ReckoningUnit" type="xs:string" minOccurs="0" />
+              <xs:element name="CheXing" msprop:Generator_ColumnVarNameInTable="columnCheXing" msprop:Generator_ColumnPropNameInRow="CheXing" msprop:Generator_ColumnPropNameInTable="CheXingColumn" msprop:Generator_UserColumnName="CheXing" type="xs:string" minOccurs="0" />
+              <xs:element name="WorkCategory" msprop:Generator_ColumnVarNameInTable="columnWorkCategory" msprop:Generator_ColumnPropNameInRow="WorkCategory" msprop:Generator_ColumnPropNameInTable="WorkCategoryColumn" msprop:Generator_UserColumnName="WorkCategory" type="xs:string" minOccurs="0" />
+              <xs:element name="HuaiWeightTime1" msprop:Generator_ColumnVarNameInTable="columnHuaiWeightTime1" msprop:Generator_ColumnPropNameInRow="HuaiWeightTime1" msprop:Generator_ColumnPropNameInTable="HuaiWeightTime1Column" msprop:Generator_UserColumnName="HuaiWeightTime1" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

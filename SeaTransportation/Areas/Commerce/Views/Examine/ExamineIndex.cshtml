@@ -1,0 +1,621 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <title>商务审核</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="~/Content/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/merged/bsgrid.all.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.bsgrid-1.37/css/skins/grid_bootstrap.min.css" rel="stylesheet" />
+   
+
+    <style type="text/css">
+        code {
+            padding: 0px 4px;
+            color: #d14;
+            background-color: #f7f7f9;
+            border: 1px solid #e1e1e8;
+        }
+        /*#button button i{
+            color:white;
+        }*/
+        #button button {
+            font-family: 华文行楷;
+            font-size: 16px;
+            line-height: 14px;
+        }
+
+        .row label {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+
+        .row input {
+            width: 150px;
+            height: 33px;
+        }
+
+        .lol th {
+            font-family: 华文行楷;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="panel-heading" style="height:55px;margin-left:-3389px;margin-top:30px;">
+            <div class="col-lg-10 col-sm-10 col-md-10 text-right" id="button">
+                <button class="btn btn-brown" style="width:122px;" id="btnShangwuShenHe"><i class="glyphicon glyphicon-floppy-saved" style="font-size:14px;"></i>商务审核</button>
+                <button class="btn btn-brown" style="width:122px;" id="btnShangwuQiShen"><i class="glyphicon glyphicon-floppy-remove" style="font-size:14px;"></i>商务弃审</button>
+                <button class="btn btn-brown" style="width:84px;" onclick="printAchievement()"><i class="glyphicon glyphicon-check" style="font-size:14px;"></i>打印</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnDaoChu"><i class=" glyphicon glyphicon-share-alt" style="font-size:14px;"></i>导出</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnSelect"><i class=" glyphicon glyphicon-search" style="font-size:14px;"></i>查询</button>
+            </div>
+        </div>
+
+        <h4 style="font-family:华文行楷;margin-left:-159px;color:cadetblue;margin-top:0px;">查询条件</h4>
+        <div class="row" id="modInsertExaminee">
+            <form id="J_Form" class="form-horizontal span24" action="/KeFangYuDing/KeFang/Insertnews" method="post">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-167px;margin-top:-15px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">运输单号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                            <input type="text" class="form-control" id="CarriageNumber" name="CarriageNumber" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-170px;margin-top:-14px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">柜号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-15px;margin-top:2px;">
+                            <input type="text" class="form-control" id="Cupboard" name="Cupboard"  />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-157px;margin-top:-14px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">封条号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <input type="text" class="form-control" id="Seal" name="Seal"  />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-157px;margin-top:-14px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">订单号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-13px;margin-top:1px;">
+                            <input type="text" class="form-control" id="IndentNumber" name="IndentNumber"  />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:805px;margin-top:-30px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">到厂时间</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-10px;margin-top:1px;">
+                            <input type="date" class="form-control" id="ArriveFactoryTimee" name="ArriveFactoryTime" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-167px;margin-top:3px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">客户简称</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                            <input type="text" class="form-control" id="ClientAbbreviation" name="ClientAbbreviation" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-170px;margin-top:4px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">委托单号</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-15px;margin-top:2px;">
+                            <input type="text" class="form-control" id="EtrustNmber" name="EtrustNmber" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-157px;margin-top:4px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">提柜地点</label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 reset" style="width:180px;margin-left:-13px;">
+                            <select type="text" style="height:33px;" class="form-control" id="TiGui"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:-157px;margin-top:4px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">还柜地点</label>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 reset" style="width:180px;margin-left:-13px;">
+                            <select type="text" style="height:33px;" class="form-control" id="HuanGui"></select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:805px;margin-top:-30px;">
+                        <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                            <label class="control-label">离厂时间</label>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-10px;margin-top:1px;">
+                            <input type="date" class="form-control" id="LeftFactoryTime" name="LeftFactoryTime" />
+                        </div>
+                    </div>
+
+                </div>
+                
+            </form>            
+        </div>
+        @*上方*@
+        <div style="margin-left:-156px;margin-top:15px;">
+            <table class="table table-hover choosetable" style="width:1479px;" id="tabExamine">
+                <thead>
+                    <tr class="lol">
+                        <th w_index="EtrustID" w_check="true"></th>  @*这是第一个0个*@ 
+                        <th w_index="CommerceID" w_hidden="true"></th>
+                        <th w_num="total_line">序号</th>
+                        <th w_index="EtrustNmber">委托单号</th>
+                        <th w_index="CarriageNumber">运输单号</th>
+                        <th w_index="EtrustType">状态</th>
+                        <th w_index="ClientAbbreviation">客户简称</th>
+                        <th w_index="CheXing">柜(车)型</th>
+                        <th w_index="Cupboard">柜号</th>
+                        <th w_index="Seal">封条号</th>
+                        <th w_index="IndentNumber">订单号</th>
+                        <th w_index="ArriveFactoryTime1">到厂时间</th>
+                        <th w_index="LeftFactoryTime1">离厂时间</th>
+                        <th w_index="User1">商务审核人</th>
+                        @*<th w_index="User">商务弃审人</th>*@
+                        <th w_index="ShangWuShenHeTime">商务审核时间</th>
+                        @*<th w_index="ShangWuQiShenTime">商务弃审时间</th>*@
+                        <th w_index="AuditType">审核否</th>   @*多条件查询的时候，表格不一定要列出所有的数据，只要查询出来就可以进行多条件查询了,进行下拉框查询的时候，主表有那个下拉框表的ID就可以了，不一定要连上那个表才可以*@
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        @*下方*@
+        <div style="margin-left:-156px;margin-top:10px;">
+            <ul class="nav nav-tabs tab-color-blue background-blue">
+                <li class="active">
+                    <a id="tbnavB" href="#tpB" data-toggle="tab" style="font-family:华文行楷;color:#000;font-size:16px;">应收应付</a>
+                </li>
+            </ul>
+            <div style="margin-left:118px;margin-top:-41px;float:left">
+                <button class="btn btn-brown" style="width:84px;" onclick="printAchievementt()"><i class="glyphicon glyphicon-check" style="font-size:14px;"></i>打印</button>
+                <button class="btn btn-brown" style="width:84px;" id="btnDaoChu1"><i class=" glyphicon glyphicon-share-alt" style="font-size:14px;"></i>导出</button>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 text-right" style="margin-left:371px;margin-top:-43px;width:80px;">
+                <label class="control-label" style="font-size:18px;">合计:</label>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:340px;margin-top:-41px;">
+                <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                    <label class="control-label">应收</label>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                    <input type="text" class="form-control" id="YingShou"  style="width:100px;margin-top:-11px;" />
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:495px;margin-top:-41px;">
+                <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                    <label class="control-label">应付</label>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                    <input type="text" class="form-control" id="YingFu" style="width:100px;margin-top:-11px;" />
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4" style="margin-left:652px;margin-top:-41px;">
+                <div class="col-lg-4 col-md-4 col-sm-4 text-right">
+                    <label class="control-label">利润</label>
+                </div>
+                <div class="col-lg-8 col-md-8 col-sm-8 reset" style="margin-left:-17px;margin-top:3px;">
+                    <input type="text" class="form-control" id="LiRun" style="width:100px;margin-top:-11px;" />
+                </div>
+            </div>
+            <table class="table table-hover choosetable" style="width:1476px;" id="tabJiSuan">
+                <thead>
+                    <tr class="lol">
+                        <th w_index="EtrustID" w_hidden="true"></th>
+                        <th w_index="ChargeID"  w_check="true"  w_hidden="true"></th>
+                        <th w_num="total_line">序号</th>
+                        <th w_index="ReckoningUnit">结算单位</th>
+                        <th w_index="ExpenseName">费用名称</th>
+                        <th w_index="ChargeType">费用类型</th>
+                        <th w_index="SettleAccounts">收付款类型</th>
+                        <th w_index="UnitPrice">单价</th>
+                        <th w_index="BoxQuantity">箱量</th>
+                        <th w_index="UnitPrice">金额</th>
+                        <th w_index="Currency">币种</th>
+                        <th w_index="">已销账金额</th>
+                        <th w_index="">已收付金额</th>
+                        <th w_index="">差异金额</th>
+                        <th w_index="">备注</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+    </div>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/jquery-2.0.3.min.js"></script>
+    <script src="~/Content/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/merged/bsgrid.all.min.js"></script>
+    <script src="~/Content/jquery.bsgrid-1.37/builds/js/lang/grid.zh-CN.min.js"></script>
+    <script src="~/Content/layer/layer.js"></script>
+    <script src="~/Content/js/combobox.js"></script>
+    <script src="~/Content/js/jquery.form.js"></script>
+    <script src="~/Content/js/customfunction.js"></script>
+
+
+
+    <script>
+        var tabExamine;
+        var tabJiSuan;
+        var EtrustID;
+
+
+        $(function () {
+            $("#YingShou").val(0);
+            $("#YingFu").val(0);
+            $("#LiRun").val(0);
+
+            //绑定提柜地点下拉框
+            createSelect("TiGui", "SelecrDiDian");
+            //绑定还柜地点下拉框
+            createSelect("HuanGui", "SelecrDiDian");
+
+            //初始化表格数据
+            tabExamine = $.fn.bsgrid.init("tabExamine", {
+                url: "SelectExamine",
+                autoLoad: true,//是否自动加载
+                pageSizeSelect: true,//分页大小选择下拉框
+                pageSize: 5,//初始化每一页数据条数
+                stripeRows: true,//隔行换色
+                rowHoverColor: true,//鼠标滑过变色
+                pagingLittleToolbar: true,//精简的图标按钮分页工具条
+                displayBlankRows: true,//不显示空白行
+                event: {
+                    //当前行事件
+                    customRowEvents: {
+                        //(record行记录值,rowIndex行索引值,trObj:tr目标,options选择的东西)
+                        click: function (record, rowIndex, trObj, options) {
+                            Check("#tabExamine tr", rowIndex + 1, record);
+                            EtrustID = record.EtrustID;//给下方表格打印水晶报表的ID赋值
+                            tabJiSuan.search("EtrustID=" + record.EtrustID);  //要把这个ID传到控制器进行查询
+
+                            $.post("SelectCharge?A=" + 1 + "&EtrustID=" + record.EtrustID, function (Data) {//把控制器获取到那三个文本框的值回填到页面是文本框上  1是随便给的值，只要大于0就可以了
+                                $("#YingShou").val(Data.YingShouZ);
+                                $("#YingFu").val(Data.YingFuZ);
+                                $("#LiRun").val(Data.LiRun);
+                            });
+                        }
+                    }
+                }
+            });
+
+            //下方表格数据
+            tabJiSuan = $.fn.bsgrid.init('tabJiSuan', {
+                url: 'SelectCharge',
+                stripeRows: true,//隔行变色
+                autoLoad: false,//是否自动加载
+                rowHoverColor: true,//划过行变色
+                pageSize: 5,
+                pageSizeSelect: false,//是否选择分页页数下拉框
+            });
+        })
+
+        //商务审核页面多条件查询
+        function tabExamineSearch() {
+            var CarriageNumber = $("#CarriageNumber").val();
+            var Cupboard = $("#Cupboard").val();
+            var Seal = $("#Seal").val();
+            var IndentNumber = $("#IndentNumber").val();
+            var ArriveFactoryTime = $("#ArriveFactoryTimee").val();
+            var LeftFactoryTime = $("#LeftFactoryTime").val();
+            var ClientAbbreviation = $("#ClientAbbreviation").val();
+            var EtrustNmber = $("#EtrustNmber").val();
+            var TiGuiDiDianID = $("#TiGui").val();
+            var HuaiGuiDiDianID = $("#HuanGui").val();
+            
+            if (CarriageNumber == undefined) {
+                CarriageNumber = "";
+            }
+            if (Cupboard == undefined) {
+                Cupboard = "";
+            }
+            if (Seal == undefined) {
+                Seal = "";
+            }
+            if (IndentNumber == undefined) {
+                IndentNumber = "";
+            }
+            if (ArriveFactoryTime == undefined) {
+                ArriveFactoryTime = "";
+            }
+            if (LeftFactoryTime==undefined) {
+                LeftFactoryTime = "";
+            }
+            if (ClientAbbreviation == undefined) {
+                ClientAbbreviation = "";
+            }
+            if (EtrustNmber == undefined) {
+                EtrustNmber = "";
+            }
+            if (TiGuiDiDianID == undefined) {
+                TiGuiDiDianID = 0;
+            }
+            if (HuaiGuiDiDianID == undefined) {
+                HuaiGuiDiDianID = 0;
+            }
+            tabExamine.search({ CarriageNumber: CarriageNumber, Cupboard: Cupboard, Seal: Seal, IndentNumber: IndentNumber, ArriveFactoryTime: ArriveFactoryTime, LeftFactoryTime: LeftFactoryTime, ClientAbbreviation: ClientAbbreviation, EtrustNmber: EtrustNmber, TiGuiDiDianID: TiGuiDiDianID, HuaiGuiDiDianID: HuaiGuiDiDianID });
+        }
+        //点击查询按钮进行多条件查询
+        $("#btnSelect").click(function () {
+            $("#YingShou").val(0);
+            $("#YingFu").val(0);
+            $("#LiRun").val(0);
+            tabExamineSearch();
+        });
+
+        //商务审核
+        $("#btnShangwuShenHe").click(function () {
+            var delCount = 0;//记录需要审核的数据的总数
+            var ReturnCount = 0;//记录审核成功的数据的总数
+            //获取选中的数据
+            var Check = $("#tabExamine input[type='checkbox']:checked");
+
+            if (Check.length > 0) {
+                var EtrustID = $("#tabExamine input:checked");
+                layer.confirm("确定要进行商务审核吗?", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                    offset: "100px"
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    //计算选中的客户所有审核中的数据的总数
+                    for (var i = 0; i < Check.length; i++) {
+                        //获取索引(获取Check[i]相对于jQuery选择器$("#tabExamine input[type='checkbox']")的索引)
+                        var Index = $("#tabExamine input[type='checkbox']").index(Check[i])-1;   //如果表格表头上方也有一个选择框，就要减1，如果没有，就不需要
+                        //根据索引获取行记录值中客户的状态
+                        var AuditType = tabExamine.getRecord(Index).AuditType;
+                        //判断获取到的客户的状态是否为审核中
+                        if (AuditType!="已审核") {
+                            delCount++;
+                        }
+                    }
+                    //判断选中的客户是否全部是“审核中”的状态
+                    if (delCount == Check.length) {
+                        //进行审核
+                        for (var i = 0; i < Check.length; i++) {
+                            $.ajax({
+                                url: "SaveExamine?EtrustID=" + Check[i].value,
+                                async: false,
+                                type: "get",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data == "success") {
+                                        ReturnCount++;
+                                    }
+                                }
+                            });
+                        }
+                        if (ReturnCount == Check.length) {
+                            layer.msg("审核成功", { icon: 1, skin: "layui-layer-molv" });
+                            tabExamineSearch();
+                        }
+                        else {
+                            layer.alert("有" + (delCount - ReturnCount) + "条数据存在异常！", { icon: 0, title: "提示", offset: "100px" });
+                        }
+                    }
+                    else {
+                        layer.alert("选中的客户中存在已审核的客户，不能进行审核！", { icon: 0, title: "提示", offset: "100px" });
+                    }
+                })
+            }
+            else {
+                layer.alert("请选择需要进行商务审核的客户！", { icon: 0, title: "提示", offset: "100px" });
+            }
+        })
+        //商务弃审
+        $("#btnShangwuQiShen").click(function () {
+            var delCount = 0;//记录需要审核的数据的总数
+            var ReturnCount = 0;//记录审核成功的数据的总数
+            //获取选中的数据
+            var Check = $("#tabExamine input[type='checkbox']:checked");
+
+            if (Check.length > 0) {
+                var EtrustID = $("#tabExamine input:checked");
+                layer.confirm("确定要进行商务弃审吗?", {
+                    icon: 3,
+                    btn: ["确定", "取消"],
+                    offset: "100px"
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    //计算选中的客户所有审核中的数据的总数
+                    for (var i = 0; i < Check.length; i++) {
+                        //获取索引(获取Check[i]相对于jQuery选择器$("#tabExamine input[type='checkbox']")的索引)
+                        var Index = $("#tabExamine input[type='checkbox']").index(Check[i]) - 1;
+                        //根据索引获取行记录值中客户的状态
+                        var AuditType = tabExamine.getRecord(Index).AuditType;
+                        //判断获取到的客户的状态是否为审核中
+                        if (AuditType != "已审核") {
+                            delCount++;
+                        }
+                    }
+                    //判断选中的客户是否全部是“审核中”的状态
+                    if (delCount == Check.length) {
+                        //进行审核
+                        for (var i = 0; i < Check.length; i++) {
+                            $.ajax({
+                                url: "SaveAbandon?EtrustID=" + Check[i].value,
+                                async: false,
+                                type: "get",
+                                dataType: "json",
+                                success: function (data) {
+                                    if (data == "success") {
+                                        ReturnCount++;
+                                    }
+                                }
+                            });
+                        }
+                        if (ReturnCount == Check.length) {
+                            layer.msg("弃审成功", { icon: 1, skin: "layui-layer-molv" });
+                            tabExamineSearch();
+                        }
+                        else {
+                            layer.alert("有" + (delCount - ReturnCount) + "条数据存在异常！", { icon: 0, title: "提示", offset: "100px" });
+                        }
+                    }
+                    else {
+                        layer.alert("选中的客户中存在已审核的客户，不能进行弃审！", { icon: 0, title: "提示", offset: "100px" });
+                    }
+                })
+            }
+            else {
+                layer.alert("请选择需要进行商务弃审的客户！", { icon: 0, title: "提示", offset: "100px" });
+            }
+        })
+        //上方表格打印水晶报表
+        function printAchievement() {
+            var CarriageNumber = $("#CarriageNumber").val();
+            var Cupboard = $("#Cupboard").val();
+            var Seal = $("#Seal").val();
+            var IndentNumber = $("#IndentNumber").val();
+            var ArriveFactoryTime = $("#ArriveFactoryTimee").val();
+            var LeftFactoryTime = $("#LeftFactoryTime").val();
+            var ClientAbbreviation = $("#ClientAbbreviation").val();
+            var EtrustNmber = $("#EtrustNmber").val();
+            var TiGuiDiDianID = $("#TiGui").val();
+            var HuaiGuiDiDianID = $("#HuanGui").val();
+
+            if (CarriageNumber == undefined) {
+                CarriageNumber = "";
+            }
+            if (Cupboard == undefined) {
+                Cupboard = "";
+            }
+            if (Seal == undefined) {
+                Seal = "";
+            }
+            if (IndentNumber == undefined) {
+                IndentNumber = "";
+            }
+            if (ArriveFactoryTime == undefined) {
+                ArriveFactoryTime = "";
+            }
+            if (LeftFactoryTime == undefined) {
+                LeftFactoryTime = "";
+            }
+            if (ClientAbbreviation == undefined) {
+                ClientAbbreviation = "";
+            }
+            if (EtrustNmber == undefined) {
+                EtrustNmber = "";
+            }
+            if (TiGuiDiDianID == undefined) {
+                TiGuiDiDianID = 0;
+            }
+            if (HuaiGuiDiDianID == undefined) {
+                HuaiGuiDiDianID = 0;
+            }
+            //拼接查询条件
+            var str = "CarriageNumber=" + CarriageNumber + "&Cupboard=" + Cupboard + "&Seal=" + Seal + "&IndentNumber=" + IndentNumber + "&ArriveFactoryTime=" + ArriveFactoryTime + "&LeftFactoryTime=" + LeftFactoryTime + "&ClientAbbreviation=" + ClientAbbreviation + "&EtrustNmber=" + EtrustNmber + "&TiGuiDiDianID=" + TiGuiDiDianID + "&HuaiGuiDiDianID=" + HuaiGuiDiDianID;
+            //getPageCondition获取当前页请求条件
+            var curCondition = tabExamine.getPageCondition(tabExamine.getCurPage());
+
+            if (curCondition.indexOf(str) > -1) {
+                layer.confirm("确定要打印当前数据吗？", {
+                    icon: 3,
+                    btn: ["确定", "取消"]
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("PrintAchievement?" + str);
+                });
+            }
+            else {
+                layer.alert("请先查询出成绩信息，预览是否是需要打印的数据", { icon: 0, title: '提示' });
+            }
+        }
+        
+        //上方表格导出Excel表格数据
+        $("#btnDaoChu").click(function () {
+            var CarriageNumber = $("#CarriageNumber").val();
+            var Cupboard = $("#Cupboard").val();
+            var Seal = $("#Seal").val();
+            var IndentNumber = $("#IndentNumber").val();
+            var ArriveFactoryTime = $("#ArriveFactoryTimee").val();
+            var LeftFactoryTime = $("#LeftFactoryTime").val();
+            var ClientAbbreviation = $("#ClientAbbreviation").val();
+            var EtrustNmber = $("#EtrustNmber").val();
+            var TiGuiDiDianID = $("#TiGui").val();
+            var HuaiGuiDiDianID = $("#HuanGui").val();
+
+            if (CarriageNumber == undefined) {
+                CarriageNumber = "";
+            }
+            if (Cupboard == undefined) {
+                Cupboard = "";
+            }
+            if (Seal == undefined) {
+                Seal = "";
+            }
+            if (IndentNumber == undefined) {
+                IndentNumber = "";
+            }
+            if (ArriveFactoryTime == undefined) {
+                ArriveFactoryTime = "";
+            }
+            if (LeftFactoryTime == undefined) {
+                LeftFactoryTime = "";
+            }
+            if (ClientAbbreviation == undefined) {
+                ClientAbbreviation = "";
+            }
+            if (EtrustNmber == undefined) {
+                EtrustNmber = "";
+            }
+            if (TiGuiDiDianID == undefined) {
+                TiGuiDiDianID = 0;
+            }
+            if (HuaiGuiDiDianID == undefined) {
+                HuaiGuiDiDianID = 0;
+            }
+
+            var str = "CarriageNumber=" + CarriageNumber + "&Cupboard=" + Cupboard + "&Seal=" + Seal + "&IndentNumber=" + IndentNumber + "&ArriveFactoryTime=" + ArriveFactoryTime + "&LeftFactoryTime=" + LeftFactoryTime + "&ClientAbbreviation=" + ClientAbbreviation + "&EtrustNmber=" + EtrustNmber + "&TiGuiDiDianID=" + TiGuiDiDianID + "&HuaiGuiDiDianID=" + HuaiGuiDiDianID;
+
+            var curCondition = tabExamine.getPageCondition(tabExamine.getCurPage());
+
+            if (curCondition.indexOf(str) > -1) {
+                layer.confirm("是否要导出当前的数据？", {
+                    icon: 3,
+                    btn: ["确定", "取消"]
+                }, function (layerIndex) {
+                    layer.close(layerIndex);
+                    window.open("ExportYuDingInfor?" + str);
+                });
+            } else {
+                layer.alert("请先查询出数据，预览是否是需要导出的数据", { icon: 0, title: '提示' });
+            }
+        });
+
+        //下方表格打印水晶报表
+        function printAchievementt() {
+            layer.confirm("确定要打印当前数据吗？", {
+                icon: 3,
+                btn: ["确定", "取消"]
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("PrintAchievementt?EtrustID=" + EtrustID); //这个表的数据是由上面表格的数据触发的，先把用来触发的那个ID传过来，再在第一个表格初始化行点击事件那个给用来触发的ID赋值(EtrustID = record.EtrustID;)
+            });
+        }
+
+        //下方表格导出Excel表格数据
+        $("#btnDaoChu1").click(function () {
+            layer.confirm("确定要导出当前数据吗？", {
+                icon: 3,
+                btn: ["确定", "取消"]
+            }, function (layerIndex) {
+                layer.close(layerIndex);
+                window.open("ExportYuDingInforr?EtrustID=" + EtrustID); //这个表的数据是由上面表格的数据触发的，先把用来触发的那个ID传过来，再在第一个表格初始化行点击事件那个给用来触发的ID赋值(EtrustID = record.EtrustID;)
+            });
+        })
+
+    </script>
+
+</body>
+</html> 

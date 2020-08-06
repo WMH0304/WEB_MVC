@@ -1,0 +1,1792 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SeaTransportationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BS_City">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Province" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="CityName" Type="nchar" MaxLength="10" />
+          <Property Name="EnglishName" Type="nchar" MaxLength="20" />
+          <Property Name="CityCode" Type="nchar" MaxLength="20" />
+          <Property Name="Describe" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_Bracket">
+          <Key>
+            <PropertyRef Name="BracketID" />
+          </Key>
+          <Property Name="BracketID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageID" Type="smallint" Nullable="false" />
+          <Property Name="BracketCode" Type="nchar" MaxLength="10" />
+          <Property Name="ChassisNumber" Type="nchar" MaxLength="20" />
+          <Property Name="BracketType" Type="nchar" MaxLength="10" />
+          <Property Name="CustomsRecordModel" Type="nchar" MaxLength="10" />
+          <Property Name="BracketTag" Type="nchar" MaxLength="20" />
+          <Property Name="SinceNumber" Type="nchar" MaxLength="20" />
+          <Property Name="ManufactureDate" Type="datetime" />
+          <Property Name="ManufactureFactory" Type="nchar" MaxLength="20" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_Calculate">
+          <Key>
+            <PropertyRef Name="CalculateID" />
+          </Key>
+          <Property Name="CalculateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SignID" Type="int" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="CalculateNumber" Type="nchar" MaxLength="15" />
+          <Property Name="SettleAccounts" Type="nchar" MaxLength="10" />
+          <Property Name="PayWayID" Type="smallint" Nullable="false" />
+          <Property Name="Currency" Type="nchar" MaxLength="10" />
+          <Property Name="SFMoney" Type="money" />
+          <Property Name="SFDate" Type="date" />
+          <Property Name="BankName" Type="nchar" MaxLength="10" />
+          <Property Name="BankAccount" Type="nchar" MaxLength="20" />
+          <Property Name="ChequeNumber" Type="nchar" MaxLength="20" />
+          <Property Name="Remark" Type="nchar" MaxLength="50" />
+          <Property Name="AlreadyCancelMoney" Type="money" />
+          <Property Name="StayCancelMoney" Type="money" />
+          <Property Name="MessageID" Type="smallint" />
+        </EntityType>
+        <EntityType Name="SYS_Charge">
+          <Key>
+            <PropertyRef Name="ChargeID" />
+          </Key>
+          <Property Name="ChargeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EtrustID" Type="int" />
+          <Property Name="ExpenseID" Type="int" />
+          <Property Name="UnitPrice" Type="money" />
+          <Property Name="ReckoningUnit" Type="nchar" MaxLength="20" />
+          <Property Name="ReckoningUnits" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="SYS_Chauffeur">
+          <Key>
+            <PropertyRef Name="ChauffeurID" />
+          </Key>
+          <Property Name="ChauffeurID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageID" Type="smallint" Nullable="false" />
+          <Property Name="ChauffeurName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ChauffeurNumber" Type="nchar" MaxLength="10" />
+          <Property Name="Sex" Type="nchar" MaxLength="3" Nullable="false" />
+          <Property Name="EnglishName" Type="nchar" MaxLength="20" />
+          <Property Name="Picture" Type="image" />
+          <Property Name="State" Type="nchar" MaxLength="10" />
+          <Property Name="Address" Type="nchar" MaxLength="10" />
+          <Property Name="Birthday" Type="date" />
+          <Property Name="ClientTypeID" Type="int" Nullable="false" />
+          <Property Name="HealthCondition" Type="nchar" MaxLength="10" />
+          <Property Name="IdentityCard" Type="nchar" MaxLength="19" Nullable="false" />
+          <Property Name="PhoneOne" Type="nchar" MaxLength="13" />
+          <Property Name="PhoneTwo" Type="nchar" MaxLength="13" />
+          <Property Name="HongkongPhoneOne" Type="nchar" MaxLength="13" />
+          <Property Name="HongkongPhoneTwo" Type="nchar" MaxLength="13" />
+          <Property Name="FamilyPhone" Type="nchar" MaxLength="13" />
+          <Property Name="UrgencyRelationer" Type="nchar" MaxLength="13" />
+          <Property Name="UrgencyRelationerPhone" Type="nchar" MaxLength="13" />
+          <Property Name="UrgencyRelationerSite" Type="nchar" MaxLength="30" />
+          <Property Name="CashDeposit" Type="money" />
+          <Property Name="DeductRatio" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="Salary" Type="money" />
+          <Property Name="DrivingLicence" Type="nchar" MaxLength="20" />
+          <Property Name="Jsznsrq" Type="date" />
+          <Property Name="Jszyxrq" Type="date" />
+          <Property Name="Hkjszh" Type="nchar" MaxLength="20" />
+          <Property Name="Hkjszhnsrq" Type="date" />
+          <Property Name="Hkjszhlyrq" Type="date" />
+          <Property Name="ICNumber" Type="nchar" MaxLength="20" />
+          <Property Name="ICNsrq" Type="date" />
+          <Property Name="Hxzh" Type="nchar" MaxLength="20" />
+          <Property Name="StatusCard" Type="nchar" MaxLength="20" />
+          <Property Name="StatusCardNsrq" Type="date" />
+          <Property Name="SocialSecurityCardNumber" Type="nchar" MaxLength="20" />
+          <Property Name="CertificateQualification" Type="nchar" MaxLength="20" />
+          <Property Name="CertificateQualificationNsrq" Type="date" />
+          <Property Name="WorkLicense" Type="nchar" MaxLength="20" />
+          <Property Name="WorkLicenseNsrq" Type="date" />
+          <Property Name="FenGSKJ" Type="bit" Nullable="false" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+          <Property Name="Apartment" Type="nchar" MaxLength="30" />
+          <Property Name="RegisteredPermanent" Type="nchar" MaxLength="15" />
+          <Property Name="HongKongPermanent" Type="nchar" MaxLength="30" />
+          <Property Name="Describe" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GatedotID" Type="int" Nullable="false" />
+          <Property Name="MessageID" Type="smallint" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="ClientCode" Type="nchar" MaxLength="10" />
+          <Property Name="ClientAbbreviation" Type="nchar" MaxLength="10" />
+          <Property Name="ChineseName" Type="nchar" MaxLength="20" />
+          <Property Name="ClientRank" Type="nchar" MaxLength="10" />
+          <Property Name="CustomsCode" Type="nchar" MaxLength="10" />
+          <Property Name="ClientSource" Type="nchar" MaxLength="10" />
+          <Property Name="ClientPhone" Type="nchar" MaxLength="13" />
+          <Property Name="ClientFax" Type="nchar" MaxLength="13" />
+          <Property Name="Email" Type="nchar" MaxLength="18" />
+          <Property Name="OfficeHours" Type="time" Precision="7" />
+          <Property Name="ClosingTime" Type="time" Precision="7" />
+          <Property Name="PostCode" Type="nchar" MaxLength="10" />
+          <Property Name="Site" Type="nchar" MaxLength="20" />
+          <Property Name="Website" Type="nchar" MaxLength="20" />
+          <Property Name="OpenAccount" Type="nchar" MaxLength="20" />
+          <Property Name="OpenAccountCode" Type="nchar" MaxLength="20" />
+          <Property Name="Describe" Type="nchar" MaxLength="50" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_ClientScontacts">
+          <Key>
+            <PropertyRef Name="ClientScontactsID" />
+          </Key>
+          <Property Name="ClientScontactsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="contactsPhone" Type="nchar" MaxLength="13" />
+          <Property Name="contactsName" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SYS_ClientSite">
+          <Key>
+            <PropertyRef Name="ClientSiteID" />
+          </Key>
+          <Property Name="ClientSiteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="GatedotID" Type="int" Nullable="false" />
+          <Property Name="ContactsPhone" Type="nchar" MaxLength="13" />
+          <Property Name="ContactsName" Type="nchar" MaxLength="10" />
+          <Property Name="ClientSite" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="Remark" Type="nchar" MaxLength="50" />
+          <Property Name="FactoryName" Type="nchar" MaxLength="20" />
+          <Property Name="FactoryCode" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="SYS_ClientType">
+          <Key>
+            <PropertyRef Name="ClientTypeID" />
+          </Key>
+          <Property Name="ClientTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" Nullable="false" />
+          <Property Name="ClientType" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SYS_CloseAccount">
+          <Key>
+            <PropertyRef Name="CloseAccountID" />
+          </Key>
+          <Property Name="CloseAccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChargeID" Type="int" />
+          <Property Name="SignCloseAccountID" Type="int" />
+          <Property Name="SignID" Type="int" />
+        </EntityType>
+        <EntityType Name="SYS_Commercel">
+          <Key>
+            <PropertyRef Name="CommerceID" />
+          </Key>
+          <Property Name="CommerceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EtrustID" Type="int" Nullable="false" />
+          <Property Name="CommerceExaminePID" Type="int" />
+          <Property Name="CommerceQiExaminePID" Type="int" />
+          <Property Name="FinancingExaninePID" Type="int" />
+          <Property Name="FinancingQiExaninePID" Type="int" />
+          <Property Name="CommerceQiExamineTime" Type="datetime" />
+          <Property Name="FinancingQiExanineTime" Type="datetime" />
+          <Property Name="CommerceExamineTime" Type="datetime" />
+          <Property Name="FinancingExanineTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SYS_Customs">
+          <Key>
+            <PropertyRef Name="CustomsID" />
+          </Key>
+          <Property Name="CustomsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GatedotID" Type="int" Nullable="false" />
+          <Property Name="CustomsName" Type="nchar" MaxLength="10" />
+          <Property Name="CustomsCode" Type="nchar" MaxLength="10" />
+          <Property Name="EnglishName" Type="nchar" MaxLength="10" />
+          <Property Name="MobilePhone" Type="nchar" MaxLength="13" />
+          <Property Name="Mobile" Type="nchar" MaxLength="13" />
+          <Property Name="Linkman" Type="nchar" MaxLength="10" />
+          <Property Name="Email" Type="nchar" MaxLength="18" />
+          <Property Name="Faxes" Type="nchar" MaxLength="13" />
+          <Property Name="PostCode" Type="nchar" MaxLength="10" />
+          <Property Name="OfficeHours" Type="time" Precision="7" />
+          <Property Name="ClosingTime" Type="time" Precision="7" />
+          <Property Name="Site" Type="nchar" MaxLength="30" />
+          <Property Name="Website" Type="nchar" MaxLength="30" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+          <Property Name="Describe" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MessageID" Type="smallint" Nullable="false" />
+          <Property Name="DepartmentName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="DepartmentMobile" Type="nchar" MaxLength="13" />
+          <Property Name="InteriorPhone" Type="nchar" MaxLength="13" />
+          <Property Name="DepartmentTop" Type="nchar" MaxLength="10" />
+          <Property Name="DepartmentDuty" Type="nchar" MaxLength="10" />
+          <Property Name="DepartmentDescribe" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_DriverBook">
+          <Key>
+            <PropertyRef Name="DriverBookID" />
+          </Key>
+          <Property Name="DriverBookID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChauffeurID" Type="int" Nullable="false" />
+          <Property Name="CustomsNumber" Type="nchar" MaxLength="20" />
+          <Property Name="BusinessLicenseNumber" Type="nchar" MaxLength="20" />
+          <Property Name="IssuingAuthority" Type="nchar" MaxLength="20" />
+          <Property Name="Remark" Type="nchar" MaxLength="50" />
+          <Property Name="AccurateLoadNumber" Type="nchar" MaxLength="20" />
+          <Property Name="TermValidity" Type="date" />
+          <Property Name="ExpirationDate" Type="date" />
+          <Property Name="DriverBook" Type="nchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="SYS_Etrust">
+          <Key>
+            <PropertyRef Name="EtrustID" />
+          </Key>
+          <Property Name="EtrustID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="ClientTypeID" Type="int" />
+          <Property Name="CustomsID" Type="int" />
+          <Property Name="ShipID" Type="int" />
+          <Property Name="PortID" Type="int" />
+          <Property Name="MessageID" Type="smallint" Nullable="false" />
+          <Property Name="UndertakeID" Type="int" />
+          <Property Name="VehicleInformationID" Type="int" />
+          <Property Name="EtrustNmber" Type="nchar" MaxLength="25" />
+          <Property Name="WorkCategory" Type="nchar" MaxLength="10" />
+          <Property Name="CheXing" Type="nchar" MaxLength="10" />
+          <Property Name="EtryClasses" Type="nchar" MaxLength="10" />
+          <Property Name="ClientCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ClientScontactsID" Type="int" />
+          <Property Name="ClientMobile" Type="nchar" MaxLength="13" />
+          <Property Name="PlanHandTime" Type="datetime" />
+          <Property Name="WhetherShou" Type="bit" Nullable="false" />
+          <Property Name="CollectionMoney" Type="money" />
+          <Property Name="HuoZhuName" Type="nchar" MaxLength="10" />
+          <Property Name="IndentNumber" Type="nchar" MaxLength="25" />
+          <Property Name="ClientSiteID" Type="int" />
+          <Property Name="TradeClause" Type="nchar" MaxLength="20" />
+          <Property Name="ChargeCustomsID" Type="int" />
+          <Property Name="ArriveTime" Type="datetime" />
+          <Property Name="TiGuiDiDianID" Type="int" />
+          <Property Name="HuaiGuiDiDianID" Type="int" />
+          <Property Name="CargoWeight" Type="nchar" MaxLength="10" />
+          <Property Name="HuiChangTime" Type="datetime" />
+          <Property Name="HangCi" Type="nchar" MaxLength="25" />
+          <Property Name="KaiCangTime" Type="datetime" />
+          <Property Name="GoalHarborID" Type="int" />
+          <Property Name="ZuoJianWay" Type="nchar" MaxLength="10" />
+          <Property Name="JieGuanTime" Type="datetime" />
+          <Property Name="CustomsBrokerID" Type="int" />
+          <Property Name="EtryWay" Type="nchar" MaxLength="10" />
+          <Property Name="WhetherBen" Type="bit" Nullable="false" />
+          <Property Name="FGCustomsID" Type="int" />
+          <Property Name="AssistBusiness" Type="nchar" MaxLength="10" />
+          <Property Name="CargoClassify" Type="nchar" MaxLength="10" />
+          <Property Name="WhetherShui" Type="bit" Nullable="false" />
+          <Property Name="ManagementFee" Type="money" />
+          <Property Name="SpecialNeed" Type="nchar" MaxLength="50" />
+          <Property Name="AttentionMatter" Type="nchar" MaxLength="50" />
+          <Property Name="CabinetType" Type="nchar" MaxLength="10" />
+          <Property Name="BookingSpace" Type="nchar" MaxLength="25" />
+          <Property Name="Cupboard" Type="nchar" MaxLength="25" />
+          <Property Name="Seal" Type="nchar" MaxLength="25" />
+          <Property Name="AuditType" Type="nchar" MaxLength="10" />
+          <Property Name="CarriageNumber" Type="nchar" MaxLength="15" />
+          <Property Name="PaiCheDate" Type="date" />
+          <Property Name="PaiCheExplain" Type="nchar" MaxLength="50" />
+          <Property Name="DispatchTime" Type="datetime" />
+          <Property Name="TiKGuiTime" Type="datetime" />
+          <Property Name="ArriveFactoryTime" Type="datetime" />
+          <Property Name="LeftFactoryTime" Type="datetime" />
+          <Property Name="HuaiWeightTime" Type="datetime" />
+          <Property Name="FollowTime" Type="datetime" />
+          <Property Name="EtrustType" Type="nchar" MaxLength="10" />
+          <Property Name="ShuiBl" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="OfferDetailID" Type="int" />
+          <Property Name="OddNumber" Type="nchar" MaxLength="25" />
+          <Property Name="FollowExplain" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_Expense">
+          <Key>
+            <PropertyRef Name="ExpenseID" />
+          </Key>
+          <Property Name="ExpenseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SettleAccounts" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ExpenseCode" Type="nchar" MaxLength="10" />
+          <Property Name="ExpenseName" Type="nchar" MaxLength="10" />
+          <Property Name="CostAttributes" Type="nchar" MaxLength="10" />
+          <Property Name="CostSortingCode" Type="int" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+          <Property Name="Remark" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_Gatedot">
+          <Key>
+            <PropertyRef Name="GatedotID" />
+          </Key>
+          <Property Name="GatedotID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityID" Type="int" Nullable="false" />
+          <Property Name="GatedotCode" Type="nchar" MaxLength="30" />
+          <Property Name="GatedotName" Type="nchar" MaxLength="15" />
+          <Property Name="WhetherSuperiorGatedot" Type="bit" Nullable="false" />
+          <Property Name="WhetherValid" Type="bit" Nullable="false" />
+          <Property Name="Describe" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_HaulWay">
+          <Key>
+            <PropertyRef Name="HaulWayID" />
+          </Key>
+          <Property Name="HaulWayID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MentionAreaID" Type="int" />
+          <Property Name="HaulWayDescription" Type="nchar" MaxLength="50" />
+          <Property Name="LoadingAreaID" Type="int" />
+          <Property Name="CustomsAreaID" Type="int" />
+          <Property Name="AlsoTankAreaID" Type="int" />
+          <Property Name="OutwardVoyage" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="ReturnTrip" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="OutwardVoyageFree" Type="money" />
+          <Property Name="ReturnTripFree" Type="money" />
+          <Property Name="OutwardVoyageTime" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="ReturnTripTime" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="TotalTime" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+          <Property Name="Describe" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_Jurisdiction">
+          <Key>
+            <PropertyRef Name="JurisdictionID" />
+          </Key>
+          <Property Name="JurisdictionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="JurisdictionName" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_Mention">
+          <Key>
+            <PropertyRef Name="MentionID" />
+          </Key>
+          <Property Name="MentionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GatedotID" Type="int" Nullable="false" />
+          <Property Name="MCode" Type="nchar" MaxLength="10" />
+          <Property Name="Abbreviation" Type="nchar" MaxLength="10" />
+          <Property Name="Linkman" Type="nchar" MaxLength="10" />
+          <Property Name="Mobile" Type="nchar" MaxLength="13" />
+          <Property Name="Site" Type="nchar" MaxLength="20" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+          <Property Name="HangCharge" Type="money" />
+          <Property Name="CheckFee" Type="money" />
+          <Property Name="GateCharges" Type="money" />
+        </EntityType>
+        <EntityType Name="SYS_Message">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TissueCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ChineseName" Type="nchar" MaxLength="20" Nullable="false" />
+          <Property Name="ChineseAbbreviation" Type="nchar" MaxLength="10" />
+          <Property Name="EnglishCode" Type="nchar" MaxLength="10" />
+          <Property Name="EnglishName" Type="nchar" MaxLength="20" />
+          <Property Name="Site" Type="nchar" MaxLength="30" />
+          <Property Name="Relation" Type="nchar" MaxLength="10" />
+          <Property Name="Describe" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_Offer">
+          <Key>
+            <PropertyRef Name="OfferID" />
+          </Key>
+          <Property Name="OfferID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+          <Property Name="OfferType" Type="nchar" MaxLength="10" />
+          <Property Name="OfferDate" Type="date" />
+          <Property Name="TakeEffectDate" Type="date" />
+          <Property Name="LoseEfficacyDate" Type="date" />
+          <Property Name="WhetherShui" Type="bit" Nullable="false" />
+          <Property Name="Remark" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_OfferDetail">
+          <Key>
+            <PropertyRef Name="OfferDetailID" />
+          </Key>
+          <Property Name="OfferDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OfferID" Type="int" Nullable="false" />
+          <Property Name="ExpenseID" Type="int" Nullable="false" />
+          <Property Name="HaulWayID" Type="int" Nullable="false" />
+          <Property Name="EtryClasses" Type="nchar" MaxLength="10" />
+          <Property Name="CabinetType" Type="nchar" MaxLength="10" />
+          <Property Name="Money" Type="money" />
+          <Property Name="ClientSiteID" Type="int" />
+          <Property Name="WorkCategory" Type="nchar" MaxLength="10" />
+          <Property Name="BoxQuantity" Type="nchar" MaxLength="8" />
+          <Property Name="Remark" Type="nchar" MaxLength="50" />
+          <Property Name="Currency" Type="nchar" MaxLength="10" />
+          <Property Name="StaffID" Type="int" />
+        </EntityType>
+        <EntityType Name="SYS_Parities">
+          <Key>
+            <PropertyRef Name="ParitiesID" />
+          </Key>
+          <Property Name="ParitiesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Currency" Type="nchar" MaxLength="10" />
+          <Property Name="BasicCurrency" Type="nchar" MaxLength="10" />
+          <Property Name="ConversionRate" Type="decimal" Precision="18" Scale="3" />
+        </EntityType>
+        <EntityType Name="SYS_PayWay">
+          <Key>
+            <PropertyRef Name="PayWayID" />
+          </Key>
+          <Property Name="PayWayID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PayWay" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SYS_Port">
+          <Key>
+            <PropertyRef Name="PortID" />
+          </Key>
+          <Property Name="PortID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PortCode" Type="nchar" MaxLength="10" />
+          <Property Name="ChineseName" Type="nchar" MaxLength="10" />
+          <Property Name="EnglishName" Type="nchar" MaxLength="10" />
+          <Property Name="CountryCode" Type="nchar" MaxLength="10" />
+          <Property Name="Area" Type="nchar" MaxLength="20" />
+          <Property Name="Berthage" Type="int" />
+          <Property Name="Phone" Type="nchar" MaxLength="13" />
+          <Property Name="Remark" Type="nchar" MaxLength="50" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_SettleWay">
+          <Key>
+            <PropertyRef Name="SettleWayID" />
+          </Key>
+          <Property Name="SettleWayID" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SettleWay" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SYS_Ship">
+          <Key>
+            <PropertyRef Name="ShipID" />
+          </Key>
+          <Property Name="ShipID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientTypeID" Type="int" Nullable="false" />
+          <Property Name="ShipCode" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ChineseName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="EnglishName" Type="nchar" MaxLength="20" />
+          <Property Name="Abbreviation" Type="nchar" MaxLength="10" />
+          <Property Name="ShipEast" Type="nchar" MaxLength="10" />
+          <Property Name="ShipType" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="CaptainName" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="ShipMobile" Type="nchar" MaxLength="13" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+          <Property Name="Operator" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SYS_Sign">
+          <Key>
+            <PropertyRef Name="SignID" />
+          </Key>
+          <Property Name="SignID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SignCloseAccountID" Type="int" Nullable="false" />
+          <Property Name="BCYShou" Type="money" />
+          <Property Name="BCYFu" Type="money" />
+          <Property Name="SettleMoney" Type="money" />
+          <Property Name="SignExplain" Type="nchar" MaxLength="50" />
+          <Property Name="SettleNumber" Type="nchar" MaxLength="15" />
+          <Property Name="SignDate" Type="date" />
+          <Property Name="YuSettleDate" Type="date" />
+          <Property Name="SettleWayID" Type="smallint" Nullable="false" />
+          <Property Name="PayWayID" Type="smallint" Nullable="false" />
+          <Property Name="StartDate" Type="date" />
+          <Property Name="FinishDate" Type="date" />
+          <Property Name="FinishType" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="SignType" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SYS_SignCloseAccount">
+          <Key>
+            <PropertyRef Name="SignCloseAccountID" />
+          </Key>
+          <Property Name="SignCloseAccountID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientCode" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="StaffName" Type="nchar" MaxLength="10" />
+          <Property Name="StaffNumber" Type="nchar" MaxLength="10" />
+          <Property Name="State" Type="nchar" MaxLength="10" />
+          <Property Name="Duty" Type="nchar" MaxLength="10" />
+          <Property Name="Sex" Type="nchar" MaxLength="10" />
+          <Property Name="CultureLevel" Type="nchar" MaxLength="10" />
+          <Property Name="JoinJob" Type="date" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="AccountName" Type="nchar" MaxLength="10" />
+          <Property Name="password" Type="nchar" MaxLength="18" />
+          <Property Name="FinallyRegisterTime" Type="datetime" />
+          <Property Name="WhetherStart" Type="bit" Nullable="false" />
+          <Property Name="Describe" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SYS_VehicleInformation">
+          <Key>
+            <PropertyRef Name="VehicleInformationID" />
+          </Key>
+          <Property Name="VehicleInformationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChauffeurID" Type="int" Nullable="false" />
+          <Property Name="BracketID" Type="int" Nullable="false" />
+          <Property Name="MessageID" Type="smallint" Nullable="false" />
+          <Property Name="VehicleCode" Type="nchar" MaxLength="10" />
+          <Property Name="PlateNumbers" Type="nchar" MaxLength="10" />
+          <Property Name="HongKongPlateNumber" Type="nchar" MaxLength="10" />
+          <Property Name="VehicleClass" Type="nchar" MaxLength="10" />
+          <Property Name="MotorcycleType" Type="nchar" MaxLength="10" />
+          <Property Name="VehicleType" Type="nchar" MaxLength="10" />
+          <Property Name="Usualplace" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityContainer Name="SeaTransportationModelStoreContainer">
+          <EntitySet Name="BS_City" EntityType="Self.BS_City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Bracket" EntityType="Self.SYS_Bracket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Calculate" EntityType="Self.SYS_Calculate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Charge" EntityType="Self.SYS_Charge" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Chauffeur" EntityType="Self.SYS_Chauffeur" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Client" EntityType="Self.SYS_Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_ClientScontacts" EntityType="Self.SYS_ClientScontacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_ClientSite" EntityType="Self.SYS_ClientSite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_ClientType" EntityType="Self.SYS_ClientType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_CloseAccount" EntityType="Self.SYS_CloseAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Commercel" EntityType="Self.SYS_Commercel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Customs" EntityType="Self.SYS_Customs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Department" EntityType="Self.SYS_Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_DriverBook" EntityType="Self.SYS_DriverBook" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Etrust" EntityType="Self.SYS_Etrust" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Expense" EntityType="Self.SYS_Expense" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Gatedot" EntityType="Self.SYS_Gatedot" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_HaulWay" EntityType="Self.SYS_HaulWay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Jurisdiction" EntityType="Self.SYS_Jurisdiction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Mention" EntityType="Self.SYS_Mention" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Message" EntityType="Self.SYS_Message" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Offer" EntityType="Self.SYS_Offer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_OfferDetail" EntityType="Self.SYS_OfferDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Parities" EntityType="Self.SYS_Parities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_PayWay" EntityType="Self.SYS_PayWay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Port" EntityType="Self.SYS_Port" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_SettleWay" EntityType="Self.SYS_SettleWay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Ship" EntityType="Self.SYS_Ship" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Sign" EntityType="Self.SYS_Sign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_SignCloseAccount" EntityType="Self.SYS_SignCloseAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_Staff" EntityType="Self.SYS_Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_User" EntityType="Self.SYS_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SYS_VehicleInformation" EntityType="Self.SYS_VehicleInformation" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SeaTransportationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BS_City">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Province" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EnglishName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="CityCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Bracket">
+          <Key>
+            <PropertyRef Name="BracketID" />
+          </Key>
+          <Property Name="BracketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageID" Type="Int16" Nullable="false" />
+          <Property Name="BracketCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ChassisNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="BracketType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CustomsRecordModel" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="BracketTag" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="SinceNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="ManufactureDate" Type="DateTime" Precision="3" />
+          <Property Name="ManufactureFactory" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_Calculate">
+          <Key>
+            <PropertyRef Name="CalculateID" />
+          </Key>
+          <Property Name="CalculateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SignID" Type="Int32" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="CalculateNumber" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="SettleAccounts" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PayWayID" Type="Int16" Nullable="false" />
+          <Property Name="Currency" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SFMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SFDate" Type="DateTime" Precision="0" />
+          <Property Name="BankName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="BankAccount" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="ChequeNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="AlreadyCancelMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="StayCancelMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MessageID" Type="Int16" />
+        </EntityType>
+        <EntityType Name="SYS_Charge">
+          <Key>
+            <PropertyRef Name="ChargeID" />
+          </Key>
+          <Property Name="ChargeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EtrustID" Type="Int32" />
+          <Property Name="ExpenseID" Type="Int32" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ReckoningUnit" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="ReckoningUnits" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Chauffeur">
+          <Key>
+            <PropertyRef Name="ChauffeurID" />
+          </Key>
+          <Property Name="ChauffeurID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageID" Type="Int16" Nullable="false" />
+          <Property Name="ChauffeurName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ChauffeurNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Sex" Type="String" MaxLength="3" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="EnglishName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="State" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Birthday" Type="DateTime" Precision="0" />
+          <Property Name="ClientTypeID" Type="Int32" Nullable="false" />
+          <Property Name="HealthCondition" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IdentityCard" Type="String" MaxLength="19" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="PhoneOne" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="PhoneTwo" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="HongkongPhoneOne" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="HongkongPhoneTwo" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="FamilyPhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="UrgencyRelationer" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="UrgencyRelationerPhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="UrgencyRelationerSite" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="CashDeposit" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DeductRatio" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="DrivingLicence" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Jsznsrq" Type="DateTime" Precision="0" />
+          <Property Name="Jszyxrq" Type="DateTime" Precision="0" />
+          <Property Name="Hkjszh" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Hkjszhnsrq" Type="DateTime" Precision="0" />
+          <Property Name="Hkjszhlyrq" Type="DateTime" Precision="0" />
+          <Property Name="ICNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="ICNsrq" Type="DateTime" Precision="0" />
+          <Property Name="Hxzh" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="StatusCard" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="StatusCardNsrq" Type="DateTime" Precision="0" />
+          <Property Name="SocialSecurityCardNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="CertificateQualification" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="CertificateQualificationNsrq" Type="DateTime" Precision="0" />
+          <Property Name="WorkLicense" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="WorkLicenseNsrq" Type="DateTime" Precision="0" />
+          <Property Name="FenGSKJ" Type="Boolean" Nullable="false" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+          <Property Name="Apartment" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="RegisteredPermanent" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="HongKongPermanent" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Client">
+          <Key>
+            <PropertyRef Name="ClientID" />
+          </Key>
+          <Property Name="ClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GatedotID" Type="Int32" Nullable="false" />
+          <Property Name="MessageID" Type="Int16" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="ClientCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ClientAbbreviation" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ChineseName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="ClientRank" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CustomsCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ClientSource" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ClientPhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="ClientFax" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="18" FixedLength="true" Unicode="true" />
+          <Property Name="OfficeHours" Type="Time" Precision="7" />
+          <Property Name="ClosingTime" Type="Time" Precision="7" />
+          <Property Name="PostCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Site" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="OpenAccount" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="OpenAccountCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_ClientScontacts">
+          <Key>
+            <PropertyRef Name="ClientScontactsID" />
+          </Key>
+          <Property Name="ClientScontactsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="contactsPhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="contactsName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_ClientSite">
+          <Key>
+            <PropertyRef Name="ClientSiteID" />
+          </Key>
+          <Property Name="ClientSiteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="GatedotID" Type="Int32" Nullable="false" />
+          <Property Name="ContactsPhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="ContactsName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ClientSite" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="FactoryName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="FactoryCode" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_ClientType">
+          <Key>
+            <PropertyRef Name="ClientTypeID" />
+          </Key>
+          <Property Name="ClientTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" Nullable="false" />
+          <Property Name="ClientType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_CloseAccount">
+          <Key>
+            <PropertyRef Name="CloseAccountID" />
+          </Key>
+          <Property Name="CloseAccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChargeID" Type="Int32" />
+          <Property Name="SignCloseAccountID" Type="Int32" />
+          <Property Name="SignID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SYS_Commercel">
+          <Key>
+            <PropertyRef Name="CommerceID" />
+          </Key>
+          <Property Name="CommerceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EtrustID" Type="Int32" Nullable="false" />
+          <Property Name="CommerceExaminePID" Type="Int32" />
+          <Property Name="CommerceQiExaminePID" Type="Int32" />
+          <Property Name="FinancingExaninePID" Type="Int32" />
+          <Property Name="FinancingQiExaninePID" Type="Int32" />
+          <Property Name="CommerceQiExamineTime" Type="DateTime" Precision="3" />
+          <Property Name="FinancingQiExanineTime" Type="DateTime" Precision="3" />
+          <Property Name="CommerceExamineTime" Type="DateTime" Precision="3" />
+          <Property Name="FinancingExanineTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SYS_Customs">
+          <Key>
+            <PropertyRef Name="CustomsID" />
+          </Key>
+          <Property Name="CustomsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GatedotID" Type="Int32" Nullable="false" />
+          <Property Name="CustomsName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CustomsCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EnglishName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MobilePhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="Linkman" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="18" FixedLength="true" Unicode="true" />
+          <Property Name="Faxes" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="PostCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="OfficeHours" Type="Time" Precision="7" />
+          <Property Name="ClosingTime" Type="Time" Precision="7" />
+          <Property Name="Site" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageID" Type="Int16" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="DepartmentMobile" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="InteriorPhone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="DepartmentTop" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DepartmentDuty" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DepartmentDescribe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_DriverBook">
+          <Key>
+            <PropertyRef Name="DriverBookID" />
+          </Key>
+          <Property Name="DriverBookID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChauffeurID" Type="Int32" Nullable="false" />
+          <Property Name="CustomsNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="BusinessLicenseNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="IssuingAuthority" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="AccurateLoadNumber" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="TermValidity" Type="DateTime" Precision="0" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="0" />
+          <Property Name="DriverBook" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Etrust">
+          <Key>
+            <PropertyRef Name="EtrustID" />
+          </Key>
+          <Property Name="EtrustID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="ClientTypeID" Type="Int32" />
+          <Property Name="CustomsID" Type="Int32" />
+          <Property Name="ShipID" Type="Int32" />
+          <Property Name="PortID" Type="Int32" />
+          <Property Name="MessageID" Type="Int16" Nullable="false" />
+          <Property Name="UndertakeID" Type="Int32" />
+          <Property Name="VehicleInformationID" Type="Int32" />
+          <Property Name="EtrustNmber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="WorkCategory" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CheXing" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EtryClasses" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ClientCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ClientScontactsID" Type="Int32" />
+          <Property Name="ClientMobile" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="PlanHandTime" Type="DateTime" Precision="3" />
+          <Property Name="WhetherShou" Type="Boolean" Nullable="false" />
+          <Property Name="CollectionMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="HuoZhuName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IndentNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="ClientSiteID" Type="Int32" />
+          <Property Name="TradeClause" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="ChargeCustomsID" Type="Int32" />
+          <Property Name="ArriveTime" Type="DateTime" Precision="3" />
+          <Property Name="TiGuiDiDianID" Type="Int32" />
+          <Property Name="HuaiGuiDiDianID" Type="Int32" />
+          <Property Name="CargoWeight" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="HuiChangTime" Type="DateTime" Precision="3" />
+          <Property Name="HangCi" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="KaiCangTime" Type="DateTime" Precision="3" />
+          <Property Name="GoalHarborID" Type="Int32" />
+          <Property Name="ZuoJianWay" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="JieGuanTime" Type="DateTime" Precision="3" />
+          <Property Name="CustomsBrokerID" Type="Int32" />
+          <Property Name="EtryWay" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="WhetherBen" Type="Boolean" Nullable="false" />
+          <Property Name="FGCustomsID" Type="Int32" />
+          <Property Name="AssistBusiness" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CargoClassify" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="WhetherShui" Type="Boolean" Nullable="false" />
+          <Property Name="ManagementFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SpecialNeed" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="AttentionMatter" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="CabinetType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="BookingSpace" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Cupboard" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="Seal" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="AuditType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CarriageNumber" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="PaiCheDate" Type="DateTime" Precision="0" />
+          <Property Name="PaiCheExplain" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="DispatchTime" Type="DateTime" Precision="3" />
+          <Property Name="TiKGuiTime" Type="DateTime" Precision="3" />
+          <Property Name="ArriveFactoryTime" Type="DateTime" Precision="3" />
+          <Property Name="LeftFactoryTime" Type="DateTime" Precision="3" />
+          <Property Name="HuaiWeightTime" Type="DateTime" Precision="3" />
+          <Property Name="FollowTime" Type="DateTime" Precision="3" />
+          <Property Name="EtrustType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ShuiBl" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="OfferDetailID" Type="Int32" />
+          <Property Name="OddNumber" Type="String" MaxLength="25" FixedLength="true" Unicode="true" />
+          <Property Name="FollowExplain" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Expense">
+          <Key>
+            <PropertyRef Name="ExpenseID" />
+          </Key>
+          <Property Name="ExpenseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SettleAccounts" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ExpenseCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ExpenseName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CostAttributes" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CostSortingCode" Type="Int32" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Gatedot">
+          <Key>
+            <PropertyRef Name="GatedotID" />
+          </Key>
+          <Property Name="GatedotID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="GatedotCode" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="GatedotName" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="WhetherSuperiorGatedot" Type="Boolean" Nullable="false" />
+          <Property Name="WhetherValid" Type="Boolean" Nullable="false" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_HaulWay">
+          <Key>
+            <PropertyRef Name="HaulWayID" />
+          </Key>
+          <Property Name="HaulWayID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MentionAreaID" Type="Int32" />
+          <Property Name="HaulWayDescription" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="LoadingAreaID" Type="Int32" />
+          <Property Name="CustomsAreaID" Type="Int32" />
+          <Property Name="AlsoTankAreaID" Type="Int32" />
+          <Property Name="OutwardVoyage" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="ReturnTrip" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="OutwardVoyageFree" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ReturnTripFree" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="OutwardVoyageTime" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ReturnTripTime" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="TotalTime" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Jurisdiction">
+          <Key>
+            <PropertyRef Name="JurisdictionID" />
+          </Key>
+          <Property Name="JurisdictionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="JurisdictionName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_Mention">
+          <Key>
+            <PropertyRef Name="MentionID" />
+          </Key>
+          <Property Name="MentionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GatedotID" Type="Int32" Nullable="false" />
+          <Property Name="MCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Abbreviation" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Linkman" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Mobile" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="Site" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+          <Property Name="HangCharge" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CheckFee" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="GateCharges" Type="Decimal" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="SYS_Message">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TissueCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ChineseName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ChineseAbbreviation" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EnglishCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EnglishName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Site" Type="String" MaxLength="30" FixedLength="true" Unicode="true" />
+          <Property Name="Relation" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Offer">
+          <Key>
+            <PropertyRef Name="OfferID" />
+          </Key>
+          <Property Name="OfferID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" />
+          <Property Name="OfferType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="OfferDate" Type="DateTime" Precision="0" />
+          <Property Name="TakeEffectDate" Type="DateTime" Precision="0" />
+          <Property Name="LoseEfficacyDate" Type="DateTime" Precision="0" />
+          <Property Name="WhetherShui" Type="Boolean" Nullable="false" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_OfferDetail">
+          <Key>
+            <PropertyRef Name="OfferDetailID" />
+          </Key>
+          <Property Name="OfferDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OfferID" Type="Int32" Nullable="false" />
+          <Property Name="ExpenseID" Type="Int32" Nullable="false" />
+          <Property Name="HaulWayID" Type="Int32" Nullable="false" />
+          <Property Name="EtryClasses" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CabinetType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Money" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ClientSiteID" Type="Int32" />
+          <Property Name="WorkCategory" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="BoxQuantity" Type="String" MaxLength="8" FixedLength="true" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Currency" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="StaffID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SYS_Parities">
+          <Key>
+            <PropertyRef Name="ParitiesID" />
+          </Key>
+          <Property Name="ParitiesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Currency" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="BasicCurrency" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ConversionRate" Type="Decimal" Precision="18" Scale="3" />
+        </EntityType>
+        <EntityType Name="SYS_PayWay">
+          <Key>
+            <PropertyRef Name="PayWayID" />
+          </Key>
+          <Property Name="PayWayID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PayWay" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Port">
+          <Key>
+            <PropertyRef Name="PortID" />
+          </Key>
+          <Property Name="PortID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PortCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ChineseName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="EnglishName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CountryCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Berthage" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="Remark" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_SettleWay">
+          <Key>
+            <PropertyRef Name="SettleWayID" />
+          </Key>
+          <Property Name="SettleWayID" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SettleWay" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Ship">
+          <Key>
+            <PropertyRef Name="ShipID" />
+          </Key>
+          <Property Name="ShipID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ShipCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ChineseName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="EnglishName" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Abbreviation" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ShipEast" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ShipType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="CaptainName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="ShipMobile" Type="String" MaxLength="13" FixedLength="true" Unicode="true" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+          <Property Name="Operator" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_Sign">
+          <Key>
+            <PropertyRef Name="SignID" />
+          </Key>
+          <Property Name="SignID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SignCloseAccountID" Type="Int32" Nullable="false" />
+          <Property Name="BCYShou" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="BCYFu" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SettleMoney" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SignExplain" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="SettleNumber" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="SignDate" Type="DateTime" Precision="0" />
+          <Property Name="YuSettleDate" Type="DateTime" Precision="0" />
+          <Property Name="SettleWayID" Type="Int16" Nullable="false" />
+          <Property Name="PayWayID" Type="Int16" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="0" />
+          <Property Name="FinishDate" Type="DateTime" Precision="0" />
+          <Property Name="FinishType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="SignType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_SignCloseAccount">
+          <Key>
+            <PropertyRef Name="SignCloseAccountID" />
+          </Key>
+          <Property Name="SignCloseAccountID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentID" Type="Int32" Nullable="false" />
+          <Property Name="StaffName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="StaffNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Duty" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Sex" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="CultureLevel" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="JoinJob" Type="DateTime" Precision="0" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SYS_User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="AccountName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="password" Type="String" MaxLength="18" FixedLength="true" Unicode="true" />
+          <Property Name="FinallyRegisterTime" Type="DateTime" Precision="3" />
+          <Property Name="WhetherStart" Type="Boolean" Nullable="false" />
+          <Property Name="Describe" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="SYS_VehicleInformation">
+          <Key>
+            <PropertyRef Name="VehicleInformationID" />
+          </Key>
+          <Property Name="VehicleInformationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChauffeurID" Type="Int32" Nullable="false" />
+          <Property Name="BracketID" Type="Int32" Nullable="false" />
+          <Property Name="MessageID" Type="Int16" Nullable="false" />
+          <Property Name="VehicleCode" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="PlateNumbers" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="HongKongPlateNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="VehicleClass" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MotorcycleType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="VehicleType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Usualplace" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="SeaTransportationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BS_City" EntityType="Self.BS_City" />
+          <EntitySet Name="SYS_Bracket" EntityType="Self.SYS_Bracket" />
+          <EntitySet Name="SYS_Calculate" EntityType="Self.SYS_Calculate" />
+          <EntitySet Name="SYS_Charge" EntityType="Self.SYS_Charge" />
+          <EntitySet Name="SYS_Chauffeur" EntityType="Self.SYS_Chauffeur" />
+          <EntitySet Name="SYS_Client" EntityType="Self.SYS_Client" />
+          <EntitySet Name="SYS_ClientScontacts" EntityType="Self.SYS_ClientScontacts" />
+          <EntitySet Name="SYS_ClientSite" EntityType="Self.SYS_ClientSite" />
+          <EntitySet Name="SYS_ClientType" EntityType="Self.SYS_ClientType" />
+          <EntitySet Name="SYS_CloseAccount" EntityType="Self.SYS_CloseAccount" />
+          <EntitySet Name="SYS_Commercel" EntityType="Self.SYS_Commercel" />
+          <EntitySet Name="SYS_Customs" EntityType="Self.SYS_Customs" />
+          <EntitySet Name="SYS_Department" EntityType="Self.SYS_Department" />
+          <EntitySet Name="SYS_DriverBook" EntityType="Self.SYS_DriverBook" />
+          <EntitySet Name="SYS_Etrust" EntityType="Self.SYS_Etrust" />
+          <EntitySet Name="SYS_Expense" EntityType="Self.SYS_Expense" />
+          <EntitySet Name="SYS_Gatedot" EntityType="Self.SYS_Gatedot" />
+          <EntitySet Name="SYS_HaulWay" EntityType="Self.SYS_HaulWay" />
+          <EntitySet Name="SYS_Jurisdiction" EntityType="Self.SYS_Jurisdiction" />
+          <EntitySet Name="SYS_Mention" EntityType="Self.SYS_Mention" />
+          <EntitySet Name="SYS_Message" EntityType="Self.SYS_Message" />
+          <EntitySet Name="SYS_Offer" EntityType="Self.SYS_Offer" />
+          <EntitySet Name="SYS_OfferDetail" EntityType="Self.SYS_OfferDetail" />
+          <EntitySet Name="SYS_Parities" EntityType="Self.SYS_Parities" />
+          <EntitySet Name="SYS_PayWay" EntityType="Self.SYS_PayWay" />
+          <EntitySet Name="SYS_Port" EntityType="Self.SYS_Port" />
+          <EntitySet Name="SYS_SettleWay" EntityType="Self.SYS_SettleWay" />
+          <EntitySet Name="SYS_Ship" EntityType="Self.SYS_Ship" />
+          <EntitySet Name="SYS_Sign" EntityType="Self.SYS_Sign" />
+          <EntitySet Name="SYS_SignCloseAccount" EntityType="Self.SYS_SignCloseAccount" />
+          <EntitySet Name="SYS_Staff" EntityType="Self.SYS_Staff" />
+          <EntitySet Name="SYS_User" EntityType="Self.SYS_User" />
+          <EntitySet Name="SYS_VehicleInformation" EntityType="Self.SYS_VehicleInformation" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SeaTransportationModelStoreContainer" CdmEntityContainer="SeaTransportationEntities">
+          <EntitySetMapping Name="BS_City">
+            <EntityTypeMapping TypeName="SeaTransportationModel.BS_City">
+              <MappingFragment StoreEntitySet="BS_City">
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="Province" ColumnName="Province" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="CityCode" ColumnName="CityCode" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Bracket">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Bracket">
+              <MappingFragment StoreEntitySet="SYS_Bracket">
+                <ScalarProperty Name="BracketID" ColumnName="BracketID" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="BracketCode" ColumnName="BracketCode" />
+                <ScalarProperty Name="ChassisNumber" ColumnName="ChassisNumber" />
+                <ScalarProperty Name="BracketType" ColumnName="BracketType" />
+                <ScalarProperty Name="CustomsRecordModel" ColumnName="CustomsRecordModel" />
+                <ScalarProperty Name="BracketTag" ColumnName="BracketTag" />
+                <ScalarProperty Name="SinceNumber" ColumnName="SinceNumber" />
+                <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
+                <ScalarProperty Name="ManufactureFactory" ColumnName="ManufactureFactory" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Calculate">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Calculate">
+              <MappingFragment StoreEntitySet="SYS_Calculate">
+                <ScalarProperty Name="CalculateID" ColumnName="CalculateID" />
+                <ScalarProperty Name="SignID" ColumnName="SignID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="CalculateNumber" ColumnName="CalculateNumber" />
+                <ScalarProperty Name="SettleAccounts" ColumnName="SettleAccounts" />
+                <ScalarProperty Name="PayWayID" ColumnName="PayWayID" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="SFMoney" ColumnName="SFMoney" />
+                <ScalarProperty Name="SFDate" ColumnName="SFDate" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="BankAccount" ColumnName="BankAccount" />
+                <ScalarProperty Name="ChequeNumber" ColumnName="ChequeNumber" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="AlreadyCancelMoney" ColumnName="AlreadyCancelMoney" />
+                <ScalarProperty Name="StayCancelMoney" ColumnName="StayCancelMoney" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Charge">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Charge">
+              <MappingFragment StoreEntitySet="SYS_Charge">
+                <ScalarProperty Name="ChargeID" ColumnName="ChargeID" />
+                <ScalarProperty Name="EtrustID" ColumnName="EtrustID" />
+                <ScalarProperty Name="ExpenseID" ColumnName="ExpenseID" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="ReckoningUnit" ColumnName="ReckoningUnit" />
+                <ScalarProperty Name="ReckoningUnits" ColumnName="ReckoningUnits" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Chauffeur">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Chauffeur">
+              <MappingFragment StoreEntitySet="SYS_Chauffeur">
+                <ScalarProperty Name="ChauffeurID" ColumnName="ChauffeurID" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="ChauffeurName" ColumnName="ChauffeurName" />
+                <ScalarProperty Name="ChauffeurNumber" ColumnName="ChauffeurNumber" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="ClientTypeID" ColumnName="ClientTypeID" />
+                <ScalarProperty Name="HealthCondition" ColumnName="HealthCondition" />
+                <ScalarProperty Name="IdentityCard" ColumnName="IdentityCard" />
+                <ScalarProperty Name="PhoneOne" ColumnName="PhoneOne" />
+                <ScalarProperty Name="PhoneTwo" ColumnName="PhoneTwo" />
+                <ScalarProperty Name="HongkongPhoneOne" ColumnName="HongkongPhoneOne" />
+                <ScalarProperty Name="HongkongPhoneTwo" ColumnName="HongkongPhoneTwo" />
+                <ScalarProperty Name="FamilyPhone" ColumnName="FamilyPhone" />
+                <ScalarProperty Name="UrgencyRelationer" ColumnName="UrgencyRelationer" />
+                <ScalarProperty Name="UrgencyRelationerPhone" ColumnName="UrgencyRelationerPhone" />
+                <ScalarProperty Name="UrgencyRelationerSite" ColumnName="UrgencyRelationerSite" />
+                <ScalarProperty Name="CashDeposit" ColumnName="CashDeposit" />
+                <ScalarProperty Name="DeductRatio" ColumnName="DeductRatio" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="DrivingLicence" ColumnName="DrivingLicence" />
+                <ScalarProperty Name="Jsznsrq" ColumnName="Jsznsrq" />
+                <ScalarProperty Name="Jszyxrq" ColumnName="Jszyxrq" />
+                <ScalarProperty Name="Hkjszh" ColumnName="Hkjszh" />
+                <ScalarProperty Name="Hkjszhnsrq" ColumnName="Hkjszhnsrq" />
+                <ScalarProperty Name="Hkjszhlyrq" ColumnName="Hkjszhlyrq" />
+                <ScalarProperty Name="ICNumber" ColumnName="ICNumber" />
+                <ScalarProperty Name="ICNsrq" ColumnName="ICNsrq" />
+                <ScalarProperty Name="Hxzh" ColumnName="Hxzh" />
+                <ScalarProperty Name="StatusCard" ColumnName="StatusCard" />
+                <ScalarProperty Name="StatusCardNsrq" ColumnName="StatusCardNsrq" />
+                <ScalarProperty Name="SocialSecurityCardNumber" ColumnName="SocialSecurityCardNumber" />
+                <ScalarProperty Name="CertificateQualification" ColumnName="CertificateQualification" />
+                <ScalarProperty Name="CertificateQualificationNsrq" ColumnName="CertificateQualificationNsrq" />
+                <ScalarProperty Name="WorkLicense" ColumnName="WorkLicense" />
+                <ScalarProperty Name="WorkLicenseNsrq" ColumnName="WorkLicenseNsrq" />
+                <ScalarProperty Name="FenGSKJ" ColumnName="FenGSKJ" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+                <ScalarProperty Name="Apartment" ColumnName="Apartment" />
+                <ScalarProperty Name="RegisteredPermanent" ColumnName="RegisteredPermanent" />
+                <ScalarProperty Name="HongKongPermanent" ColumnName="HongKongPermanent" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Client">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Client">
+              <MappingFragment StoreEntitySet="SYS_Client">
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="GatedotID" ColumnName="GatedotID" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="ClientAbbreviation" ColumnName="ClientAbbreviation" />
+                <ScalarProperty Name="ChineseName" ColumnName="ChineseName" />
+                <ScalarProperty Name="ClientRank" ColumnName="ClientRank" />
+                <ScalarProperty Name="CustomsCode" ColumnName="CustomsCode" />
+                <ScalarProperty Name="ClientSource" ColumnName="ClientSource" />
+                <ScalarProperty Name="ClientPhone" ColumnName="ClientPhone" />
+                <ScalarProperty Name="ClientFax" ColumnName="ClientFax" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="OfficeHours" ColumnName="OfficeHours" />
+                <ScalarProperty Name="ClosingTime" ColumnName="ClosingTime" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="OpenAccount" ColumnName="OpenAccount" />
+                <ScalarProperty Name="OpenAccountCode" ColumnName="OpenAccountCode" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_ClientScontacts">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_ClientScontacts">
+              <MappingFragment StoreEntitySet="SYS_ClientScontacts">
+                <ScalarProperty Name="ClientScontactsID" ColumnName="ClientScontactsID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="contactsPhone" ColumnName="contactsPhone" />
+                <ScalarProperty Name="contactsName" ColumnName="contactsName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_ClientSite">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_ClientSite">
+              <MappingFragment StoreEntitySet="SYS_ClientSite">
+                <ScalarProperty Name="ClientSiteID" ColumnName="ClientSiteID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="GatedotID" ColumnName="GatedotID" />
+                <ScalarProperty Name="ContactsPhone" ColumnName="ContactsPhone" />
+                <ScalarProperty Name="ContactsName" ColumnName="ContactsName" />
+                <ScalarProperty Name="ClientSite" ColumnName="ClientSite" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="FactoryName" ColumnName="FactoryName" />
+                <ScalarProperty Name="FactoryCode" ColumnName="FactoryCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_ClientType">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_ClientType">
+              <MappingFragment StoreEntitySet="SYS_ClientType">
+                <ScalarProperty Name="ClientTypeID" ColumnName="ClientTypeID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="ClientType" ColumnName="ClientType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_CloseAccount">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_CloseAccount">
+              <MappingFragment StoreEntitySet="SYS_CloseAccount">
+                <ScalarProperty Name="CloseAccountID" ColumnName="CloseAccountID" />
+                <ScalarProperty Name="ChargeID" ColumnName="ChargeID" />
+                <ScalarProperty Name="SignCloseAccountID" ColumnName="SignCloseAccountID" />
+                <ScalarProperty Name="SignID" ColumnName="SignID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Commercel">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Commercel">
+              <MappingFragment StoreEntitySet="SYS_Commercel">
+                <ScalarProperty Name="CommerceID" ColumnName="CommerceID" />
+                <ScalarProperty Name="EtrustID" ColumnName="EtrustID" />
+                <ScalarProperty Name="CommerceExaminePID" ColumnName="CommerceExaminePID" />
+                <ScalarProperty Name="CommerceQiExaminePID" ColumnName="CommerceQiExaminePID" />
+                <ScalarProperty Name="FinancingExaninePID" ColumnName="FinancingExaninePID" />
+                <ScalarProperty Name="FinancingQiExaninePID" ColumnName="FinancingQiExaninePID" />
+                <ScalarProperty Name="CommerceQiExamineTime" ColumnName="CommerceQiExamineTime" />
+                <ScalarProperty Name="FinancingQiExanineTime" ColumnName="FinancingQiExanineTime" />
+                <ScalarProperty Name="CommerceExamineTime" ColumnName="CommerceExamineTime" />
+                <ScalarProperty Name="FinancingExanineTime" ColumnName="FinancingExanineTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Customs">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Customs">
+              <MappingFragment StoreEntitySet="SYS_Customs">
+                <ScalarProperty Name="CustomsID" ColumnName="CustomsID" />
+                <ScalarProperty Name="GatedotID" ColumnName="GatedotID" />
+                <ScalarProperty Name="CustomsName" ColumnName="CustomsName" />
+                <ScalarProperty Name="CustomsCode" ColumnName="CustomsCode" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Linkman" ColumnName="Linkman" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Faxes" ColumnName="Faxes" />
+                <ScalarProperty Name="PostCode" ColumnName="PostCode" />
+                <ScalarProperty Name="OfficeHours" ColumnName="OfficeHours" />
+                <ScalarProperty Name="ClosingTime" ColumnName="ClosingTime" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Department">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Department">
+              <MappingFragment StoreEntitySet="SYS_Department">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentMobile" ColumnName="DepartmentMobile" />
+                <ScalarProperty Name="InteriorPhone" ColumnName="InteriorPhone" />
+                <ScalarProperty Name="DepartmentTop" ColumnName="DepartmentTop" />
+                <ScalarProperty Name="DepartmentDuty" ColumnName="DepartmentDuty" />
+                <ScalarProperty Name="DepartmentDescribe" ColumnName="DepartmentDescribe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_DriverBook">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_DriverBook">
+              <MappingFragment StoreEntitySet="SYS_DriverBook">
+                <ScalarProperty Name="DriverBookID" ColumnName="DriverBookID" />
+                <ScalarProperty Name="ChauffeurID" ColumnName="ChauffeurID" />
+                <ScalarProperty Name="CustomsNumber" ColumnName="CustomsNumber" />
+                <ScalarProperty Name="BusinessLicenseNumber" ColumnName="BusinessLicenseNumber" />
+                <ScalarProperty Name="IssuingAuthority" ColumnName="IssuingAuthority" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="AccurateLoadNumber" ColumnName="AccurateLoadNumber" />
+                <ScalarProperty Name="TermValidity" ColumnName="TermValidity" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="DriverBook" ColumnName="DriverBook" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Etrust">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Etrust">
+              <MappingFragment StoreEntitySet="SYS_Etrust">
+                <ScalarProperty Name="EtrustID" ColumnName="EtrustID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="ClientTypeID" ColumnName="ClientTypeID" />
+                <ScalarProperty Name="CustomsID" ColumnName="CustomsID" />
+                <ScalarProperty Name="ShipID" ColumnName="ShipID" />
+                <ScalarProperty Name="PortID" ColumnName="PortID" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="UndertakeID" ColumnName="UndertakeID" />
+                <ScalarProperty Name="VehicleInformationID" ColumnName="VehicleInformationID" />
+                <ScalarProperty Name="EtrustNmber" ColumnName="EtrustNmber" />
+                <ScalarProperty Name="WorkCategory" ColumnName="WorkCategory" />
+                <ScalarProperty Name="CheXing" ColumnName="CheXing" />
+                <ScalarProperty Name="EtryClasses" ColumnName="EtryClasses" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+                <ScalarProperty Name="ClientScontactsID" ColumnName="ClientScontactsID" />
+                <ScalarProperty Name="ClientMobile" ColumnName="ClientMobile" />
+                <ScalarProperty Name="PlanHandTime" ColumnName="PlanHandTime" />
+                <ScalarProperty Name="WhetherShou" ColumnName="WhetherShou" />
+                <ScalarProperty Name="CollectionMoney" ColumnName="CollectionMoney" />
+                <ScalarProperty Name="HuoZhuName" ColumnName="HuoZhuName" />
+                <ScalarProperty Name="IndentNumber" ColumnName="IndentNumber" />
+                <ScalarProperty Name="ClientSiteID" ColumnName="ClientSiteID" />
+                <ScalarProperty Name="TradeClause" ColumnName="TradeClause" />
+                <ScalarProperty Name="ChargeCustomsID" ColumnName="ChargeCustomsID" />
+                <ScalarProperty Name="ArriveTime" ColumnName="ArriveTime" />
+                <ScalarProperty Name="TiGuiDiDianID" ColumnName="TiGuiDiDianID" />
+                <ScalarProperty Name="HuaiGuiDiDianID" ColumnName="HuaiGuiDiDianID" />
+                <ScalarProperty Name="CargoWeight" ColumnName="CargoWeight" />
+                <ScalarProperty Name="HuiChangTime" ColumnName="HuiChangTime" />
+                <ScalarProperty Name="HangCi" ColumnName="HangCi" />
+                <ScalarProperty Name="KaiCangTime" ColumnName="KaiCangTime" />
+                <ScalarProperty Name="GoalHarborID" ColumnName="GoalHarborID" />
+                <ScalarProperty Name="ZuoJianWay" ColumnName="ZuoJianWay" />
+                <ScalarProperty Name="JieGuanTime" ColumnName="JieGuanTime" />
+                <ScalarProperty Name="CustomsBrokerID" ColumnName="CustomsBrokerID" />
+                <ScalarProperty Name="EtryWay" ColumnName="EtryWay" />
+                <ScalarProperty Name="WhetherBen" ColumnName="WhetherBen" />
+                <ScalarProperty Name="FGCustomsID" ColumnName="FGCustomsID" />
+                <ScalarProperty Name="AssistBusiness" ColumnName="AssistBusiness" />
+                <ScalarProperty Name="CargoClassify" ColumnName="CargoClassify" />
+                <ScalarProperty Name="WhetherShui" ColumnName="WhetherShui" />
+                <ScalarProperty Name="ManagementFee" ColumnName="ManagementFee" />
+                <ScalarProperty Name="SpecialNeed" ColumnName="SpecialNeed" />
+                <ScalarProperty Name="AttentionMatter" ColumnName="AttentionMatter" />
+                <ScalarProperty Name="CabinetType" ColumnName="CabinetType" />
+                <ScalarProperty Name="BookingSpace" ColumnName="BookingSpace" />
+                <ScalarProperty Name="Cupboard" ColumnName="Cupboard" />
+                <ScalarProperty Name="Seal" ColumnName="Seal" />
+                <ScalarProperty Name="AuditType" ColumnName="AuditType" />
+                <ScalarProperty Name="CarriageNumber" ColumnName="CarriageNumber" />
+                <ScalarProperty Name="PaiCheDate" ColumnName="PaiCheDate" />
+                <ScalarProperty Name="PaiCheExplain" ColumnName="PaiCheExplain" />
+                <ScalarProperty Name="DispatchTime" ColumnName="DispatchTime" />
+                <ScalarProperty Name="TiKGuiTime" ColumnName="TiKGuiTime" />
+                <ScalarProperty Name="ArriveFactoryTime" ColumnName="ArriveFactoryTime" />
+                <ScalarProperty Name="LeftFactoryTime" ColumnName="LeftFactoryTime" />
+                <ScalarProperty Name="HuaiWeightTime" ColumnName="HuaiWeightTime" />
+                <ScalarProperty Name="FollowTime" ColumnName="FollowTime" />
+                <ScalarProperty Name="EtrustType" ColumnName="EtrustType" />
+                <ScalarProperty Name="ShuiBl" ColumnName="ShuiBl" />
+                <ScalarProperty Name="OfferDetailID" ColumnName="OfferDetailID" />
+                <ScalarProperty Name="OddNumber" ColumnName="OddNumber" />
+                <ScalarProperty Name="FollowExplain" ColumnName="FollowExplain" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Expense">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Expense">
+              <MappingFragment StoreEntitySet="SYS_Expense">
+                <ScalarProperty Name="ExpenseID" ColumnName="ExpenseID" />
+                <ScalarProperty Name="SettleAccounts" ColumnName="SettleAccounts" />
+                <ScalarProperty Name="ExpenseCode" ColumnName="ExpenseCode" />
+                <ScalarProperty Name="ExpenseName" ColumnName="ExpenseName" />
+                <ScalarProperty Name="CostAttributes" ColumnName="CostAttributes" />
+                <ScalarProperty Name="CostSortingCode" ColumnName="CostSortingCode" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Gatedot">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Gatedot">
+              <MappingFragment StoreEntitySet="SYS_Gatedot">
+                <ScalarProperty Name="GatedotID" ColumnName="GatedotID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="GatedotCode" ColumnName="GatedotCode" />
+                <ScalarProperty Name="GatedotName" ColumnName="GatedotName" />
+                <ScalarProperty Name="WhetherSuperiorGatedot" ColumnName="WhetherSuperiorGatedot" />
+                <ScalarProperty Name="WhetherValid" ColumnName="WhetherValid" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_HaulWay">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_HaulWay">
+              <MappingFragment StoreEntitySet="SYS_HaulWay">
+                <ScalarProperty Name="HaulWayID" ColumnName="HaulWayID" />
+                <ScalarProperty Name="MentionAreaID" ColumnName="MentionAreaID" />
+                <ScalarProperty Name="HaulWayDescription" ColumnName="HaulWayDescription" />
+                <ScalarProperty Name="LoadingAreaID" ColumnName="LoadingAreaID" />
+                <ScalarProperty Name="CustomsAreaID" ColumnName="CustomsAreaID" />
+                <ScalarProperty Name="AlsoTankAreaID" ColumnName="AlsoTankAreaID" />
+                <ScalarProperty Name="OutwardVoyage" ColumnName="OutwardVoyage" />
+                <ScalarProperty Name="ReturnTrip" ColumnName="ReturnTrip" />
+                <ScalarProperty Name="OutwardVoyageFree" ColumnName="OutwardVoyageFree" />
+                <ScalarProperty Name="ReturnTripFree" ColumnName="ReturnTripFree" />
+                <ScalarProperty Name="OutwardVoyageTime" ColumnName="OutwardVoyageTime" />
+                <ScalarProperty Name="ReturnTripTime" ColumnName="ReturnTripTime" />
+                <ScalarProperty Name="TotalTime" ColumnName="TotalTime" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Jurisdiction">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Jurisdiction">
+              <MappingFragment StoreEntitySet="SYS_Jurisdiction">
+                <ScalarProperty Name="JurisdictionID" ColumnName="JurisdictionID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="JurisdictionName" ColumnName="JurisdictionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Mention">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Mention">
+              <MappingFragment StoreEntitySet="SYS_Mention">
+                <ScalarProperty Name="MentionID" ColumnName="MentionID" />
+                <ScalarProperty Name="GatedotID" ColumnName="GatedotID" />
+                <ScalarProperty Name="MCode" ColumnName="MCode" />
+                <ScalarProperty Name="Abbreviation" ColumnName="Abbreviation" />
+                <ScalarProperty Name="Linkman" ColumnName="Linkman" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+                <ScalarProperty Name="HangCharge" ColumnName="HangCharge" />
+                <ScalarProperty Name="CheckFee" ColumnName="CheckFee" />
+                <ScalarProperty Name="GateCharges" ColumnName="GateCharges" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Message">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Message">
+              <MappingFragment StoreEntitySet="SYS_Message">
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="TissueCode" ColumnName="TissueCode" />
+                <ScalarProperty Name="ChineseName" ColumnName="ChineseName" />
+                <ScalarProperty Name="ChineseAbbreviation" ColumnName="ChineseAbbreviation" />
+                <ScalarProperty Name="EnglishCode" ColumnName="EnglishCode" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="Site" ColumnName="Site" />
+                <ScalarProperty Name="Relation" ColumnName="Relation" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Offer">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Offer">
+              <MappingFragment StoreEntitySet="SYS_Offer">
+                <ScalarProperty Name="OfferID" ColumnName="OfferID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+                <ScalarProperty Name="OfferType" ColumnName="OfferType" />
+                <ScalarProperty Name="OfferDate" ColumnName="OfferDate" />
+                <ScalarProperty Name="TakeEffectDate" ColumnName="TakeEffectDate" />
+                <ScalarProperty Name="LoseEfficacyDate" ColumnName="LoseEfficacyDate" />
+                <ScalarProperty Name="WhetherShui" ColumnName="WhetherShui" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_OfferDetail">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_OfferDetail">
+              <MappingFragment StoreEntitySet="SYS_OfferDetail">
+                <ScalarProperty Name="OfferDetailID" ColumnName="OfferDetailID" />
+                <ScalarProperty Name="OfferID" ColumnName="OfferID" />
+                <ScalarProperty Name="ExpenseID" ColumnName="ExpenseID" />
+                <ScalarProperty Name="HaulWayID" ColumnName="HaulWayID" />
+                <ScalarProperty Name="EtryClasses" ColumnName="EtryClasses" />
+                <ScalarProperty Name="CabinetType" ColumnName="CabinetType" />
+                <ScalarProperty Name="Money" ColumnName="Money" />
+                <ScalarProperty Name="ClientSiteID" ColumnName="ClientSiteID" />
+                <ScalarProperty Name="WorkCategory" ColumnName="WorkCategory" />
+                <ScalarProperty Name="BoxQuantity" ColumnName="BoxQuantity" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Parities">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Parities">
+              <MappingFragment StoreEntitySet="SYS_Parities">
+                <ScalarProperty Name="ParitiesID" ColumnName="ParitiesID" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="BasicCurrency" ColumnName="BasicCurrency" />
+                <ScalarProperty Name="ConversionRate" ColumnName="ConversionRate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_PayWay">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_PayWay">
+              <MappingFragment StoreEntitySet="SYS_PayWay">
+                <ScalarProperty Name="PayWayID" ColumnName="PayWayID" />
+                <ScalarProperty Name="PayWay" ColumnName="PayWay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Port">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Port">
+              <MappingFragment StoreEntitySet="SYS_Port">
+                <ScalarProperty Name="PortID" ColumnName="PortID" />
+                <ScalarProperty Name="PortCode" ColumnName="PortCode" />
+                <ScalarProperty Name="ChineseName" ColumnName="ChineseName" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="CountryCode" ColumnName="CountryCode" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="Berthage" ColumnName="Berthage" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_SettleWay">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_SettleWay">
+              <MappingFragment StoreEntitySet="SYS_SettleWay">
+                <ScalarProperty Name="SettleWayID" ColumnName="SettleWayID" />
+                <ScalarProperty Name="SettleWay" ColumnName="SettleWay" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Ship">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Ship">
+              <MappingFragment StoreEntitySet="SYS_Ship">
+                <ScalarProperty Name="ShipID" ColumnName="ShipID" />
+                <ScalarProperty Name="ClientTypeID" ColumnName="ClientTypeID" />
+                <ScalarProperty Name="ShipCode" ColumnName="ShipCode" />
+                <ScalarProperty Name="ChineseName" ColumnName="ChineseName" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="Abbreviation" ColumnName="Abbreviation" />
+                <ScalarProperty Name="ShipEast" ColumnName="ShipEast" />
+                <ScalarProperty Name="ShipType" ColumnName="ShipType" />
+                <ScalarProperty Name="CaptainName" ColumnName="CaptainName" />
+                <ScalarProperty Name="ShipMobile" ColumnName="ShipMobile" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+                <ScalarProperty Name="Operator" ColumnName="Operator" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Sign">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Sign">
+              <MappingFragment StoreEntitySet="SYS_Sign">
+                <ScalarProperty Name="SignID" ColumnName="SignID" />
+                <ScalarProperty Name="SignCloseAccountID" ColumnName="SignCloseAccountID" />
+                <ScalarProperty Name="BCYShou" ColumnName="BCYShou" />
+                <ScalarProperty Name="BCYFu" ColumnName="BCYFu" />
+                <ScalarProperty Name="SettleMoney" ColumnName="SettleMoney" />
+                <ScalarProperty Name="SignExplain" ColumnName="SignExplain" />
+                <ScalarProperty Name="SettleNumber" ColumnName="SettleNumber" />
+                <ScalarProperty Name="SignDate" ColumnName="SignDate" />
+                <ScalarProperty Name="YuSettleDate" ColumnName="YuSettleDate" />
+                <ScalarProperty Name="SettleWayID" ColumnName="SettleWayID" />
+                <ScalarProperty Name="PayWayID" ColumnName="PayWayID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="FinishDate" ColumnName="FinishDate" />
+                <ScalarProperty Name="FinishType" ColumnName="FinishType" />
+                <ScalarProperty Name="SignType" ColumnName="SignType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_SignCloseAccount">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_SignCloseAccount">
+              <MappingFragment StoreEntitySet="SYS_SignCloseAccount">
+                <ScalarProperty Name="SignCloseAccountID" ColumnName="SignCloseAccountID" />
+                <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_Staff">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_Staff">
+              <MappingFragment StoreEntitySet="SYS_Staff">
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="StaffName" ColumnName="StaffName" />
+                <ScalarProperty Name="StaffNumber" ColumnName="StaffNumber" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Duty" ColumnName="Duty" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="CultureLevel" ColumnName="CultureLevel" />
+                <ScalarProperty Name="JoinJob" ColumnName="JoinJob" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_User">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_User">
+              <MappingFragment StoreEntitySet="SYS_User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="FinallyRegisterTime" ColumnName="FinallyRegisterTime" />
+                <ScalarProperty Name="WhetherStart" ColumnName="WhetherStart" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SYS_VehicleInformation">
+            <EntityTypeMapping TypeName="SeaTransportationModel.SYS_VehicleInformation">
+              <MappingFragment StoreEntitySet="SYS_VehicleInformation">
+                <ScalarProperty Name="VehicleInformationID" ColumnName="VehicleInformationID" />
+                <ScalarProperty Name="ChauffeurID" ColumnName="ChauffeurID" />
+                <ScalarProperty Name="BracketID" ColumnName="BracketID" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="VehicleCode" ColumnName="VehicleCode" />
+                <ScalarProperty Name="PlateNumbers" ColumnName="PlateNumbers" />
+                <ScalarProperty Name="HongKongPlateNumber" ColumnName="HongKongPlateNumber" />
+                <ScalarProperty Name="VehicleClass" ColumnName="VehicleClass" />
+                <ScalarProperty Name="MotorcycleType" ColumnName="MotorcycleType" />
+                <ScalarProperty Name="VehicleType" ColumnName="VehicleType" />
+                <ScalarProperty Name="Usualplace" ColumnName="Usualplace" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
